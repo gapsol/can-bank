@@ -38,8 +38,8 @@ export class AppComponent implements OnInit {
               && this.canbankXS.canSurface.length !== 0
               && this.canbankXS.canType.length !== 0) {
                 clearInterval(tInt);
-//                this.showSplash = false;
-//                this.router.navigate(['home']);
+                this.showSplash = false;
+                this.router.navigate(['home']);
               }
           }, 100);
         } else {

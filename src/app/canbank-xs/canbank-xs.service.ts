@@ -219,13 +219,11 @@ export class CanbankXsService {
 
   // getLists - run all functions for obtaining lists of categories for form selects
   public getLists(): boolean {
-    console.log('getLists');
     // TODO: process errors as FE error message
     this.getColor(0).subscribe(
       (response: any) => {
         this._canColor = response['list'];
         this._levelL1 = 'success';
-        console.log(response['list']);
       },
       (error: any) => {
         this._levelL1 = 'error';
@@ -236,7 +234,6 @@ export class CanbankXsService {
       (response: any) => {
         this._canContentType = response['list'];
         this._levelL2 = 'success';
-        console.log(response['list']);
       },
       (error: any) => {
         this._levelL2 = 'error';
@@ -247,7 +244,6 @@ export class CanbankXsService {
       (response: any) => {
         this._canCountry = response['list'];
         this._levelL3 = 'success';
-        console.log(response['list']);
       },
       (error: any) => {
         this._levelL3 = 'error';
@@ -258,7 +254,6 @@ export class CanbankXsService {
       (response: any) => {
         this._canLanguage = response['list'];
         this._levelL4 = 'success';
-        console.log(response['list']);
       },
       (error: any) => {
         this._levelL4 = 'error';
@@ -269,7 +264,6 @@ export class CanbankXsService {
       (response: any) => {
         this._canMaterial = response['list'];
         this._levelL5 = 'success';
-        console.log(response['list']);
       },
       (error: any) => {
         this._levelL5 = 'error';
@@ -280,7 +274,6 @@ export class CanbankXsService {
       (response: any) => {
         this._canSurface = response['list'];
         this._levelL6 = 'success';
-        console.log(response['list']);
       },
       (error: any) => {
         this._levelL6 = 'error';
@@ -291,7 +284,6 @@ export class CanbankXsService {
       (response: any) => {
         this._canType = response['list'];
         this._levelL7 = 'success';
-        console.log(response['list']);
       },
       (error: any) => {
         this._levelL7 = 'error';

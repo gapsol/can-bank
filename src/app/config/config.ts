@@ -5,10 +5,11 @@ export interface canbankConfig {
   isDemo: boolean,
 }
 
+// setup localhost and server settings
 var localConfig: canbankConfig = {
   serverUrl: "http://can-bank",
   apiPath: "/api-can-bank",
-  language: "sk",
+  language: "en",
   isDemo: false
 }
 
