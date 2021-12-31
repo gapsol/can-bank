@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
   canbankInit(): void {
     this.canbankXS.getState().subscribe(
       (response: any) => {
-        console.log(response['status'])
         if (response['status'] === 'success') {
           this.canbankXS.getLists();
           // TODO: onChange - finished lists requests
