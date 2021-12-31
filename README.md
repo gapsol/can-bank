@@ -12,5 +12,5 @@ ng serve --open
 
 ### PHP + MySQL based REST API
 `/api-can-bank`
-- install PHP & MySQL based server, e.g. Apache, map this directory to its configuration
+- install PHP (5.6+) & MySQL based server, e.g. Apache, map this directory to its configuration
 - create config directory `_settings` and config file `_env_php.json` or your own alternative
