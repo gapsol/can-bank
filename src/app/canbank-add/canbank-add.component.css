@@ -1,0 +1,74 @@
+input, select, textarea {
+  border-width: 1px;
+  border-style: solid;
+}
+.can-file-button {
+  display: block;
+  width: fit-content;
+  border-width: 0 3px 3px 0;
+  border-style: solid;
+  border-radius: 6px;
+  border-color: gold;
+  padding: 1px 6px;
+  /*background-color: navy;*/
+  color: navy;
+}
+.new-option {
+  font-weight: bold;
+  font-style: italic;
+  background-color: lightyellow;
+}
+
+.input-value-box {
+  padding-top: 5px;
+}
+.input-with-icon {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: stretch;
+}
+.input-icon {
+  width: 2em;
+  line-height: 2em;
+  text-align: center;
+  border-radius: 6px;
+}
+.input-icon-cover {
+  border-radius: 50%;
+  border: 1px solid black;
+}
+.input-icon-opener {
+  border-radius: 50% 50% 10% 10%;
+  border: 1px solid black;
+}
+.input-icon-transparent {
+  background-color: transparent;
+}
+.input-icon-white {
+  background-color: white;
+}
+.input-icon-lightgray {
+  background-color: lightgray;
+}
+.input-icon-silver {
+  background-color: silver;
+}
+.input-icon-gray {
+  background-color: gray;
+}
+.input-icon-yellow {
+  background-color: yellow;
+}
+.input-icon-gold {
+  background-color: gold;
+}
+.input-icon-red {
+  background-color: red;
+}
+.input-icon-green {
+  background-color: green;
+}
+.input-icon-blue {
+  background-color: blue;
+}

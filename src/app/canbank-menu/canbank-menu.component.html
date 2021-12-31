@@ -1,0 +1,18 @@
+<nav class="canbank-menu" *ngIf="showMenu">
+    <div id="menu-btn-home" class="menu-btn">
+      <a routerLink="/home" routerLinkActive="menu-btn-active" class="anchor-btn">[ {{ i18n.menu_home }} ]</a>
+    </div>
+    <div id="menu-btn-add" class="menu-btn">
+      <a routerLink="/add" routerLinkActive="menu-btn-active" class="anchor-btn">[ {{ i18n.menu_add }} ]</a>
+    </div>
+    <div id="menu-btn-bind" class="menu-btn">
+      <a routerLink="/find" routerLinkActive="menu-btn-active" class="anchor-btn">[ {{ i18n.menu_find }} ]</a>
+    </div>
+    <div id="menu-btn-catg" class="menu-btn">
+      <a routerLink="/categories" routerLinkActive="menu-btn-active" class="anchor-btn">[ {{ i18n.menu_categories }} ]</a>
+    </div>
+    <div id="menu-btn-stats" class="menu-btn">
+      <a routerLink="/stats" routerLinkActive="menu-btn-active" class="anchor-btn">[ {{ i18n.menu_stats }} ]</a>
+    </div>
+</nav>
+<router-outlet></router-outlet>

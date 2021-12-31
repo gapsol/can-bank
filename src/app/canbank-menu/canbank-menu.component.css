@@ -1,0 +1,26 @@
+.canbank-menu {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.menu-btn {
+  display: inline-block;
+  width: calc(20% - 1px);
+  height: 2em;
+  border-right: 1px solid gold;
+  line-height: 2em;
+  text-align: center;
+  font-weight: bold;
+}
+.menu-btn, .menu-btn a {
+  background-color: blue;
+  color: gold;
+}
+.menu-btn-active {
+  background-color: gold !important;
+  color: blue !important;
+}
+.anchor-btn {
+  display: inline-block;
+  width: 100%;
+}

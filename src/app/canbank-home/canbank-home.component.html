@@ -1,0 +1,24 @@
+<div class="sub-screen" style="text-align: center;">
+
+  <h1>
+    <span *ngFor="let can of printCan" class="odometer">{{ can }}</span>
+    <br>{{ langCan }}
+  </h1>
+  <h1>
+    <span *ngFor="let can of printType" class="odometer">{{ can }}</span>
+    <br>{{ langType }}
+  </h1>
+  <h1>
+    <span *ngFor="let can of printCountry" class="odometer">{{ can }}</span>
+    <br>{{ langCountry }}
+  </h1>
+  <h1>
+    <span *ngFor="let can of printOldest" class="odometer">{{ can }}</span>
+    <br>{{ langOldest }}
+  </h1>
+  <h1>
+    <span *ngFor="let can of printNewest" class="odometer">{{ can }}</span>
+    <br>{{ langNewest }}
+  </h1>
+
+</div>
