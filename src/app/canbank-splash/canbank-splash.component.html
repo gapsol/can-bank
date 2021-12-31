@@ -3,6 +3,6 @@
     <div class="can-splash-h1">canBank</div>
     <div  [id]="item.levelId" [class]="item.levelClass" class="can-splash-level" *ngFor="let item of levelMeter"></div>
     <div>{{ splashMessage }}</div>
-    <div [class]="rotationClass" class="rotation can-splash-h1">O</div>
+    <div [class]="rotationClass" class="rotation can-splash-h1">{{ rotationChar }}</div>
   </div>
 </div>

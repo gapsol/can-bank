@@ -303,6 +303,7 @@ export class CanbankXsService {
       map((response: any) => { return response['data'] }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
     )
@@ -318,6 +319,7 @@ export class CanbankXsService {
       map((response: any) => { return response['data'] }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
     )
@@ -333,6 +335,7 @@ export class CanbankXsService {
       map((response: any) => { return response['data']}),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
     )
@@ -348,6 +351,7 @@ export class CanbankXsService {
       map((response: any) => { return response['data']}),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
     )
@@ -363,6 +367,7 @@ export class CanbankXsService {
       map((response: any) => { return response['data']}),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
     )
@@ -378,6 +383,7 @@ export class CanbankXsService {
       map((response: any) => { return response['data']}),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
     )
@@ -393,6 +399,7 @@ export class CanbankXsService {
       map((response: any) => { return response['data']}),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
     )

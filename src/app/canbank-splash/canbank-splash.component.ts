@@ -10,6 +10,7 @@ import { levelMeter } from '../canbank-xs/levelmeter';
 })
 export class CanbankSplashComponent implements OnInit, OnChanges {
   splashMessage: string = '';
+  rotationChar: string = '';
   rotationClass: string = '';
   levelMeter = levelMeter;
 
@@ -23,6 +24,7 @@ export class CanbankSplashComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     console.log('SPLASH component')
+    this.rotationChar = 'O';
     this.splashMessage = '';
     let index: number = 0;
     let tInt = setInterval(() => {
@@ -51,7 +53,9 @@ export class CanbankSplashComponent implements OnInit, OnChanges {
           && this.canbankXS.canLanguage.length !== 0
           && this.canbankXS.canMaterial.length !== 0
           && this.canbankXS.canSurface.length !== 0
-          && this.canbankXS.canType.length !== 0) {
+          && this.canbankXS.canType.length !== 0
+          || this.canbankXS.canbankMessage.includes('Unknown Error')) {
+            this.rotationChar = '';
             clearInterval(tInt);
           }
       }
