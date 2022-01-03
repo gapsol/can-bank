@@ -1,5 +1,6 @@
 <?php
 
+$query = [];
 $query[1] = 'INSERT INTO `can_country` (`id`, `name`, `abbr`, `default`) VALUES (1, "Slovensko", "SK", 1)';
 $query[2] = 'INSERT INTO `can_country` (`id`, `name`, `abbr`, `default`) VALUES (2, "Česko", "CZ", 0)';
 $query[3] = 'INSERT INTO `can_country` (`id`, `name`, `abbr`, `default`) VALUES (3, "Poľsko", "PL", 0)';
@@ -15,12 +16,13 @@ require_once 'get_config.php';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
 $mysqli->select_db(DB_NAME);
+echo 'table can_country: processing...';
 for ($i = 1; $i <= count($query); $i++) {
-    echo '<br>'.$mysqli->query($query[$i]);
+    echo $mysqli->query($query[$i]);
     if ($mysqli->error)  {
         echo '<br>'.$mysqli->error;
     }
 }
 $mysqli->close();
 
-echo '<br>can_country done!';
+echo '...done!<br>';

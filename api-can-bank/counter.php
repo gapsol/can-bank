@@ -10,10 +10,10 @@ require_once 'get_headers.php';
 require_once 'json_responses.php';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
-if ($mysqli->connect_error) { json_error($mysqli->connect_error); }
+if ($mysqli->connect_error) { json_error(500, $mysqli->connect_error); }
 
 $mysqli->select_db(DB_NAME);
-if ($mysqli->error) { json_error($mysqli->error); }
+if ($mysqli->error) { json_error(500, $mysqli->error); }
 
 $query = '';
 if ($_SERVER['REQUEST_METHOD']=='GET' && $_REQUEST && isset($_REQUEST['table'])) {
@@ -41,9 +41,9 @@ if ($_SERVER['REQUEST_METHOD']=='GET' && $_REQUEST && isset($_REQUEST['table']))
         json_error('Incorrect request');
     } else {
         $result = $mysqli->query($query);
-        if ($mysqli->error) { json_error($mysqli->error); }
+        if ($mysqli->error) { json_error(500, $mysqli->error); }
         // $mysqli->close();
-        
+
         if ($mysqli->affected_rows > 0) {
             $return = $result->fetch_assoc();
             if (isset($return['COUNT(*)'])) {

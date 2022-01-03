@@ -27,16 +27,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 if (isset($query) && isfull($query)) {
     $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
-    if ($mysqli->connect_error) { json_error($mysqli->connect_error); }
-    
+    if ($mysqli->connect_error) { json_error(500, $mysqli->connect_error); }
+
     $mysqli->select_db(DB_NAME);
-    if ($mysqli->error) { json_error($mysqli->error); }
-    
+    if ($mysqli->error) { json_error(500, $mysqli->error); }
+
     $result = $mysqli->query($query);
-    if ($mysqli->error) { json_error($mysqli->error); }
+    if ($mysqli->error) { json_error(500, $mysqli->error); }
 
     $mysqli->close();
-    
+
     switch ($_GET['id']) {
         case 0:
             $return = [];

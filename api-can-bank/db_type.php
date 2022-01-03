@@ -1,5 +1,6 @@
 <?php
 
+$query = [];
 $query[1] = 'INSERT INTO `can_type` (`id`, `name`, `diameter`, `height`, `volume`, `volumeFlOz`, `default`) VALUES (1, "2: Svijany (can-for-men)", 0, 0, 2000, 0, 0)';
 $query[2] = 'INSERT INTO `can_type` (`id`, `name`, `diameter`, `height`, `volume`, `volumeFlOz`, `default`) VALUES (2, "1: cylinder (october-fest)", 0, 0, 1000, 0, 0)';
 $query[3] = 'INSERT INTO `can_type` (`id`, `name`, `diameter`, `height`, `volume`, `volumeFlOz`, `default`) VALUES (3, "1: klasik (russian-beer-type)", 0, 0, 1000, 0, 0)';
@@ -30,11 +31,11 @@ require_once 'get_config.php';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
 $mysqli->select_db(DB_NAME);
+echo 'table can_type: processing...';
 for ($i = 1; $i <= count($query); $i++) {
-    // echo '<br>'.
-    $mysqli->query($query[$i]);
+    echo $mysqli->query($query[$i]);
     if ($mysqli->error)  { echo '<br>'.$mysqli->error; }
 }
 $mysqli->close();
 
-// echo '<br>can_type done!';
+echo '...done!<br>';

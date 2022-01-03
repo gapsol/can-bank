@@ -1,5 +1,6 @@
 <?php
 
+$query = [];
 $query[1] = 'INSERT INTO `can_content` (`id`, `name`, `default`) VALUES (1, "pivo", 1)';
 $query[2] = 'INSERT INTO `can_content` (`id`, `name`, `default`) VALUES (2, "radler", 0)';
 $query[3] = 'INSERT INTO `can_content` (`id`, `name`, `default`) VALUES (3, "cider", 0)';
@@ -15,12 +16,13 @@ require_once 'get_config.php';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
 $mysqli->select_db(DB_NAME);
+echo 'table can_content: processing...';
 for ($i = 1; $i <= count($query); $i++) {
-    echo '<br>'.$mysqli->query($query[$i]);
+    echo $mysqli->query($query[$i]);
     if ($mysqli->error)  {
         echo '<br>'.$mysqli->error;
     }
 }
 $mysqli->close();
 
-echo '<br>can_content done!';
+echo '...done!<br>';
