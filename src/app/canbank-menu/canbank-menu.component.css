@@ -5,7 +5,6 @@
 }
 .menu-btn {
   display: inline-block;
-  width: calc(20% - 1px);
   height: 2em;
   border-right: 1px solid gold;
   line-height: 2em;

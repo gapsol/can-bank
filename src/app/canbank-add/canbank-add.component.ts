@@ -114,7 +114,7 @@ export class CanbankAddComponent implements OnInit {
       this.updateCover();
       this.updateOpener();
   }
-
+/*
   sortColor() {
     this.canColor.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
   }
@@ -130,7 +130,7 @@ export class CanbankAddComponent implements OnInit {
   sortType() {
     this.canType.sort((a, b) => { return (a.volume < b.volume) ? 1 : -1; });
   }
-
+*/
   updateType() {
     let canFormVolumeFlOz: string;
     let canObj = this.canType.find(cantyp => cantyp.value == this.canForm.value.canFormType);

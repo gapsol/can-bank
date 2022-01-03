@@ -29,8 +29,17 @@
 .can-splash-level.success {
   background-color: lime;
 }
+.can-splash-level.empty {
+  background-color: #00C000;
+}
 .can-splash-level.error {
   background-color: red;
+}
+.can-splash-success {
+  color: lime;
+}
+.can-splash-error {
+  color: red;
 }
 
 .rotation {

@@ -1,26 +1,15 @@
-.can-flash-div {
-  height: 100%;
-  line-height: 100%;
-  background-color: gold;
-  color: blue;
-  text-align: center;
-}
-.can-flash-content {
-  position: relative;
-  top: calc(50% - 5em);
-}
 .can-flash-h1 {
-  font-size: 2em;
-  line-height: 2em;
+  color: gold;
 }
 .can-flash-plus {
   margin: auto;
   width: 2em;
   height: 2em;
   line-height: 2em;
+  border: 12px solid;
   border-radius: 2em;
-  background-color: blue;
-  color: gold;
+  background-color: gold;
+  color: blue;
 }
 .can-flash-plus:hover {
   cursor: pointer;

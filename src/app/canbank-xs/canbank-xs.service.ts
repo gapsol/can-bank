@@ -32,6 +32,15 @@ export class CanbankXsService {
   get canbankMessage(): string { return this._canbankMessage; }
   set canbankMessage(msg: string) { this._canbankMessage = msg; }
   @Input()
+  private _flashMessage: string = '';
+  get flashMessage(): string { return this._flashMessage; }
+  set flashMessage(msg: string) { this._flashMessage = msg; }
+  @Input()
+  private _flashMe: boolean = false;
+  get flashMe(): boolean { return this._flashMe; }
+  set flashMe(msg: boolean) { this._flashMe = msg; }
+
+  @Input()
   private _canColor: Array<canColor> = [];
   get canColor(): Array<canColor> { return this._canColor; }
   set canColor(obj: Array<canColor>) { this._canColor = obj; }
@@ -65,9 +74,9 @@ export class CanbankXsService {
   get levelDb(): string { return this._levelDb; }
   set levelDb(str: string) { this._levelDb = str; }
   @Input()
-  private _levelTb: string = '';
-  get levelTb(): string { return this._levelTb; }
-  set levelTb(str: string) { this._levelTb = str; }
+  private _levelDt: string = '';
+  get levelDt(): string { return this._levelDt; }
+  set levelDt(str: string) { this._levelDt = str; }
   @Input()
   private _levelL1: string = '';
   get levelL1(): string { return this._levelL1; }
@@ -130,26 +139,39 @@ export class CanbankXsService {
   // getState - get state of the canBank
   // check connection, exiestence of database and tables
   public getState(): Observable<object> {
-    console.log('getState')
-    this._levelDb = 'running';
-    this._levelTb = 'running';
     return this.http.get(`${this.canbankUrl}/canbank`)
     .pipe(
       map((response: any) => {
-        this._levelDb = 'success';
-        this._levelTb = 'success';
-        this.canbankMessage = response['data']['message'];
-        return response['data'];
+        console.log('XS getState response')
+        console.log(response)
+        if (response.data.status === 'error') {
+          this._levelDb = this._levelDt = 'error';
+          this._canbankMessage = response.data.message;
+          if (response.data.message.includes('Unknown database')) {
+            this._canbankMessage = 'Database doesn\'t exist!';
+            this._flashMe = true;
+            this._flashMessage = 'Create database!';
+          } else if (typeof response.data.message == 'object' || response.data.message.includes('Table')) {
+            this._levelDb = 'success';
+            this._flashMe = true;
+            this._flashMessage = 'Recreate database!';
+          }
+          return throwError(response.data.message);
+        } else {
+          this._levelDb = this._levelDt = 'success';
+        }
+        return response;
       }),
       catchError((error: HttpErrorResponse) => {
+        console.log('XS getState error')
         console.error(error);
+        this._levelDb =
+        this._levelDt = 'error';
         if (error.statusText.includes('Unknown Error')) {
-          this._levelDb = this._levelTb = this._levelL1 = this._levelL2 = this._levelL3 = this._levelL4 = this._levelL5 = this._levelL6 = this._levelL7 = 'error';
+          this._canbankMessage = 'Connection error!';
         } else {
-          this._levelDb = (error.message.includes('Unknown database')) ? 'error' : 'success';
-          this._levelTb = (error.message.includes('Table')) ? 'error' : 'success';
+          this._canbankMessage = error.statusText;
         }
-        this.canbankMessage = 'Application error!';
         return this.handleError(error);
       })
     )
@@ -161,7 +183,12 @@ export class CanbankXsService {
   public createDB(): Observable<object> {
     return this.http.post(`${this.canbankUrl}/canbank`, {})
     .pipe(
-      map((response: any) => { return response['data'] }),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          return throwError(response['data']['message']);
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         this.canbankMessage = error.statusText;
@@ -177,7 +204,12 @@ export class CanbankXsService {
     .set('table', table);
     return this.http.get(`${this.canbankUrl}/counter`, { params })
     .pipe(
-      map((response: any) => { return response['data'] }),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          return throwError(response['data']['message']);
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         return this.handleError(error);
@@ -193,7 +225,12 @@ export class CanbankXsService {
       .set('fnc', 'oldest');
     return this.http.get(`${this.canbankUrl}/counter`, { params })
     .pipe(
-      map((response: any) => { return response['data'] }),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          return throwError(response['data']['message']);
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         return this.handleError(error);
@@ -209,7 +246,12 @@ export class CanbankXsService {
       .set('fnc', 'newest');
     return this.http.get(`${this.canbankUrl}/counter`, { params })
     .pipe(
-      map((response: any) => { return response['data'] }),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          return throwError(response['data']['message']);
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         return this.handleError(error);
@@ -218,7 +260,7 @@ export class CanbankXsService {
   }
 
   // getLists - run all functions for obtaining lists of categories for form selects
-  public getLists(): boolean {
+  /*public getLists(): boolean {
     // TODO: process errors as FE error message
     this.getColor(0).subscribe(
       (response: any) => {
@@ -291,7 +333,7 @@ export class CanbankXsService {
       }
     );
     return true;
-  }
+  }*/
 
   // GET /color?id
   // getColor - get list of colors (id = 0) or color by id (!= 0)
@@ -300,9 +342,20 @@ export class CanbankXsService {
     const params = new HttpParams()
       .set('id', id)
     return this.http.get(`${this.canbankUrl}/color`, { params }).pipe(
-      map((response: any) => { return response['data'] }),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          this._levelL1 = 'error';
+          return throwError(response['data']['message']);
+        }
+        this._levelL1 = 'success';
+        if (/*response['data']['list'] && */response['data']['list'].length == 0) {
+          this._levelL1 = 'empty';
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this._levelL1 = 'error';
         this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
@@ -316,9 +369,20 @@ export class CanbankXsService {
     const params = new HttpParams()
       .set('id', id)
     return this.http.get(`${this.canbankUrl}/content`, { params }).pipe(
-      map((response: any) => { return response['data'] }),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          this._levelL2 = 'error';
+          return throwError(response['data']['message']);
+        }
+        this._levelL2 = 'success';
+        if (/*response['data']['list'] && */response['data']['list'].length == 0) {
+          this._levelL2 = 'empty';
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this._levelL2 = 'error';
         this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
@@ -332,9 +396,20 @@ export class CanbankXsService {
     const params = new HttpParams()
       .set('id', id)
     return this.http.get(`${this.canbankUrl}/country`, { params }).pipe(
-      map((response: any) => { return response['data']}),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          this._levelL3 = 'error';
+          return throwError(response['data']['message']);
+        }
+        this._levelL3 = 'success';
+        if (/*response['data']['list'] && */response['data']['list'].length == 0) {
+          this._levelL3 = 'empty';
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this._levelL3 = 'error';
         this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
@@ -348,9 +423,20 @@ export class CanbankXsService {
     const params = new HttpParams()
       .set('id', id)
     return this.http.get(`${this.canbankUrl}/language`, { params }).pipe(
-      map((response: any) => { return response['data']}),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          this._levelL4 = 'error';
+          return throwError(response['data']['message']);
+        }
+        this._levelL4 = 'success';
+        if (/*response['data']['list'] && */response['data']['list'].length == 0) {
+          this._levelL4 = 'empty';
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this._levelL4 = 'error';
         this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
@@ -364,9 +450,20 @@ export class CanbankXsService {
     const params = new HttpParams()
       .set('id', id)
     return this.http.get(`${this.canbankUrl}/material`, { params }).pipe(
-      map((response: any) => { return response['data']}),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          this._levelL5 = 'error';
+          return throwError(response['data']['message']);
+        }
+        this._levelL5 = 'success';
+        if (/*response['data']['list'] && */response['data']['list'].length == 0) {
+          this._levelL5 = 'empty';
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this._levelL5 = 'error';
         this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
@@ -380,9 +477,20 @@ export class CanbankXsService {
     const params = new HttpParams()
       .set('id', id)
     return this.http.get(`${this.canbankUrl}/surface`, { params }).pipe(
-      map((response: any) => { return response['data']}),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          this._levelL6 = 'error';
+          return throwError(response['data']['message']);
+        }
+        this._levelL6 = 'success';
+        if (/*response['data']['list'] && */response['data']['list'].length == 0) {
+          this._levelL6 = 'empty';
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this._levelL6 = 'error';
         this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
@@ -396,9 +504,20 @@ export class CanbankXsService {
     const params = new HttpParams()
       .set('id', id)
     return this.http.get(`${this.canbankUrl}/type`, { params }).pipe(
-      map((response: any) => { return response['data']}),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          this._levelL7 = 'error';
+          return throwError(response['data']['message']);
+        }
+        this._levelL7 = 'success';
+        if (/*response['data']['list'] && */response['data']['list'].length == 0) {
+          this._levelL7 = 'empty';
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.log(error);
+        this._levelL7 = 'error';
         this.canbankMessage = error.statusText;
         return this.handleError(error);
       })
@@ -410,7 +529,12 @@ export class CanbankXsService {
     console.log('getBank')
     return this.http.get(`${this.canbankUrl}/bank`)
     .pipe(
-      map((response: any) => { return response['data'] }),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          return throwError(response['data']['message']);
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error)
         return this.handleError(error);
@@ -424,7 +548,12 @@ export class CanbankXsService {
     console.log(formdata)
     return this.http.post(`${this.canbankUrl}/bank`, {"data": formdata})
     .pipe(
-      map((response: any) => { return response['data'] }),
+      map((response: any) => {
+        if (response['data']['status'] == 'error') {
+          return throwError(response['data']['message']);
+        }
+        return response['data'];
+      }),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
         return this.handleError(error);

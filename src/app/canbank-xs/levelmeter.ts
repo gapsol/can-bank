@@ -1,3 +1,4 @@
+/*
 export interface levelMeter {
   levelId: string,
   levelClass: string,
@@ -14,3 +15,15 @@ export var levelMeter: Array<levelMeter> = [
   { levelId: "levelL6", levelClass: "" },
   { levelId: "levelL7", levelClass: "" },
 ];
+*/
+export var levelMeter = {
+  levelDb: "",
+  levelDt: "",
+  levelL1: "",
+  levelL2: "",
+  levelL3: "",
+  levelL4: "",
+  levelL5: "",
+  levelL6: "",
+  levelL7: ""
+};
