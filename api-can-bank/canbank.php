@@ -9,6 +9,9 @@ require_once 'get_config.php';
 require_once 'get_headers.php';
 require_once 'json_responses.php';
 
+$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+  if ($mysqli->connect_error) { json_error($mysqli, 401, $mysqli->connect_error); }
+
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
         get_canbank_state();
@@ -19,58 +22,52 @@ switch ($_SERVER['REQUEST_METHOD']) {
 }
 
 function get_canbank_state() {
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
-    if ($mysqli->connect_error) { json_error(401, $mysqli->connect_error); }
-
+    global $mysqli;
     $mysqli->select_db(DB_NAME);
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+      if ($mysqli->error) { json_error($mysqli, 500, $mysqli->error); }
 
     $table_error = [];
-    $table_index = 0;
     $mysqli->query('select count(*) from `can_bank`');
-    if ($mysqli->error) { $table_error[$table_index++] = $mysqli->error; }
+      if ($mysqli->error) { array_push($table_error, $mysqli->error); }
 
     $mysqli->query('select count(*) from `can_type`');
-    if ($mysqli->error) { $table_error[$table_index++] = $mysqli->error; }
+      if ($mysqli->error) { array_push($table_error, $mysqli->error); }
 
     $mysqli->query('select count(*) from `can_surface`');
-    if ($mysqli->error) { $table_error[$table_index++] = $mysqli->error; }
+      if ($mysqli->error) { array_push($table_error, $mysqli->error); }
 
     $mysqli->query('select count(*) from `can_material`');
-    if ($mysqli->error) { $table_error[$table_index++] = $mysqli->error; }
+      if ($mysqli->error) { array_push($table_error, $mysqli->error); }
 
     $mysqli->query('select count(*) from `can_color`');
-    if ($mysqli->error) { $table_error[$table_index++] = $mysqli->error; }
+      if ($mysqli->error) { array_push($table_error, $mysqli->error); }
 
     $mysqli->query('select count(*) from `can_content`');
-    if ($mysqli->error) { $table_error[$table_index++] = $mysqli->error; }
+      if ($mysqli->error) { array_push($table_error, $mysqli->error); }
 
     $mysqli->query('select count(*) from `can_country`');
-    if ($mysqli->error) { $table_error[$table_index++] = $mysqli->error; }
+      if ($mysqli->error) { array_push($table_error, $mysqli->error); }
 
     $mysqli->query('select count(*) from `can_language`');
-    if ($mysqli->error) { $table_error[$table_index++] = $mysqli->error; }
-    if ($table_index > 0) {
-      json_error(500, $table_error);
-    }
+      if ($mysqli->error) { array_push($table_error, $mysqli->error); }
 
-    $mysqli->close();
-    json_success('Database ready!');
+    if (count($table_error) > 0) { json_error($mysqli, 500, $table_error); }
+
+    json_success($mysqli, 'Database ready!');
 }
 
 function create_canbank_db() {
-    $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
-    if ($mysqli->connect_error) { json_error(401, $mysqli->connect_error); }
-define(DB_NAME, '');
+    global $mysqli;
     $mysqli->query('CREATE DATABASE IF NOT EXISTS `'.DB_NAME.'` CHARACTER SET utf8 COLLATE utf8_unicode_ci');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, $mysqli->error); }
 
     $mysqli->select_db(DB_NAME);
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, $mysqli->error); }
 
     $mysqli->query('CREATE TABLE IF NOT EXISTS `can_bank` (
 `id` int primary key auto_increment not null,
-`tstamp` timestamp,
+`tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`uniq` varchar(10),
 `type` int,
 `diameter` int,
 `height` int,
@@ -97,11 +94,12 @@ define(DB_NAME, '');
 `fname5` varchar(100),
 `notes` varchar(250)
 )');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, 'can_bank'.$mysqli->error); }
 
     $mysqli->query('CREATE TABLE IF NOT EXISTS `can_type` (
 `id` int primary key auto_increment not null,
-`tstamp` timestamp,
+`tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`uniq` varchar(10),
 `name` varchar(250),
 `diameter` int,
 `height` int,
@@ -109,62 +107,67 @@ define(DB_NAME, '');
 `volumeFlOz` int,
 `default` tinyint
 )');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, 'can_type'.$mysqli->error); }
 
     $mysqli->query('CREATE TABLE IF NOT EXISTS `can_material` (
 `id` int primary key auto_increment not null,
-`tstamp` timestamp,
+`tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`uniq` varchar(10),
 `name` varchar(100),
 `abbr` varchar(3),
 `color` varchar(50),
 `default` tinyint
 )');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, 'can_material'.$mysqli->error); }
 
     $mysqli->query('CREATE TABLE IF NOT EXISTS `can_surface` (
 `id` int primary key auto_increment not null,
-`tstamp` timestamp,
+`tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`uniq` varchar(10),
 `name` varchar(100),
 `color` varchar(50),
 `default` tinyint
 )');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, 'can_surface'.$mysqli->error); }
 
     $mysqli->query('CREATE TABLE IF NOT EXISTS `can_color` (
 `id` int primary key auto_increment not null,
-`tstamp` timestamp,
+`tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`uniq` varchar(10),
 `name` varchar(100),
 `color` varchar(50),
 `default` tinyint
 )');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, 'can_color'.$mysqli->error); }
 
     $mysqli->query('CREATE TABLE IF NOT EXISTS `can_content` (
 `id` int primary key auto_increment not null,
-`tstamp` timestamp,
+`tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`uniq` varchar(10),
 `name` varchar(100),
 `default` tinyint
 )');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, 'can_content'.$mysqli->error); }
 
     $mysqli->query('CREATE TABLE IF NOT EXISTS `can_country` (
 `id` int primary key auto_increment not null,
-`tstamp` timestamp,
+`tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`uniq` varchar(10),
 `name` varchar(100),
 `abbr` varchar(3),
 `default` tinyint
 )');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, 'can_country'.$mysqli->error); }
 
     $mysqli->query('CREATE TABLE IF NOT EXISTS `can_language` (
 `id` int primary key auto_increment not null,
-`tstamp` timestamp,
+`tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+`uniq` varchar(10),
 `name` varchar(100),
 `abbr` varchar(3),
 `default` tinyint
 )');
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
+    if ($mysqli->error) { json_error($mysqli, 500, 'can_language'.$mysqli->error); }
 
-    $mysqli->close();
-    json_success('');
+    json_success($mysqli);
 }

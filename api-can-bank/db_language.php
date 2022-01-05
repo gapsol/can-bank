@@ -1,29 +1,31 @@
 <?php
 
-$query = [];
-$query[1] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (1, "slovenský", "sk", 1)';
-$query[2] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (2, "český", "cz", 0)';
-$query[3] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (3, "poľský", "pl", 0)';
-$query[4] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (4, "maďarský", "hu", 0)';
-$query[5] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (5, "nemecký", "de", 0)';
-$query[6] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (6, "francúzsky", "fr", 0)';
-$query[7] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (7, "španielsky", "es", 0)';
-$query[8] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (8, "katalánsky", "ca", 0)';
-$query[9] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (9, "anglický", "en", 0)';
-$query[10] = 'INSERT INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (10, "ruský", "ru", 0)';
-
+require_once 'get_headers.php';
+require_once 'json_responses.php';
 require_once 'get_config.php';
-//require_once 'get_headers.php';
+
+if (!isset($j)) { $j = []; }
+$query = [];
+$query[1] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (1, "slovak", "sk", 1)';
+$query[2] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (2, "czech", "cz", 0)';
+$query[3] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (3, "polish", "pl", 0)';
+$query[4] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (4, "hungarian", "hu", 0)';
+$query[5] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (5, "german", "de", 0)';
+$query[6] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (6, "french", "fr", 0)';
+$query[7] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (7, "spanish", "es", 0)';
+$query[8] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (8, "catalan", "ca", 0)';
+$query[9] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (9, "english", "en", 0)';
+$query[10] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (10, "russian", "ru", 0)';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+  if ($mysqli->error)  { array_push($j, 'can_language: '.$mysqli->error); }
 $mysqli->select_db(DB_NAME);
-echo 'table can_language: processing...';
+  if ($mysqli->error)  { array_push($j, 'can_language: '.$mysqli->error); }
+
 for ($i = 1; $i <= count($query); $i++) {
-    echo $mysqli->query($query[$i]);
-    if ($mysqli->error)  {
-        echo '<br>'.$mysqli->error;
-    }
+  $mysqli->query($query[$i]);
+    if ($mysqli->error)  { array_push($j, 'can_language: '.$mysqli->error); }
 }
 $mysqli->close();
 
-echo '...done!<br>';
+// if (count($j) > 0) { json_error($mysqli, 500, $j); }

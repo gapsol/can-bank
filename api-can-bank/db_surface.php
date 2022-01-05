@@ -1,23 +1,25 @@
 <?php
 
-$query = [];
-$query[1] = 'INSERT INTO `can_surface` (`id`, `name`, `color`, `default`) VALUES (1, "lesklý", "lightgray", 1)';
-$query[2] = 'INSERT INTO `can_surface` (`id`, `name`, `color`, `default`) VALUES (2, "matný", "silver", 0)';
-$query[3] = 'INSERT INTO `can_surface` (`id`, `name`, `color`, `default`) VALUES (3, "fólia", "yellow", 0)';
-$query[4] = 'INSERT INTO `can_surface` (`id`, `name`, `color`, `default`) VALUES (4, "papier", "white", 0)';
-
+require_once 'get_headers.php';
+require_once 'json_responses.php';
 require_once 'get_config.php';
-//require_once 'get_headers.php';
+
+if (!isset($j)) { $j = []; }
+$query = [];
+$query[1] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `default`) VALUES (1, "glossy", "lightgray", 1)';
+$query[2] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `default`) VALUES (2, "matt", "silver", 0)';
+$query[3] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `default`) VALUES (3, "foil", "yellow", 0)';
+$query[4] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `default`) VALUES (4, "paper", "white", 0)';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+  if ($mysqli->error)  { array_push($j, 'can_surface: '.$mysqli->error); }
 $mysqli->select_db(DB_NAME);
-echo 'table can_surface: processing...';
+  if ($mysqli->error)  { array_push($j, 'can_surface: '.$mysqli->error); }
+
 for ($i = 1; $i <= count($query); $i++) {
-    echo $mysqli->query($query[$i]);
-    if ($mysqli->error)  {
-        echo '<br>'.$mysqli->error;
-    }
+  $mysqli->query($query[$i]);
+    if ($mysqli->error)  { array_push($j, 'can_surface: '.$mysqli->error); }
 }
 $mysqli->close();
 
-echo '...done!<br>';
+// if (count($j) > 0) { json_error($mysqli, 500, $j); }

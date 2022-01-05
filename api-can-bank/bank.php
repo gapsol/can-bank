@@ -71,18 +71,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
         var_dump($del);
         break;
     default:
-        json_error(500, 'No request');
+        json_error($mysqli, 500, 'No request');
 }
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
-if ($mysqli->connect_error) { json_error(500, $mysqli->connect_error); }
+if ($mysqli->connect_error) { json_error($mysqli, 500, $mysqli->connect_error); }
 
 $mysqli->select_db(DB_NAME);
-if ($mysqli->error) { json_error(500, $mysqli->error); }
+if ($mysqli->error) { json_error($mysqli, 500, $mysqli->error); }
 
 $result = $mysqli->query($query);
-if ($mysqli->error) { json_error(500, $mysqli->error); }
-//$return = $result->fetch_assoc();
-$mysqli->close();
+if ($mysqli->error) { json_error($mysqli, 500, $mysqli->error); }
 
-json_return('data', $result);
+json_return($mysqli, 'data', $result);

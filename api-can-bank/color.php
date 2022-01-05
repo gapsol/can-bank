@@ -8,6 +8,11 @@ require_once 'get_config.php';
 require_once 'get_headers.php';
 require_once 'json_responses.php';
 
+$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+  if ($mysqli->connect_error) { json_error($mysqli, 500, $mysqli->connect_error); }
+$mysqli->select_db(DB_NAME);
+  if ($mysqli->error) { json_error($mysqli, 500, $mysqli->error); }
+
 $query = '';
 switch ($_SERVER['REQUEST_METHOD']) {
     case 'GET':
@@ -22,20 +27,12 @@ switch ($_SERVER['REQUEST_METHOD']) {
         }
         break;
     default:
-        json_error('Incorrect or undefined request');
+        json_error($mysqli, 500, 'Incorrect or undefined request');
 }
 
 if (isset($query) && isfull($query)) {
-    $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
-    if ($mysqli->connect_error) { json_error(500, $mysqli->connect_error); }
-
-    $mysqli->select_db(DB_NAME);
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
-
     $result = $mysqli->query($query);
-    if ($mysqli->error) { json_error(500, $mysqli->error); }
-
-    $mysqli->close();
+      if ($mysqli->error) { json_error($mysqli, 500, $mysqli->error); }
 
     switch ($_GET['id']) {
         case 0:
@@ -43,12 +40,12 @@ if (isset($query) && isfull($query)) {
             while ($row = $result->fetch_assoc()) {
                 array_push($return, $row);
             }
-            json_return('list', $return);
+            json_return($mysqli, 'list', $return);
             break;
         default:
             $return = $result->fetch_assoc();
-            json_return('item', $return);
+            json_return($mysqli, 'item', $return);
     }
 } else {
-    json_error('Incorrect request');
+    json_error($mysqli, 500, 'Incorrect request');
 }
