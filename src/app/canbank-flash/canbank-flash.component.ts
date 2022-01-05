@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { config } from '../config/config';
+import { i18n } from '../data/can-i18n';
 import { CanbankXsService } from '../canbank-xs/canbank-xs.service';
 
 @Component({
@@ -11,6 +13,7 @@ import { CanbankXsService } from '../canbank-xs/canbank-xs.service';
   styleUrls: ['./canbank-flash.component.css']
 })
 export class CanbankFlashComponent implements OnInit {
+  i18n = i18n[config.language];
   flashMessage: string[] = [];
 
   constructor(
@@ -18,65 +21,40 @@ export class CanbankFlashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('FLASH component')
-
     this.flashMessage[0] = this.canbankXS.flashMessage;
-    // TODO: onChange?
-    /*let tInt = setInterval(() => {
-      if (this.canbankXS.canbankMessage !== '') {
-        if (this.canbankXS.canbankMessage.includes('Unknown database')) {
-          this.flashMessage[0] = 'Database doesn\'t exist';
-          this.flashMessage[1] = 'Let\'s create it!';
-        } else if (this.canbankXS.canbankMessage.includes('Table') && this.canbankXS.canbankMessage.includes('doesn\'t exist')) {
-          this.flashMessage[0] = this.canbankXS.canbankMessage;
-          this.flashMessage[1] = 'Check or recreate database!';
-        } else {
-          this.flashMessage[0] = this.canbankXS.canbankMessage;
-          this.flashMessage[1] = '';
-        }
-        clearInterval(tInt);
-      }
-    }, 250);*/
   }
 
   canbankCreate() {
-    console.log('create canbank');
     this.flashMessage = [];
-    this.flashMessage[0] = 'Creating database';
+    this.flashMessage[0] = i18n.msg_create;
 
     // TODO: change these dots...
-    let tInt = setInterval(() => {
-      this.flashMessage[1] += '.';
-    }, 333);
+    let tInt = setInterval(() => { this.flashMessage[1] += '.'; }, config.tOut);
 
     this.canbankXS.createDB().subscribe(
-      (res: any) => {
-        console.log(res);
-        switch (res['status']) {
+      (response: any) => {
+        switch (response['status']) {
           case 'success':
-            this.flashMessage[0] = 'Database created';
+            this.flashMessage[0] = this.i18n.msg_created;
             setTimeout(() => {
               this.canbankXS.canbankMessage = '';
               window.location.reload();
-            }, 500);
+            }, config.tOut);
             break;
           case 'error':
-            this.flashMessage[0] = 'Creation failed';
-            this.flashMessage[1] = res['message'];
+            this.flashMessage[0] = this.i18n.msg_creation_failed;
+            this.flashMessage[1] = response['message'];
             break;
           default:
-            this.flashMessage[0] = 'Unknown status!';
-            this.flashMessage[1] = 'Look at the console';
+            this.flashMessage[0] = this.i18n.msg_unknown_status;
         }
       },
-      (err: any) => {
-        this.flashMessage[0] = 'Creation failed';
+      (error: any) => {
+        this.flashMessage[0] = this.i18n.msg_creation_failed;
         this.flashMessage[1] = this.canbankXS.canbankMessage;
-        console.error(err);
+        console.error(error);
       },
-      () => {
-        clearInterval(tInt);
-      }
+      () => { clearInterval(tInt); }
     );
   }
 

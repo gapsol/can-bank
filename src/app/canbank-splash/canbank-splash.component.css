@@ -30,7 +30,7 @@
   background-color: lime;
 }
 .can-splash-level.empty {
-  background-color: #00C000;
+  background-color: green;
 }
 .can-splash-level.error {
   background-color: red;
@@ -39,7 +39,7 @@
   color: lime;
 }
 .can-splash-error {
-  color: red;
+  color: gold;
 }
 
 .rotation {

@@ -4,5 +4,6 @@
     <div class="can-splash-success">{{ successMessage }}</div>
     <div class="can-splash-error" *ngFor="let item of errorMessage">{{ item }}</div>
     <canbank-flash *ngIf="flashMe"></canbank-flash>
+    <canbank-fill *ngIf="fillMe"></canbank-fill>
   </div>
 </div>

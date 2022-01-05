@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { config } from '../config/config';
 import { CanbankXsService } from '../canbank-xs/canbank-xs.service';
 import { levelMeter } from '../canbank-xs/levelmeter';
 
@@ -14,6 +15,7 @@ export class CanbankSplashComponent implements OnInit {
   successMessage: string = '';
   errorMessage: string[] = [];
   flashMe: boolean = false;
+  fillMe: boolean = false;
 
   canbankUrl: string = '';
 
@@ -23,16 +25,14 @@ export class CanbankSplashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('SPLASH component')
     this.checkDbTb();
   }
 
   checkDbTb() {
     this.setLevelMeterDb('running');
     this.canbankXS.getState().subscribe(
-      () => {
-        console.log('getState resolved');
-        this.copyLevelMeterDb();
+      (response: any) => {
+        this.getLevelMeterDb();
         if (this.canbankXS.levelDb === 'error') {
           this.setLevelMeter('error');
           this.errorMessage[0] = this.canbankXS.canbankMessage;
@@ -44,55 +44,57 @@ export class CanbankSplashComponent implements OnInit {
           }
           this.flashMe = this.canbankXS.flashMe;
         } else {
-          this.checkLists();
+          this.successMessage = this.canbankXS.canbankMessage;
+          let that = this;
+          setTimeout(() => { that.checkLists(that); }, config.tOut);
         }
       },
       (error: any) => {
         console.error(error)
-        console.log('getState rejected')
         this.setLevelMeter('error');
         this.errorMessage[0] = this.canbankXS.canbankMessage;
       }
     )
   }
 
-  checkLists() {
-    this.setLevelMeterLst('running');
-    this.canbankXS.getColor(0).subscribe(
+  checkLists(that: any) {
+    that.setLevelMeterLst('running');
+    that.canbankXS.getColor(0).subscribe(
       () => {},
-      (error) => { console.error(error) },
-      () => { this.levelMeter.levelL1 = this.canbankXS.levelL1; }
+      (error: any) => { console.error(error) },
+      () => { that.levelMeter.levelL1 = that.canbankXS.levelL1; }
     )
-    this.canbankXS.getContentType(0).subscribe(
+    that.canbankXS.getContentType(0).subscribe(
       () => {},
-      (error) => { console.error(error); },
-      () => { this.levelMeter.levelL2 = this.canbankXS.levelL2; }
+      (error: any) => { console.error(error); },
+      () => { that.levelMeter.levelL2 = that.canbankXS.levelL2; }
     )
-    this.canbankXS.getCountry(0).subscribe(
+    that.canbankXS.getCountry(0).subscribe(
       () => {},
-      (error) => { console.error(error) },
-      () => { this.levelMeter.levelL3 = this.canbankXS.levelL3; }
+      (error: any) => { console.error(error) },
+      () => { that.levelMeter.levelL3 = that.canbankXS.levelL3; }
     )
-    this.canbankXS.getLanguage(0).subscribe(
+    that.canbankXS.getLanguage(0).subscribe(
       () => {},
-      (error) => { console.error(error) },
-      () => { this.levelMeter.levelL4 = this.canbankXS.levelL4; }
+      (error: any) => { console.error(error) },
+      () => { that.levelMeter.levelL4 = that.canbankXS.levelL4; }
     )
-    this.canbankXS.getMaterial(0).subscribe(
+    that.canbankXS.getMaterial(0).subscribe(
       () => {},
-      (error) => { console.error(error) },
-      () => { this.levelMeter.levelL5 = this.canbankXS.levelL5; }
+      (error: any) => { console.error(error) },
+      () => { that.levelMeter.levelL5 = that.canbankXS.levelL5; }
     )
-    this.canbankXS.getSurface(0).subscribe(
+    that.canbankXS.getSurface(0).subscribe(
       () => {},
-      (error) => { console.error(error) },
-      () => { this.levelMeter.levelL6 = this.canbankXS.levelL6; }
-   )
-    this.canbankXS.getType(0).subscribe(
-      () => {},
-      (error) => { console.error(error) },
-      () => { this.levelMeter.levelL7 = this.canbankXS.levelL7; }
+      (error: any) => { console.error(error) },
+      () => { that.levelMeter.levelL6 = that.canbankXS.levelL6; }
     )
+    that.canbankXS.getType(0).subscribe(
+      () => {},
+      (error: any) => { console.error(error) },
+      () => { that.levelMeter.levelL7 = that.canbankXS.levelL7; }
+    )
+    that.afterTheEvent(that.getLevelMeterState, 9, that.checkFlash);
   }
 
   setLevelMeter(state: string) {
@@ -100,9 +102,9 @@ export class CanbankSplashComponent implements OnInit {
     this.setLevelMeterLst(state);
   }
 
-  copyLevelMeter() {
-    this.copyLevelMeterDb();
-    this.copyLevelMeterLst();
+  getLevelMeter() {
+    this.getLevelMeterDb();
+    this.getLevelMeterLst();
   }
 
   setLevelMeterDb(state: string) {
@@ -110,7 +112,7 @@ export class CanbankSplashComponent implements OnInit {
     this.levelMeter.levelDt = state;
   }
 
-  copyLevelMeterDb() {
+  getLevelMeterDb() {
     this.levelMeter.levelDb = this.canbankXS.levelDb;
     this.levelMeter.levelDt = this.canbankXS.levelDt;
   }
@@ -125,7 +127,7 @@ export class CanbankSplashComponent implements OnInit {
     this.levelMeter.levelL7 = state;
   }
 
-  copyLevelMeterLst() {
+  getLevelMeterLst() {
     this.levelMeter.levelL1 = this.canbankXS.levelL1;
     this.levelMeter.levelL2 = this.canbankXS.levelL2;
     this.levelMeter.levelL3 = this.canbankXS.levelL3;
@@ -135,59 +137,39 @@ export class CanbankSplashComponent implements OnInit {
     this.levelMeter.levelL7 = this.canbankXS.levelL7;
   }
 
-  /*canbankInit(): void {
-    this.levelMeter.levelDb = this.levelMeter.levelDt = 'running';
-    this.canbankXS.getState().subscribe(
-      (response: any) => {
-        if (response['status'] === 'success') {
-          this.canbankXS.getLists();
-          // TODO: onChange - finished lists requests
-          let tInt = setInterval(() => {
-            if (this.canbankXS.canColor.length !== 0
-              && this.canbankXS.canContentType.length !== 0
-              && this.canbankXS.canCountry.length !== 0
-              && this.canbankXS.canLanguage.length !== 0
-              && this.canbankXS.canMaterial.length !== 0
-              && this.canbankXS.canSurface.length !== 0
-              && this.canbankXS.canType.length !== 0) {
-                clearInterval(tInt);
-                // this.router.navigate(['home']);
-              }
-          }, 125);
-        } else {
-          this.router.navigate(['flash']);
-        }
-      },
-      (error: any) => {
-        console.log(error);
+  getLevelMeterState(that: any): number {
+    let n = 0;
+    for (let [key, val] of Object.entries(that.levelMeter)) {
+      if (val !== '') { n++; }
+    }
+    return n;
+  }
+
+  getLevelMeterEmpty(): Array<string> {
+    let list = [];
+    for (let [key, val] of Object.entries(this.levelMeter)) {
+      if (val === 'empty') {
+        list.push(key);
       }
-    );
+    }
+    return list;
   }
 
-  readXchange() {
-    this.successMessage = this.canbankXS.canbankMessage;
-
-    this.levelMeter.levelDb = this.canbankXS.levelDb;
-    this.levelMeter.levelDt = this.canbankXS.levelDt;
-    this.levelMeter.levelL1 = this.canbankXS.levelL1;
-    this.levelMeter.levelL2 = this.canbankXS.levelL2;
-    this.levelMeter.levelL3 = this.canbankXS.levelL3;
-    this.levelMeter.levelL4 = this.canbankXS.levelL4;
-    this.levelMeter.levelL5 = this.canbankXS.levelL5;
-    this.levelMeter.levelL6 = this.canbankXS.levelL6;
-    this.levelMeter.levelL7 = this.canbankXS.levelL7;
+  afterTheEvent(compFnc: Function, compVal: any, callBack: Function) {
+    let tInt = setInterval(() => {
+      if (compFnc(this) === compVal) {
+        clearInterval(tInt);
+        callBack(this);
+      }
+    }, 100);
   }
 
-  isFinished() {
-    return (
-      this.canbankXS.canColor.length !== 0
-      && this.canbankXS.canContentType.length !== 0
-      && this.canbankXS.canCountry.length !== 0
-      && this.canbankXS.canLanguage.length !== 0
-      && this.canbankXS.canMaterial.length !== 0
-      && this.canbankXS.canSurface.length !== 0
-      && this.canbankXS.canType.length !== 0
-      || this.canbankXS.canbankMessage.toLowerCase().includes('error')
-    );
-  }*/
+  checkFlash(that: any) {
+    if (that.getLevelMeterEmpty().length > 0) {
+      that.fillMe = true;
+    } else {
+      that.router.navigate(['home']);
+    }
+  }
+
 }

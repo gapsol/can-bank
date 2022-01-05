@@ -17,6 +17,7 @@ import { CanbankAddComponent } from './canbank-add/canbank-add.component';
 import { CanbankFindComponent } from './canbank-find/canbank-find.component';
 import { CanbankCategoriesComponent } from './canbank-categories/canbank-categories.component';
 import { CanbankStatsComponent } from './canbank-stats/canbank-stats.component';
+import { CanbankFillComponent } from './canbank-fill/canbank-fill.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { CanbankStatsComponent } from './canbank-stats/canbank-stats.component';
     CanbankFindComponent,
     CanbankCategoriesComponent,
     CanbankStatsComponent,
+    CanbankFillComponent,
    ],
   providers: [],
   bootstrap: [AppComponent]

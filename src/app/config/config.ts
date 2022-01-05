@@ -3,21 +3,24 @@ export interface canbankConfig {
   apiPath: string,
   language: string,
   isDemo: boolean,
+  tOut: number,
 }
 
 // setup localhost and server settings
 var localConfig: canbankConfig = {
   serverUrl: "http://can-bank",
   apiPath: "/api-can-bank",
-  language: "en",
-  isDemo: false
+  language: "sk",
+  isDemo: false,
+  tOut: 1144,
 }
 
 var serverConfig: canbankConfig = {
   serverUrl: "https://www.can-bank.com",
   apiPath: "/api-can-bank",
   language: "en",
-  isDemo: false
+  isDemo: false,
+  tOut: 488,
 }
 
 export var config: canbankConfig = localConfig;
