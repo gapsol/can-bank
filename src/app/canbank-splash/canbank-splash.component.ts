@@ -168,7 +168,9 @@ export class CanbankSplashComponent implements OnInit {
     if (that.getLevelMeterEmpty().length > 0) {
       that.fillMe = true;
     } else {
-      that.router.navigate(['home']);
+      setTimeout(() => {
+        that.router.navigate(['home'])
+      }, config.tOut);
     }
   }
 

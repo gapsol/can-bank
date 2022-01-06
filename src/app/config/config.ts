@@ -12,7 +12,7 @@ var localConfig: canbankConfig = {
   apiPath: "/api-can-bank",
   language: "sk",
   isDemo: false,
-  tOut: 1144,
+  tOut: 741,
 }
 
 var serverConfig: canbankConfig = {

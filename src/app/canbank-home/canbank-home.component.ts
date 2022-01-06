@@ -28,6 +28,7 @@ export class CanbankHomeComponent implements OnInit {
   printNewest: Array<string> = [];
   langNewest: string = '';
   tIntNew: any;
+  now: any;
 
   constructor(
     private canbankXS: CanbankXsService,
@@ -35,186 +36,142 @@ export class CanbankHomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('HOME component');
-
+    this.demoCount();
     if (!config.isDemo) {
-      this.startCount();
+      this.now = new Date();
+      this.getCans();
+      this.getTypes();
+      this.getCountries();
+      this.getOldest();
+      this.getNewest();
     }
-    this.getCans();
-    this.getTypes();
-    this.getCountries();
-    this.getOldest();
-    this.getNewest();
   }
 
-  startCount() {
-    this.langCan = this.canbankLS.langGetWordCount('can', 5);
-    this.tIntCan = setInterval(() => {
-      this.printCan = this.genNum();
-    }, 100);
-    this.langType = this.canbankLS.langGetWordCount('type', 5);
-    this.tIntTyp = setInterval(() => {
-      this.printType = this.genNum();
-    }, 100);
-    this.langCountry = this.canbankLS.langGetWordCount('country', 5);
-    this.tIntCty = setInterval(() => {
-      this.printCountry = this.genNum();
-    }, 100);
-    this.langOldest = this.canbankLS.langGetWordCount('oldest');
-    this.tIntOld = setInterval(() => {
-      this.printOldest = this.genDat();
-    }, 100);
-    this.langNewest = this.canbankLS.langGetWordCount('newest');
-    this.tIntNew = setInterval(() => {
-      this.printNewest = this.genDat();
-    }, 100);
-  }
-
-  genNum(): Array<string> {
-    let arr = [];
-    arr.push((Math.round(Math.random() * 9)).toString());
-    return arr;
-  }
-
-  genDat(): Array<string> {
-    let year = Math.round(1993 + 30 * Math.random());
-    let month = Math.round(12 * Math.random());
-    let day = Math.round(30 * Math.random());
-    let datum = day + '.' + month + '.' + year;
-    return datum.split('');
+  afterTheEvent(fnc: Function, arg: any, tInt: any) {
+    let time: any = new Date();
+    let dt = time - this.now;
+    if (config.tOut - dt > 0) {
+      setInterval(() => {
+        clearInterval(tInt);
+        let that = this;
+        fnc(that, arg);
+      }, config.tOut - dt);
+    }
   }
 
   getCans() {
-    if (config.isDemo) {
-      this.displayCans(canBank.length);
-    } else {
-      this.canbankXS.getCount('bank').subscribe(
-        (res: any) => {
-          this.displayCans(+res['count']);
-        },
-        (err: any) => {
-          console.error(err);
-        },
-        () => {
+    this.canbankXS.getCount('bank').subscribe(
+      (response: any) => {
+        console.log('getCans')
+        console.log(response['count'])
+        if (response['count'] !== '0') {
+          this.afterTheEvent(this.displayCans, +response['count'], this.tIntCan);
+        } else {
           clearInterval(this.tIntCan);
+          this.printCan = ['-'];
         }
-      );
-    }
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  displayCans(result: number) {
-    this.langCan = this.canbankLS.langGetWordCount('can', result);
-    this.printCan = result.toString().split('');
+  displayCans(that: any, result: number) {
+    that.langCan = that.canbankLS.langGetWordCount('can', result);
+    that.printCan = result.toString().split('');
   }
 
   getTypes() {
-    if (config.isDemo) {
-      this.displayTypes(canType.length);
-    } else {
-      this.canbankXS.getCount('type').subscribe(
-        (res: any) => {
-          this.displayTypes(+res['count']);
-        },
-        (err: any) => {
-          console.error(err);
-        },
-        () => {
+    this.canbankXS.getCount('type').subscribe(
+      (response: any) => {
+        if (response['count'] !== '0') {
+          this.afterTheEvent(this.displayTypes, +response['count'], this.tIntTyp);
+        } else {
           clearInterval(this.tIntTyp);
+          this.printType = ['0'];
         }
-      );
-    }
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  displayTypes(result: number) {
-    this.printType = result.toString().split('');
-    this.langType = this.canbankLS.langGetWordCount('type', result);
+  displayTypes(that: any, result: number) {
+    that.printType = result.toString().split('');
+    that.langType = that.canbankLS.langGetWordCount('type', result);
   }
 
   getCountries() {
-    if (config.isDemo) {
-      this.displayCountries(canCountry.length);
-    } else {
-      this.canbankXS.getCount('country').subscribe(
-        (res: any) => {
-          this.displayCountries(+res['count']);
-        },
-        (err: any) => {
-          console.error(err);
-        },
-        () => {
+    this.canbankXS.getCount('country').subscribe(
+      (response: any) => {
+        if (response['count'] !== '0') {
+          this.afterTheEvent(this.displayCountries, +response['count'], this.tIntCty);
+        } else {
           clearInterval(this.tIntCty);
+          this.printCountry = ['0'];
         }
-      );
-    }
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  displayCountries(result: number) {
-    this.printCountry = result.toString().split('');
-    this.langCountry = this.canbankLS.langGetWordCount('country', result);
+  displayCountries(that: any, result: number) {
+    that.printCountry = result.toString().split('');
+    that.langCountry = that.canbankLS.langGetWordCount('country', result);
   }
 
   getOldest() {
     let d = new Date('1993-6-13');
-    if (config.isDemo) {
-      d = this.sCanOldest();
-      this.displayOldest(d);
-    } else {
-      this.canbankXS.getOldest().subscribe(
-        (res: any) => {
-          if (res['count'] !== 0) {
-            d = new Date(res['count']);
-            this.displayOldest(d);
-          } else {
-            this.printOldest = ['-'];
-          }
-        },
-        (err: any) => {
-          console.error(err);
-        },
-        () => {
+    this.canbankXS.getOldest().subscribe(
+      (response: any) => {
+        if (response['count'] !== 0) {
+          d = new Date(response['count']);
+          this.afterTheEvent(this.displayOldest, d, this.tIntOld);
+        } else {
           clearInterval(this.tIntOld);
+          this.printOldest = ['-'];
         }
-      );
-    }
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  displayOldest(d: Date) {
+  displayOldest(that: any, d: Date) {
     let month = d.getMonth() + 1;
     let result = d.getDate() + '.' + month + '.' + d.getFullYear();
-    this.printOldest = result.split('');
-    this.langOldest = this.canbankLS.langGetWordCount('oldest');
+    that.printOldest = result.split('');
+    that.langOldest = that.canbankLS.langGetWordCount('oldest');
   }
 
   getNewest() {
     let d = new Date(Date.now());
-    if (config.isDemo) {
-      d = this.sCanNewest();
-      this.displayNewest(d);
-    } else {
-      this.canbankXS.getNewest().subscribe(
-        (res: any) => {
-          if (res['count'] !== 0) {
-            d = new Date(res['count']);
-            this.displayNewest(d);
-          } else {
-            this.printNewest = ['-'];
-          }
-        },
-        (err: any) => {
-          console.error(err);
-        },
-        () => {
+    this.canbankXS.getNewest().subscribe(
+      (response: any) => {
+        if (response['count'] !== 0) {
+          d = new Date(response['count']);
+          this.afterTheEvent(this.displayNewest, d, this.tIntNew);
+        } else {
           clearInterval(this.tIntNew);
+          this.printNewest = ['-'];
         }
-      );
-    }
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  displayNewest(d: Date) {
+  displayNewest(that: any, d: Date) {
     let month = d.getMonth() + 1;
     let result = d.getDate() + '.' + month + '.' + d.getFullYear();
-    this.printNewest = result.split('');
-    this.langNewest = this.canbankLS.langGetWordCount('newest');
+    that.printNewest = result.split('');
+    that.langNewest = that.canbankLS.langGetWordCount('newest');
   }
 
   sCanOldest(): Date {
@@ -237,6 +194,53 @@ export class CanbankHomeComponent implements OnInit {
       }
     })
     return newest;
+  }
+
+  /*
+  * functions for demo effects
+  */
+  demoCount() {
+    this.langCan = this.canbankLS.langGetWordCount('can', 5);
+    this.tIntCan = setInterval(() => {
+      this.printCan = this.genNum();
+    }, 147);
+    this.langType = this.canbankLS.langGetWordCount('type', 5);
+    this.tIntTyp = setInterval(() => {
+      this.printType = this.genNum();
+    }, 147);
+    this.langCountry = this.canbankLS.langGetWordCount('country', 5);
+    this.tIntCty = setInterval(() => {
+      this.printCountry = this.genNum();
+    }, 147);
+    this.langOldest = this.canbankLS.langGetWordCount('oldest');
+    this.tIntOld = setInterval(() => {
+      this.printOldest = this.genDat();
+    }, 147);
+    this.langNewest = this.canbankLS.langGetWordCount('newest');
+    this.tIntNew = setInterval(() => {
+      this.printNewest = this.genDat();
+    }, 147);
+    setTimeout(() => {
+      clearInterval(this.tIntCan);
+      clearInterval(this.tIntTyp);
+      clearInterval(this.tIntCty);
+      clearInterval(this.tIntOld);
+      clearInterval(this.tIntNew);
+    }, 1471);
+  }
+
+  genNum(): Array<string> {
+    let arr = [];
+    arr.push((Math.round(Math.random() * 9 + 1)).toString());
+    return arr;
+  }
+
+  genDat(): Array<string> {
+    let year = Math.round(1993 + 30 * Math.random());
+    let month = Math.round(12 * Math.random());
+    let day = Math.round(30 * Math.random());
+    let datum = day + '.' + month + '.' + year;
+    return datum.split('');
   }
 
 }
