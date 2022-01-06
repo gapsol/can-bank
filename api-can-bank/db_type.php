@@ -4,7 +4,9 @@ require_once 'get_headers.php';
 require_once 'json_responses.php';
 require_once 'get_config.php';
 
-if (!isset($j)) { $j = []; }
+if (!isset($j)) {
+  $j = [];
+}
 $query = [];
 $query[1] = 'INSERT IGNORE INTO `can_type` (`id`, `name`, `diameter`, `height`, `volume`, `volumeFlOz`, `default`) VALUES (1, "2: Svijany (can-for-men)", 0, 0, 2000, 0, 0)';
 $query[2] = 'INSERT IGNORE INTO `can_type` (`id`, `name`, `diameter`, `height`, `volume`, `volumeFlOz`, `default`) VALUES (2, "1: cylinder (october-fest)", 0, 0, 1000, 0, 0)';
@@ -32,13 +34,19 @@ $query[23] = 'INSERT IGNORE INTO `can_type` (`id`, `name`, `diameter`, `height`,
 $query[24] = 'INSERT IGNORE INTO `can_type` (`id`, `name`, `diameter`, `height`, `volume`, `volumeFlOz`, `default`) VALUES (24, "0.150: slim (cola-type)", 0, 0, 150, 0, 0)';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
-  if ($mysqli->error)  { array_push($j, 'can_type: '.$mysqli->error); }
+if ($mysqli->error) {
+  array_push($j, 'can_type: ' . $mysqli->error);
+}
 $mysqli->select_db(DB_NAME);
-  if ($mysqli->error)  { array_push($j, 'can_type: '.$mysqli->error); }
+if ($mysqli->error) {
+  array_push($j, 'can_type: ' . $mysqli->error);
+}
 
 for ($i = 1; $i <= count($query); $i++) {
   $mysqli->query($query[$i]);
-    if ($mysqli->error)  { array_push($j, 'can_type: '.$mysqli->error); }
+  if ($mysqli->error) {
+    array_push($j, 'can_type: ' . $mysqli->error);
+  }
 }
 $mysqli->close();
 
