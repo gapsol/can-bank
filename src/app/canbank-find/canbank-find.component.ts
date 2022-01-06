@@ -16,13 +16,13 @@ export class CanbankFindComponent implements OnInit {
   cans: Can[] = [];
   error = '';
   success = '';
-/*  canFindForm = this.formBuilder.group({
-    name: ''
-  });*/
+  /*  canFindForm = this.formBuilder.group({
+      name: ''
+    });*/
   findMe = new Find('');
 
   constructor(private canbankFindService: CanbankFindService) { }
-//  constructor(private http: HttpClient) { }
+  //  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     console.log('FIND component');

@@ -14,25 +14,25 @@ import { canType } from '../data/can-type';
 })
 export class CanbankHomeComponent implements OnInit {
   printCan: Array<string> = [];
-    langCan: string = '';
-    tIntCan: any;
+  langCan: string = '';
+  tIntCan: any;
   printType: Array<string> = [];
-    langType: string = '';
-    tIntTyp: any;
+  langType: string = '';
+  tIntTyp: any;
   printCountry: Array<string> = [];
-    langCountry: string = '';
-    tIntCty: any;
+  langCountry: string = '';
+  tIntCty: any;
   printOldest: Array<string> = [];
-    langOldest: string = '';
-    tIntOld: any;
+  langOldest: string = '';
+  tIntOld: any;
   printNewest: Array<string> = [];
-    langNewest: string = '';
-    tIntNew: any;
+  langNewest: string = '';
+  tIntNew: any;
 
   constructor(
     private canbankXS: CanbankXsService,
     private canbankLS: CanbankLangService
-    ) { }
+  ) { }
 
   ngOnInit() {
     console.log('HOME component');
@@ -162,7 +162,7 @@ export class CanbankHomeComponent implements OnInit {
       this.canbankXS.getOldest().subscribe(
         (res: any) => {
           if (res['count'] !== 0) {
-            d = new Date(res['count']) ;
+            d = new Date(res['count']);
             this.displayOldest(d);
           } else {
             this.printOldest = ['-'];

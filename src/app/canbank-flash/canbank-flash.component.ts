@@ -18,7 +18,7 @@ export class CanbankFlashComponent implements OnInit {
 
   constructor(
     private canbankXS: CanbankXsService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.flashMessage[0] = this.canbankXS.flashMessage;

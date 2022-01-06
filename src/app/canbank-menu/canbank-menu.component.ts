@@ -23,12 +23,12 @@ interface menuItem {
 export class CanbankMenuComponent implements OnInit {
   i18n = i18n[config.language];
   menuList: Array<menuItem> = [
-    {uri: '/home',        i18n: this.i18n['menu_home']},
-    {uri: '/add',         i18n: this.i18n['menu_add']},
-    {uri: '/find',        i18n: this.i18n['menu_find']},
-    {uri: '/categories',  i18n: this.i18n['menu_categories']},
-    {uri: '/stats',       i18n: this.i18n['menu_stats']},
-    {uri: '/settings',    i18n: this.i18n['menu_settings']},
+    { uri: '/home', i18n: this.i18n['menu_home'] },
+    { uri: '/add', i18n: this.i18n['menu_add'] },
+    { uri: '/find', i18n: this.i18n['menu_find'] },
+    { uri: '/categories', i18n: this.i18n['menu_categories'] },
+    { uri: '/stats', i18n: this.i18n['menu_stats'] },
+    { uri: '/settings', i18n: this.i18n['menu_settings'] },
   ];
   menuLength: number = 100 / this.menuList.length;
   menuWidth: string = `width: calc(${this.menuLength}% - 1px);`;

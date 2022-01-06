@@ -16,20 +16,20 @@ export class CanbankAddComponent implements OnInit {
 
   menuBtnAdd: string = '';
   canColor = this.canbankXS.canColor;
-    coverIconColor: string = ''; // read from default?
-    openerIconColor: string = ''; // read from default?
+  coverIconColor: string = ''; // read from default?
+  openerIconColor: string = ''; // read from default?
   canContentType = this.canbankXS.canContentType;
   canCountry = this.canbankXS.canCountry;
-    countryIconContent: string = '';
+  countryIconContent: string = '';
   canLanguage = this.canbankXS.canLanguage;
-    languageIconContent: string = '';
+  languageIconContent: string = '';
   canMaterial = this.canbankXS.canMaterial;
-    materialIconColor: string = '';
-    materialIconContent: string = '';
+  materialIconColor: string = '';
+  materialIconContent: string = '';
   canSurface = this.canbankXS.canSurface;
-    surfaceIconColor: string = '';
+  surfaceIconColor: string = '';
   canType = this.canbankXS.canType;
-    typeIconContent: string = '';
+  typeIconContent: string = '';
   canFormValid: boolean = false;
 
   canReqDiameter: boolean = false;
@@ -101,36 +101,36 @@ export class CanbankAddComponent implements OnInit {
     this.i18n = i18n[config.language];
     this.menuBtnAdd = 'menu-btn-active';
 
-/* use for basic sets from local file
-      this.sortColor();
-      this.sortContentType();
-      this.sortCountry();
-      this.sortLanguage();
-      this.sortType();
-*/
-      this.updateType();
-      this.updateMaterial();
-      this.updateSurface();
-      this.updateCover();
-      this.updateOpener();
+    /* use for basic sets from local file
+          this.sortColor();
+          this.sortContentType();
+          this.sortCountry();
+          this.sortLanguage();
+          this.sortType();
+    */
+    this.updateType();
+    this.updateMaterial();
+    this.updateSurface();
+    this.updateCover();
+    this.updateOpener();
   }
-/*
-  sortColor() {
-    this.canColor.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
-  }
-  sortContentType() {
-    this.canContentType.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
-  }
-  sortCountry() {
-    this.canCountry.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
-  }
-  sortLanguage() {
-    this.canLanguage.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
-  }
-  sortType() {
-    this.canType.sort((a, b) => { return (a.volume < b.volume) ? 1 : -1; });
-  }
-*/
+  /*
+    sortColor() {
+      this.canColor.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
+    }
+    sortContentType() {
+      this.canContentType.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
+    }
+    sortCountry() {
+      this.canCountry.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
+    }
+    sortLanguage() {
+      this.canLanguage.sort((a, b) => { return (a.name > b.name) ? 1 : -1; });
+    }
+    sortType() {
+      this.canType.sort((a, b) => { return (a.volume < b.volume) ? 1 : -1; });
+    }
+  */
   updateType() {
     let canFormVolumeFlOz: string;
     let canObj = this.canType.find(cantyp => cantyp.value == this.canForm.value.canFormType);
@@ -167,7 +167,7 @@ export class CanbankAddComponent implements OnInit {
     }
   }
 
-  reduceVolume(volume: number):string {
+  reduceVolume(volume: number): string {
     if (volume >= 1) {
       if (Math.floor(volume) !== volume) {
         return volume.toFixed(1);
@@ -191,7 +191,7 @@ export class CanbankAddComponent implements OnInit {
     let canObj = this.canMaterial.find((canmat) => {
       canmat.value == this.canForm.value.canFormMaterial;
     });
-    this.materialIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color: 'input-icon-transparent';
+    this.materialIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
     this.materialIconContent = (canObj !== undefined) ? canObj.abbr : '?';
   }
 
@@ -326,7 +326,7 @@ export class CanbankAddComponent implements OnInit {
         console.error(err)
       }
     );
-//    this.resetAlerts();
+    //    this.resetAlerts();
 
     /*this.canbankFindService.store(this.can).subscribe(
       (res) => {

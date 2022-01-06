@@ -104,7 +104,8 @@
     <div class="input-box">
       <label for="can-form-brand">{{ i18n['brand'] }}</label>
       <div class="input-value-box">
-        <input id="can-form-brand" type="text" formControlName="canFormBrand" (change)="updateBrand()" maxlength="100" required value="Coca" />
+        <input id="can-form-brand" type="text" formControlName="canFormBrand" (change)="updateBrand()" maxlength="100"
+          required value="Coca" />
       </div>
     </div>
 
@@ -112,7 +113,8 @@
       <div class="can-sm-12 can-md-12 can-lg-6">
         <label for="can-form-content-name">{{ i18n['content_name'] }}</label>
         <div class="input-value-box">
-          <input id="can-form-content-name" type="text" formControlName="canFormContentName" (change)="updateContentName()" />
+          <input id="can-form-content-name" type="text" formControlName="canFormContentName"
+            (change)="updateContentName()" />
         </div>
       </div>
 
@@ -130,7 +132,8 @@
       <div class="can-sm-12 can-md-6 can-lg-3">
         <label for="can-form-alcohol">{{ i18n['alcohol'] }}</label>
         <div class="input-value-box">
-          <input id="can-form-alcohol" type="number" min="0" max="100" step="0.1" formControlName="canFormAlcohol" required />
+          <input id="can-form-alcohol" type="number" min="0" max="100" step="0.1" formControlName="canFormAlcohol"
+            required />
         </div>
       </div>
     </div>
@@ -139,7 +142,8 @@
     <div class="input-box">
       <label for="can-form-keywords">{{ i18n['keywords'] }}</label>
       <div class="input-value-box">
-        <input id="can-form-keywords" type="text" formControlName="canFormKeywords" (change)="updateKeywords()" pattern="" />
+        <input id="can-form-keywords" type="text" formControlName="canFormKeywords" (change)="updateKeywords()"
+          pattern="" />
       </div>
     </div>
 
@@ -192,7 +196,8 @@
       <div class="can-sm-12 can-md-12 can-lg-12">
         <label for="can-form-ean">{{ i18n['barcode'] }}</label>
         <div class="input-value-box">
-          <input id="can-form-ean" type="text" maxlength="13" pattern="[0-9]{1,13}" formControlName="canFormEan" (change)="updateEan()" required />
+          <input id="can-form-ean" type="text" maxlength="13" pattern="[0-9]{1,13}" formControlName="canFormEan"
+            (change)="updateEan()" required />
         </div>
       </div>
 
@@ -238,9 +243,9 @@
 
     <div class="input-box">
       <label for="can-form-notes">{{ i18n['notes'] }}</label>
-        <div class="input-value-box">
-          <textarea id="can-form-notes" formControlName="canFormNotes"></textarea>
-        </div>
+      <div class="input-value-box">
+        <textarea id="can-form-notes" formControlName="canFormNotes"></textarea>
+      </div>
 
     </div>
 

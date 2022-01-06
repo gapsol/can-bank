@@ -42,7 +42,7 @@ import { CanbankFillComponent } from './canbank-fill/canbank-fill.component';
     CanbankCategoriesComponent,
     CanbankStatsComponent,
     CanbankFillComponent,
-   ],
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

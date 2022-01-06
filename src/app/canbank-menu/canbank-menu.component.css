@@ -11,7 +11,8 @@
   text-align: center;
   font-weight: bold;
 }
-.menu-btn, .menu-btn a {
+.menu-btn,
+.menu-btn a {
   background-color: blue;
   color: gold;
 }

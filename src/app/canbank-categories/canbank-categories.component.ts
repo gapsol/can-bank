@@ -30,5 +30,5 @@ export class CanbankCategoriesComponent implements OnInit {
     console.log('CATEGORIES component')
   }
 
-  canCategories() {}
+  canCategories() { }
 }

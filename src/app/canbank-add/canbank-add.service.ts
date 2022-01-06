@@ -14,7 +14,7 @@ interface Car {
 export class CanbankAddService {
   baseUrl = 'http://localhost/api';
 
-  constructor(private http: HttpClient  ) { }
+  constructor(private http: HttpClient) { }
 
   getAll() {
     return this.http.get(`${this.baseUrl}/add`).pipe(

@@ -86,11 +86,11 @@ export class CanbankLangService {
           default:
             return 'countries';
         }
-        case 'newest':
-          return 'newest';
-        case 'oldest':
-          return 'oldest';
-        default:
+      case 'newest':
+        return 'newest';
+      case 'oldest':
+        return 'oldest';
+      default:
         return '???';
     }
   }

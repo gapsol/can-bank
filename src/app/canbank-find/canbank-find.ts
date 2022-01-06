@@ -1,7 +1,7 @@
 export class Find {
   constructor(
     public findString: string
-  ) {}
+  ) { }
 }
 
 export interface Can {

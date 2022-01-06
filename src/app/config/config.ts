@@ -20,7 +20,7 @@ var serverConfig: canbankConfig = {
   apiPath: "/api-can-bank",
   language: "en",
   isDemo: false,
-  tOut: 488,
+  tOut: 471,
 }
 
 export var config: canbankConfig = localConfig;

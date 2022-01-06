@@ -9,7 +9,7 @@ import { Can } from './canbank-find';
 export class CanbankFindService {
   baseUrl = 'http://localhost/api';
 
-  constructor(private http: HttpClient  ) { }
+  constructor(private http: HttpClient) { }
 
   getAll() {
     return this.http.get(`${this.baseUrl}/get`).pipe(

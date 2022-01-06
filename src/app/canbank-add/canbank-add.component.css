@@ -1,4 +1,6 @@
-input, select, textarea {
+input,
+select,
+textarea {
   border-width: 1px;
   border-style: solid;
 }

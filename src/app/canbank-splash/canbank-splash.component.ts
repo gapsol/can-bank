@@ -22,7 +22,7 @@ export class CanbankSplashComponent implements OnInit {
   constructor(
     private canbankXS: CanbankXsService,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.checkDbTb();
@@ -39,7 +39,7 @@ export class CanbankSplashComponent implements OnInit {
           this.flashMe = this.canbankXS.flashMe;
         } else if (this.canbankXS.levelDt === 'error') {
           this.setLevelMeterLst('error');
-          for (let i=0; i<this.canbankXS.canbankMessage.length; i++) {
+          for (let i = 0; i < this.canbankXS.canbankMessage.length; i++) {
             this.errorMessage[i] = this.canbankXS.canbankMessage[i];
           }
           this.flashMe = this.canbankXS.flashMe;
@@ -60,37 +60,37 @@ export class CanbankSplashComponent implements OnInit {
   checkLists(that: any) {
     that.setLevelMeterLst('running');
     that.canbankXS.getColor(0).subscribe(
-      () => {},
+      () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL1 = that.canbankXS.levelL1; }
     )
     that.canbankXS.getContentType(0).subscribe(
-      () => {},
+      () => { },
       (error: any) => { console.error(error); },
       () => { that.levelMeter.levelL2 = that.canbankXS.levelL2; }
     )
     that.canbankXS.getCountry(0).subscribe(
-      () => {},
+      () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL3 = that.canbankXS.levelL3; }
     )
     that.canbankXS.getLanguage(0).subscribe(
-      () => {},
+      () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL4 = that.canbankXS.levelL4; }
     )
     that.canbankXS.getMaterial(0).subscribe(
-      () => {},
+      () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL5 = that.canbankXS.levelL5; }
     )
     that.canbankXS.getSurface(0).subscribe(
-      () => {},
+      () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL6 = that.canbankXS.levelL6; }
     )
     that.canbankXS.getType(0).subscribe(
-      () => {},
+      () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL7 = that.canbankXS.levelL7; }
     )
@@ -109,7 +109,7 @@ export class CanbankSplashComponent implements OnInit {
 
   setLevelMeterDb(state: string) {
     this.levelMeter.levelDb =
-    this.levelMeter.levelDt = state;
+      this.levelMeter.levelDt = state;
   }
 
   getLevelMeterDb() {
@@ -119,12 +119,12 @@ export class CanbankSplashComponent implements OnInit {
 
   setLevelMeterLst(state: string) {
     this.levelMeter.levelL1 =
-    this.levelMeter.levelL2 =
-    this.levelMeter.levelL3 =
-    this.levelMeter.levelL4 =
-    this.levelMeter.levelL5 =
-    this.levelMeter.levelL6 =
-    this.levelMeter.levelL7 = state;
+      this.levelMeter.levelL2 =
+      this.levelMeter.levelL3 =
+      this.levelMeter.levelL4 =
+      this.levelMeter.levelL5 =
+      this.levelMeter.levelL6 =
+      this.levelMeter.levelL7 = state;
   }
 
   getLevelMeterLst() {
