@@ -86,9 +86,10 @@ button:disabled {
   text-align: center;
 }
 .odometer {
+  font-family: Gill Sans MT, sans-serif; /* Bahnschrift / Consolas / DejaVu Sans Mono*/
   margin-left: 3px;
   border-radius: 3px;
-  padding: 2px 3px;
+  padding: 3px;
   background-color: black;
   color: white;
 }

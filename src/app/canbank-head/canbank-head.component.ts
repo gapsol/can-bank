@@ -1,16 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'canbank-head',
-  templateUrl: './canbank-head.component.html',
+  template: `
+    <div class="canbank-head">
+      <b style="font-size: 4em; color: gold;">canBank</b>
+    </div>
+  `,
   styleUrls: ['./canbank-head.component.css']
 })
-export class CanbankHeadComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-    console.log('HEAD component')
-  }
-
-}
+export class CanbankHeadComponent { }

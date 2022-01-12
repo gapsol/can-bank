@@ -74,7 +74,7 @@ export var i18n: any = {
     "unknown_content_type": "neznámy druh obsahu",
     "add_content_type": "pridať druh obsahu",
     "alcohol": "alkohol [%]",
-    "keywords": "keypoznávacie slová",
+    "keywords": "poznávacie slová",
     "production_date": "dátum výroby",
     "expiration_date": "dátum spotreby",
     "country": "krajina",

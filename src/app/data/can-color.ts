@@ -1,5 +1,5 @@
 export interface canColor {
-  value: number,
+  id: number,
   name: string,
   color: string,
   default: boolean
@@ -7,33 +7,39 @@ export interface canColor {
 
 export var canColor: Array<canColor> = [
   {
-    value: 1,
+    id: 1,
     name: "kov - strieborný",
     color: "silver",
     default: true
   },
   {
-    value: 2,
-    name: "kov - žltý",
+    id: 2,
+    name: "kov - zlatý",
     color: "gold",
     default: false
   },
   {
-    value: 3,
+    id: 3,
     name: "modrá",
     color: "blue",
     default: false
   },
   {
-    value: 4,
+    id: 4,
     name: "červená",
     color: "red",
     default: false
   },
   {
-    value: 5,
+    id: 5,
     name: "žltá",
     color: "yellow",
+    default: false
+  },
+  {
+    id: 6,
+    name: "čierna",
+    color: "black",
     default: false
   },
 ]

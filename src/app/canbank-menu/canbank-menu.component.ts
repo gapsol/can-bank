@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
 
 interface menuItem {
   uri: string,
-  i18n: string
+  i18n: string,
+  svg: string
 }
 
 @Component({
   selector: 'canbank-menu',
   template: `
-    <nav class="canbank-menu">
+    <nav class="canbank-menu" *ngIf="isMenu">
       <div class="menu-btn" [style]="menuWidth" *ngFor="let item of menuList">
-        <a [routerLink]="item.uri" routerLinkActive="menu-btn-active" class="anchor-btn">[ {{ item.i18n }} ]</a>
+        <a [routerLink]="item.uri" routerLinkActive="menu-btn-active" class="anchor-btn">
+          <span>{{ item.i18n }}</span>
+        </a>
       </div>
     </nav>
     <router-outlet></router-outlet>
@@ -23,20 +27,23 @@ interface menuItem {
 export class CanbankMenuComponent implements OnInit {
   i18n = i18n[config.language];
   menuList: Array<menuItem> = [
-    { uri: '/home', i18n: this.i18n['menu_home'] },
-    { uri: '/add', i18n: this.i18n['menu_add'] },
-    { uri: '/find', i18n: this.i18n['menu_find'] },
-    { uri: '/categories', i18n: this.i18n['menu_categories'] },
-    { uri: '/stats', i18n: this.i18n['menu_stats'] },
-    { uri: '/settings', i18n: this.i18n['menu_settings'] },
+    { uri: '/home', i18n: this.i18n['menu_home'], svg: '' },
+    { uri: '/add', i18n: this.i18n['menu_add'], svg: '' },
+    { uri: '/find', i18n: this.i18n['menu_find'], svg: '' },
+    { uri: '/categories', i18n: this.i18n['menu_categories'], svg: '' },
+    { uri: '/stats', i18n: this.i18n['menu_stats'], svg: '' },
+    { uri: '/settings', i18n: this.i18n['menu_settings'], svg: '' },
   ];
   menuLength: number = 100 / this.menuList.length;
   menuWidth: string = `width: calc(${this.menuLength}% - 1px);`;
+  isMenu: boolean = false;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    console.log('MENU component')
+    this.router.events.subscribe(() => {
+      this.isMenu = (window.location.pathname !== '/' && window.location.pathname !== '/splash');
+    })
   }
 
 }

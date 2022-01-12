@@ -1,5 +1,5 @@
 export interface canLanguage {
-  value: number,
+  id: number,
   name: string,
   abbr: string,
   default: boolean
@@ -7,61 +7,61 @@ export interface canLanguage {
 
 export var canLanguage: Array<canLanguage> = [
   {
-    value: 1,
+    id: 1,
     name: "slovenský",
     abbr: "sk",
     default: true
   },
   {
-    value: 2,
+    id: 2,
     name: "český",
     abbr: "cz",
     default: false
   },
   {
-    value: 3,
+    id: 3,
     name: "poľský",
     abbr: "pl",
     default: false
   },
   {
-    value: 4,
+    id: 4,
     name: "maďarský",
     abbr: "hu",
     default: false
   },
   {
-    value: 5,
+    id: 5,
     name: "nemecký",
     abbr: "de",
     default: false
   },
   {
-    value: 6,
+    id: 6,
     name: "francúzsky",
     abbr: "fr",
     default: false
   },
   {
-    value: 7,
+    id: 7,
     name: "španielsky",
     abbr: "es",
     default: false
   },
   {
-    value: 8,
+    id: 8,
     name: "katalánsky",
     abbr: "ca",
     default: false
   },
   {
-    value: 9,
+    id: 9,
     name: "anglický",
     abbr: "en",
     default: false
   },
   {
-    value: 10,
+    id: 10,
     name: "ruský",
     abbr: "ru",
     default: false

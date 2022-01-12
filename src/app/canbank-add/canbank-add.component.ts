@@ -18,18 +18,25 @@ export class CanbankAddComponent implements OnInit {
   canColor = this.canbankXS.canColor;
   coverIconColor: string = ''; // read from default?
   openerIconColor: string = ''; // read from default?
+
   canContentType = this.canbankXS.canContentType;
+
   canCountry = this.canbankXS.canCountry;
   countryIconContent: string = '';
+
   canLanguage = this.canbankXS.canLanguage;
   languageIconContent: string = '';
+
   canMaterial = this.canbankXS.canMaterial;
   materialIconColor: string = '';
   materialIconContent: string = '';
+
   canSurface = this.canbankXS.canSurface;
   surfaceIconColor: string = '';
+
   canType = this.canbankXS.canType;
   typeIconContent: string = '';
+
   canFormValid: boolean = false;
 
   canReqDiameter: boolean = false;
@@ -39,7 +46,7 @@ export class CanbankAddComponent implements OnInit {
 
   canForm = new FormGroup({
     canFormType: new FormControl(
-      this.canType.find(cantyp => cantyp.default)?.value,
+      this.canType.find(cantyp => cantyp.default)?.id,
       Validators.required
     ),
     canFormTypeDetails: new FormGroup({
@@ -49,26 +56,26 @@ export class CanbankAddComponent implements OnInit {
       canFormVolumeFlOz: new FormControl(''),
     }),
     canFormMaterial: new FormControl(
-      this.canMaterial.find(canmat => canmat.default)?.value,
+      this.canMaterial.find(canmat => canmat.default)?.id,
       Validators.required
     ),
     canFormSurface: new FormControl(
-      this.canSurface.find(cansur => cansur.default)?.value,
+      this.canSurface.find(cansur => cansur.default)?.id,
       Validators.required
     ),
     canFormCoverColor: new FormControl(
-      this.canColor.find(cancol => cancol.default)?.value,
+      this.canColor.find(cancol => cancol.default)?.id,
       Validators.required
     ),
     canFormOpenerColor: new FormControl(
-      this.canColor.find(cancol => cancol.default)?.value,
+      this.canColor.find(cancol => cancol.default)?.id,
       Validators.required
     ),
-    canFormBrand: new FormControl('Cola Loca', // TODO: vymazat tento default
+    canFormBrand: new FormControl('',
       Validators.required),
     canFormContentName: new FormControl(''),
     canFormContentType: new FormControl(
-      this.canContentType.find(canctp => canctp.default)?.value,
+      this.canContentType.find(canctp => canctp.default)?.id,
       Validators.required
     ),
     canFormAlcohol: new FormControl(0,
@@ -77,14 +84,14 @@ export class CanbankAddComponent implements OnInit {
     canFormProdDate: new FormControl(''),
     canFormExpDate: new FormControl(''),
     canFormCountry: new FormControl(
-      this.canCountry.find(canctr => canctr.default)?.value,
+      this.canCountry.find(canctr => canctr.default)?.id,
       Validators.required
     ),
     canFormLanguage: new FormControl(
-      this.canLanguage.find(canlang => canlang.default)?.value,
+      this.canLanguage.find(canlang => canlang.default)?.id,
       Validators.required
     ),
-    canFormEan: new FormControl('0000', // TODO: vymazat tento default
+    canFormEan: new FormControl('',
       Validators.required),
     canFormFname1: new FormControl(''),
     canFormFname2: new FormControl(''),
@@ -97,7 +104,6 @@ export class CanbankAddComponent implements OnInit {
   constructor(private canbankXS: CanbankXsService) { }
 
   ngOnInit() {
-    console.log('ADD component');
     this.i18n = i18n[config.language];
     this.menuBtnAdd = 'menu-btn-active';
 
@@ -133,7 +139,7 @@ export class CanbankAddComponent implements OnInit {
   */
   updateType() {
     let canFormVolumeFlOz: string;
-    let canObj = this.canType.find(cantyp => cantyp.value == this.canForm.value.canFormType);
+    let canObj = this.canType.find(cantyp => cantyp.id == this.canForm.value.canFormType);
     if (canObj !== undefined) {
       this.typeIconContent = this.reduceVolume(canObj.volume / 1000);
       if (this.typeIconContent[0] == '0') {
@@ -188,9 +194,7 @@ export class CanbankAddComponent implements OnInit {
   }
 
   updateMaterial() {
-    let canObj = this.canMaterial.find((canmat) => {
-      canmat.value == this.canForm.value.canFormMaterial;
-    });
+    let canObj = this.canMaterial.find(canmat => canmat.id == this.canForm.value.canFormMaterial);
     this.materialIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
     this.materialIconContent = (canObj !== undefined) ? canObj.abbr : '?';
   }
@@ -200,9 +204,7 @@ export class CanbankAddComponent implements OnInit {
   }
 
   updateSurface() {
-    let canObj = this.canSurface.find((cansfc) => {
-      cansfc.value == this.canForm.value.canFormSurface
-    });
+    let canObj = this.canSurface.find(cansfc => cansfc.id == this.canForm.value.canFormSurface);
     this.surfaceIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
   }
 
@@ -210,24 +212,20 @@ export class CanbankAddComponent implements OnInit {
     // TODO: po pridani refreshnut zoznam
   }
 
-  newColor() {
-    // TODO: po pridani farby refreshnut oba zoznamy - Cover i Opener
-  }
-
   updateCover() {
     // TODO: zmenit tvar ikonky
-    let canObj = this.canColor.find((cancol) => {
-      cancol.value == this.canForm.value.canFormCoverColor
-    });
+    let canObj = this.canColor.find(cancol => cancol.id == this.canForm.value.canFormCoverColor);
     this.coverIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
   }
 
   updateOpener() {
     // TODO: zmenit tvar ikonky
-    let canObj = this.canColor.find((cancol) => {
-      cancol.value == this.canForm.value.canFormOpenerColor
-    });
+    let canObj = this.canColor.find(cancol => cancol.id == this.canForm.value.canFormOpenerColor);
     this.openerIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
+  }
+
+  newColor() {
+    // TODO: po pridani farby refreshnut oba zoznamy - Cover i Opener
   }
 
   updateBrand() {

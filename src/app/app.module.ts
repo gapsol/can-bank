@@ -10,8 +10,6 @@ import { CanbankSplashComponent } from './canbank-splash/canbank-splash.componen
 import { CanbankFlashComponent } from './canbank-flash/canbank-flash.component';
 import { CanbankHeadComponent } from './canbank-head/canbank-head.component';
 import { CanbankMenuComponent } from './canbank-menu/canbank-menu.component';
-// TODO: remove body
-import { CanbankBodyComponent } from './canbank-body/canbank-body.component';
 import { CanbankHomeComponent } from './canbank-home/canbank-home.component';
 import { CanbankAddComponent } from './canbank-add/canbank-add.component';
 import { CanbankFindComponent } from './canbank-find/canbank-find.component';
@@ -34,8 +32,6 @@ import { CanbankFillComponent } from './canbank-fill/canbank-fill.component';
     CanbankFlashComponent,
     CanbankHeadComponent,
     CanbankMenuComponent,
-    // TODO: remove body
-    CanbankBodyComponent,
     CanbankHomeComponent,
     CanbankAddComponent,
     CanbankFindComponent,

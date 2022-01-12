@@ -62,13 +62,11 @@ export class CanbankHomeComponent implements OnInit {
   getCans() {
     this.canbankXS.getCount('bank').subscribe(
       (response: any) => {
-        console.log('getCans')
-        console.log(response['count'])
         if (response['count'] !== '0') {
           this.afterTheEvent(this.displayCans, +response['count'], this.tIntCan);
         } else {
           clearInterval(this.tIntCan);
-          this.printCan = ['-'];
+          this.printCan = ['0'];
         }
       },
       (error: any) => {

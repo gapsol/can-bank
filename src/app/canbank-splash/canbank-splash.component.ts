@@ -59,37 +59,37 @@ export class CanbankSplashComponent implements OnInit {
 
   checkLists(that: any) {
     that.setLevelMeterLst('running');
-    that.canbankXS.getColor(0).subscribe(
+    that.canbankXS.getColor().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL1 = that.canbankXS.levelL1; }
     )
-    that.canbankXS.getContentType(0).subscribe(
+    that.canbankXS.getContentType().subscribe(
       () => { },
       (error: any) => { console.error(error); },
       () => { that.levelMeter.levelL2 = that.canbankXS.levelL2; }
     )
-    that.canbankXS.getCountry(0).subscribe(
+    that.canbankXS.getCountry().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL3 = that.canbankXS.levelL3; }
     )
-    that.canbankXS.getLanguage(0).subscribe(
+    that.canbankXS.getLanguage().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL4 = that.canbankXS.levelL4; }
     )
-    that.canbankXS.getMaterial(0).subscribe(
+    that.canbankXS.getMaterial().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL5 = that.canbankXS.levelL5; }
     )
-    that.canbankXS.getSurface(0).subscribe(
+    that.canbankXS.getSurface().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL6 = that.canbankXS.levelL6; }
     )
-    that.canbankXS.getType(0).subscribe(
+    that.canbankXS.getType().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL7 = that.canbankXS.levelL7; }

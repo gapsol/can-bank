@@ -1,5 +1,5 @@
 export interface canType {
-  value: number,
+  id: number,
   name: string,
   diameter: number,
   height: number,
@@ -10,7 +10,7 @@ export interface canType {
 
 export var canType: Array<canType> = [
   {
-    value: 1,
+    id: 1,
     name: "2: Svijany (can-4-men)",
     diameter: 0,
     height: 0,
@@ -19,7 +19,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 2,
+    id: 2,
     name: "1: cylinder (october-fest)",
     diameter: 0,
     height: 0,
@@ -28,7 +28,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 3,
+    id: 3,
     name: "1: klasik (russian-beer-type)",
     diameter: 0,
     height: 0,
@@ -37,7 +37,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 4,
+    id: 4,
     name: "0.710/24: klasik (us-big-beer)",
     diameter: 0,
     height: 0,
@@ -46,7 +46,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 5,
+    id: 5,
     name: "0.7: fat-boy (beer-type)",
     diameter: 0,
     height: 0,
@@ -55,7 +55,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 6,
+    id: 6,
     name: "0.680/23: AriZona (us-big-limo)",
     diameter: 0,
     height: 0,
@@ -64,7 +64,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 7,
+    id: 7,
     name: "0.568: klasik (us-xxl-type)",
     diameter: 0,
     height: 0,
@@ -73,7 +73,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 8,
+    id: 8,
     name: "0.550: klasik (xxl-type)",
     diameter: 0,
     height: 0,
@@ -82,7 +82,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 9,
+    id: 9,
     name: "0.5: klasik (beer-type)",
     diameter: 67,
     height: 167,
@@ -91,7 +91,7 @@ export var canType: Array<canType> = [
     default: true
   },
   {
-    value: 10,
+    id: 10,
     name: "0.473: klasik (us-ipa-type)",
     diameter: 0,
     height: 0,
@@ -100,7 +100,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 11,
+    id: 11,
     name: "0.443/15: klasik (monster-type)",
     diameter: 0,
     height: 0,
@@ -109,7 +109,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 12,
+    id: 12,
     name: "0.440: klasik (cider-type)",
     diameter: 0,
     height: 0,
@@ -118,7 +118,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 13,
+    id: 13,
     name: "0.4: klasik (cider-type)",
     diameter: 0,
     height: 0,
@@ -127,7 +127,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 14,
+    id: 14,
     name: "0.345: klasik (chups-type)",
     diameter: 66,
     height: 124,
@@ -136,7 +136,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 15,
+    id: 15,
     name: "0.355/12: klasik (us-beer-type)",
     diameter: 69,
     height: 122,
@@ -145,7 +145,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 16,
+    id: 16,
     name: "0.355: slim (limo-type)",
     diameter: 0,
     height: 0,
@@ -154,7 +154,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 17,
+    id: 17,
     name: "0.330: klasik (beer-type)",
     diameter: 62,
     height: 110,
@@ -163,7 +163,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 18,
+    id: 18,
     name: "0.330: slim (limo-type)",
     diameter: 61,
     height: 145,
@@ -172,7 +172,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 19,
+    id: 19,
     name: "0.280: slim (special-type)",
     diameter: 0,
     height: 0,
@@ -181,7 +181,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 20,
+    id: 20,
     name: "0.250: slim (energy-type)",
     diameter: 51,
     height: 134,
@@ -190,7 +190,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 21,
+    id: 21,
     name: "0.250: short (limo-type)",
     diameter: 0,
     height: 0,
@@ -199,7 +199,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 22,
+    id: 22,
     name: "0.240: short (coffe-type)",
     diameter: 0,
     height: 0,
@@ -208,7 +208,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 23,
+    id: 23,
     name: "0.2: slim (secco-type)",
     diameter: 0,
     height: 0,
@@ -217,7 +217,7 @@ export var canType: Array<canType> = [
     default: false
   },
   {
-    value: 24,
+    id: 24,
     name: "0.150: slim (cola-type)",
     diameter: 0,
     height: 0,
