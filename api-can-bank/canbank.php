@@ -9,9 +9,12 @@ require_once 'get_config.php';
 require_once 'get_headers.php';
 require_once 'json_responses.php';
 
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if ($mysqli->connect_error) {
   json_error($mysqli, 401, $mysqli->connect_error);
+}
+if ($mysqli->error) {
+  json_error($mysqli, 500, $mysqli->error);
 }
 
 switch ($_SERVER['REQUEST_METHOD']) {
@@ -26,48 +29,44 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function get_canbank_state()
 {
   global $mysqli;
-  $mysqli->select_db(DB_NAME);
-  if ($mysqli->error) {
-    json_error($mysqli, 500, $mysqli->error);
-  }
 
   $table_error = [];
-  $mysqli->query('select count(*) from `can_bank`');
+  $mysqli->query('SELECT COUNT(*) FROM `can_bank`');
   if ($mysqli->error) {
     array_push($table_error, $mysqli->error);
   }
 
-  $mysqli->query('select count(*) from `can_type`');
+  $mysqli->query('SELECT COUNT(*) FROM `can_type`');
   if ($mysqli->error) {
     array_push($table_error, $mysqli->error);
   }
 
-  $mysqli->query('select count(*) from `can_surface`');
+  $mysqli->query('SELECT COUNT(*) FROM `can_surface`');
   if ($mysqli->error) {
     array_push($table_error, $mysqli->error);
   }
 
-  $mysqli->query('select count(*) from `can_material`');
+  $mysqli->query('SELECT COUNT(*) FROM `can_material`');
   if ($mysqli->error) {
     array_push($table_error, $mysqli->error);
   }
 
-  $mysqli->query('select count(*) from `can_color`');
+  $mysqli->query('SELECT COUNT(*) FROM `can_color`');
   if ($mysqli->error) {
     array_push($table_error, $mysqli->error);
   }
 
-  $mysqli->query('select count(*) from `can_content`');
+  $mysqli->query('SELECT COUNT(*) FROM `can_content`');
   if ($mysqli->error) {
     array_push($table_error, $mysqli->error);
   }
 
-  $mysqli->query('select count(*) from `can_country`');
+  $mysqli->query('SELECT COUNT(*) FROM `can_country`');
   if ($mysqli->error) {
     array_push($table_error, $mysqli->error);
   }
 
-  $mysqli->query('select count(*) from `can_language`');
+  $mysqli->query('SELECT COUNT(*) FROM `can_language`');
   if ($mysqli->error) {
     array_push($table_error, $mysqli->error);
   }
@@ -82,7 +81,7 @@ function get_canbank_state()
 function create_canbank_db()
 {
   global $mysqli;
-  $mysqli->query('CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET utf8 COLLATE utf8_unicode_ci');
+  $mysqli->query('CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET `'.DB_CHARSET.'` COLLATE `'.DB_COLLATION.'`');
   if ($mysqli->error) {
     json_error($mysqli, 500, $mysqli->error);
   }

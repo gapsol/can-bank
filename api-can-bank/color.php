@@ -8,11 +8,10 @@ require_once 'get_config.php';
 require_once 'get_headers.php';
 require_once 'json_responses.php';
 
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if ($mysqli->connect_error) {
   json_error($mysqli, 500, $mysqli->connect_error);
 }
-$mysqli->select_db(DB_NAME);
 if ($mysqli->error) {
   json_error($mysqli, 500, $mysqli->error);
 }
@@ -31,7 +30,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     }
     break;
   default:
-    json_error($mysqli, 500, 'Incorrect or undefined request');
+    json_error($mysqli, 400, 'Bad request');
 }
 
 if (isset($query) && isfull($query)) {
@@ -44,6 +43,7 @@ if (isset($query) && isfull($query)) {
     case 0:
       $return = [];
       while ($row = $result->fetch_assoc()) {
+        $row['default'] = ($row['default'] == 1) ? true : false;
         array_push($return, $row);
       }
       json_return($mysqli, 'list', $return);
@@ -53,5 +53,5 @@ if (isset($query) && isfull($query)) {
       json_return($mysqli, 'item', $return);
   }
 } else {
-  json_error($mysqli, 500, 'Incorrect request');
+  json_error($mysqli, 400, 'Bad request');
 }

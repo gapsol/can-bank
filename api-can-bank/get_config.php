@@ -7,8 +7,15 @@ define('DB_SERVER', $params['db_server']);
 define('DB_USERNAME', $params['db_username']);
 define('DB_PASSWORD', $params['db_password']);
 define('DB_NAME', $params['db_name']);
+define('DB_CHARSET', $params['db_charset']);
+define('DB_COLLATION', $params['db_collation']);
 
 function isfull($var)
 {
   return $var !== '';
+}
+
+function gen_uniq()
+{
+  return time();// . rand(10, 99);
 }
