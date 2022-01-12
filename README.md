@@ -14,3 +14,17 @@ ng serve --open
 `/api-can-bank`
 - install PHP (5.6+) & MySQL based server, e.g. Apache, map this directory to its configuration
 - create config directory `_settings` and config file `_env_php.json` or your own alternative
+
+### TODOs:
+- ADD part:
+-- files handling
+-- action after submit (display recorded data)
+-- action before load (check db data)
+- FIND part:
+-- action after submit (display found data)
+- CATEGORIES part:
+-- editing forms
+- STATS part:
+-- generate report
+- SETTINGS part:
+-- will be shown by situation
