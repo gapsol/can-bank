@@ -16,6 +16,7 @@ import { CanbankFindComponent } from './canbank-find/canbank-find.component';
 import { CanbankCategoriesComponent } from './canbank-categories/canbank-categories.component';
 import { CanbankStatsComponent } from './canbank-stats/canbank-stats.component';
 import { CanbankFillComponent } from './canbank-fill/canbank-fill.component';
+import { CanbankDisplayComponent } from './canbank-display/canbank-display.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { CanbankFillComponent } from './canbank-fill/canbank-fill.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
+  declarations: [	
     AppComponent,
     CanbankSplashComponent,
     CanbankFlashComponent,
@@ -38,7 +39,8 @@ import { CanbankFillComponent } from './canbank-fill/canbank-fill.component';
     CanbankCategoriesComponent,
     CanbankStatsComponent,
     CanbankFillComponent,
-  ],
+      CanbankDisplayComponent
+   ],
   providers: [],
   bootstrap: [AppComponent]
 })

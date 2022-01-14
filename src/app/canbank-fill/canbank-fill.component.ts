@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankXsService } from '../canbank-xs/canbank-xs.service';
+import { CanbankXsService } from '../canbank-services/canbank-xs.service';
 
 @Component({
   selector: 'canbank-fill',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
-import { CanbankXsService } from '../canbank-xs/canbank-xs.service';
-import { CanbankLangService } from '../canbank-xs/canbank-lang.service';
+import { CanbankXsService } from '../canbank-services/canbank-xs.service';
+import { CanbankLangService } from '../canbank-services/canbank-lang.service';
 import { canBank } from '../data/can-bank';
 import { canCountry } from '../data/can-country';
 import { canType } from '../data/can-type';

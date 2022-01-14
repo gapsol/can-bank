@@ -1,7 +1,7 @@
 <div id="can-add" class="sub-screen">
 
   <h1 style="text-align: center; color: navy;">canAdd</h1>
-  <form id="can-form" name="can-form" [formGroup]="canForm" (ngSubmit)="addCan()">
+  <form id="can-form" [formGroup]="canForm" (ngSubmit)="addCan()">
     <div class="input-box">
       <label for="can-form-type">{{ i18n['can_type'] }}</label>
       <div class="input-value-box input-with-icon">
@@ -207,6 +207,13 @@
     </div>
 
     <div class="input-box">
+      <label for="can-form-notes">{{ i18n['notes'] }}</label>
+      <div class="input-value-box">
+        <textarea id="can-form-notes" formControlName="canFormNotes"></textarea>
+      </div>
+    </div>
+
+    <div class="input-box">
       <label for="can-form-fname1" class="can-file-button">{{ i18n['photo'] }} 1</label>
       <div class="input-value-box">
         <input id="can-form-fname1" type="file" formControlName="canFormFname1" />
@@ -242,16 +249,10 @@
     </div>
 
     <div class="input-box">
-      <label for="can-form-notes">{{ i18n['notes'] }}</label>
-      <div class="input-value-box">
-        <textarea id="can-form-notes" formControlName="canFormNotes"></textarea>
-      </div>
-
-    </div>
-
-    <div class="input-box">
       <button type="submit" [disabled]="!canForm.valid">{{ i18n['save'] }}</button>
     </div>
   </form>
+
+  <canbank-display></canbank-display>
 
 </div>

@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 import { config } from '../config/config';
-import { CanbankXsService } from '../canbank-xs/canbank-xs.service';
+import { CanbankXsService } from '../canbank-services/canbank-xs.service';
 import { i18n } from '../data/can-i18n';
 
 @Component({

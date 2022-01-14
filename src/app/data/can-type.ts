@@ -210,8 +210,8 @@ export var canType: Array<canType> = [
   {
     id: 23,
     name: "0.2: slim (secco-type)",
-    diameter: 0,
-    height: 0,
+    diameter: 50,
+    height: 110,
     volume: 200,
     volumeFlOz: 0,
     default: false
