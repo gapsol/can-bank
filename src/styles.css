@@ -5,6 +5,7 @@
 @media screen and (min-width: 960px) {
   .can-lg-3 { width: 25%; }
   .can-lg-6 { width: 50%; }
+  .can-lg-4 { width: 33.33%; }
   .can-lg-12 { width: 100%; }
 }
 @media screen and (min-width: 480px) and (max-width: 960px) {

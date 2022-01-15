@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankXsService } from '../canbank-services/canbank-xs.service';
+import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
 
 @Component({
   selector: 'canbank-fill',
@@ -15,7 +15,7 @@ export class CanbankFillComponent implements OnInit {
   i18n = i18n[config.language];
   fillBtn: string = this.i18n.msg_fill;
 
-  constructor(private canbankXS: CanbankXsService) { }
+  constructor(private canbankXC: CanbankXcService) { }
 
   ngOnInit(): void {
     console.log('FILL component')
@@ -24,7 +24,7 @@ export class CanbankFillComponent implements OnInit {
   canbankPreFill() {
     console.log('preFILL')
     this.fillBtn = '?';
-    this.canbankXS.preFillDB().subscribe(
+    this.canbankXC.preFillDB().subscribe(
       () => { this.afterTheEvent(); },
       (error: any) => { console.error(error); }
     );

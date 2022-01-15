@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { config } from '../config/config';
-import { CanbankXsService } from '../canbank-services/canbank-xs.service';
-import { CanbankLmService } from '../canbank-services/canbank-lm.service';
+import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
+import { CanbankLmService } from '../canbank-services/canbank-lmeter.service';
 
 @Component({
   selector: 'canbank-splash',
@@ -30,7 +30,7 @@ export class CanbankSplashComponent implements OnInit {
   canbankUrl: string = '';
 
   constructor(
-    private canbankXS: CanbankXsService,
+    private canbankXC: CanbankXcService,
     private canbankLM: CanbankLmService,
     private router: Router,
   ) { }
@@ -41,21 +41,21 @@ export class CanbankSplashComponent implements OnInit {
 
   checkDbTb() {
     this.setLevelMeterDb('running');
-    this.canbankXS.getState().subscribe(
+    this.canbankXC.getState().subscribe(
       () => {
         this.getLevelMeterDb();
         if (this.canbankLM.levelDb === 'error') {
           this.setLevelMeter('error');
-          this.errorMessage[0] = this.canbankXS.canbankMessage;
-          this.flashMe = this.canbankXS.flashMe;
+          this.errorMessage[0] = this.canbankXC.canbankMessage;
+          this.flashMe = this.canbankXC.flashMe;
         } else if (this.canbankLM.levelDt === 'error') {
           this.setLevelMeterLst('error');
-          for (let i = 0; i < this.canbankXS.canbankMessage.length; i++) {
-            this.errorMessage[i] = this.canbankXS.canbankMessage[i];
+          for (let i = 0; i < this.canbankXC.canbankMessage.length; i++) {
+            this.errorMessage[i] = this.canbankXC.canbankMessage[i];
           }
-          this.flashMe = this.canbankXS.flashMe;
+          this.flashMe = this.canbankXC.flashMe;
         } else {
-          this.successMessage = this.canbankXS.canbankMessage;
+          this.successMessage = this.canbankXC.canbankMessage;
           let that = this;
           setTimeout(() => { that.checkLists(that); }, config.tOut);
         }
@@ -63,44 +63,44 @@ export class CanbankSplashComponent implements OnInit {
       (error: any) => {
         console.error(error)
         this.setLevelMeter('error');
-        this.errorMessage[0] = this.canbankXS.canbankMessage;
+        this.errorMessage[0] = this.canbankXC.canbankMessage;
       }
     )
   }
 
   checkLists(that: any) {
     that.setLevelMeterLst('running');
-    that.canbankXS.getColor().subscribe(
+    that.canbankXC.getColor().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL1 = that.canbankLM.levelL1; }
     )
-    that.canbankXS.getContentType().subscribe(
+    that.canbankXC.getContentType().subscribe(
       () => { },
       (error: any) => { console.error(error); },
       () => { that.levelMeter.levelL2 = that.canbankLM.levelL2; }
     )
-    that.canbankXS.getCountry().subscribe(
+    that.canbankXC.getCountry().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL3 = that.canbankLM.levelL3; }
     )
-    that.canbankXS.getLanguage().subscribe(
+    that.canbankXC.getLanguage().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL4 = that.canbankLM.levelL4; }
     )
-    that.canbankXS.getMaterial().subscribe(
+    that.canbankXC.getMaterial().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL5 = that.canbankLM.levelL5; }
     )
-    that.canbankXS.getSurface().subscribe(
+    that.canbankXC.getSurface().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL6 = that.canbankLM.levelL6; }
     )
-    that.canbankXS.getType().subscribe(
+    that.canbankXC.getType().subscribe(
       () => { },
       (error: any) => { console.error(error) },
       () => { that.levelMeter.levelL7 = that.canbankLM.levelL7; }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
-import { CanbankXsService } from '../canbank-services/canbank-xs.service';
-import { CanbankLangService } from '../canbank-services/canbank-lang.service';
+import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
+import { CanbankLangService } from '../canbank-services/canbank-language.service';
 import { canBank } from '../data/can-bank';
 import { canCountry } from '../data/can-country';
 import { canType } from '../data/can-type';
@@ -31,7 +31,7 @@ export class CanbankHomeComponent implements OnInit {
   now: any;
 
   constructor(
-    private canbankXS: CanbankXsService,
+    private canbankXC: CanbankXcService,
     private canbankLS: CanbankLangService
   ) { }
 
@@ -60,7 +60,7 @@ export class CanbankHomeComponent implements OnInit {
   }
 
   getCans() {
-    this.canbankXS.getCount('bank').subscribe(
+    this.canbankXC.getCount('bank').subscribe(
       (response: any) => {
         if (response['count'] !== '0') {
           this.afterTheEvent(this.displayCans, +response['count'], this.tIntCan);
@@ -81,7 +81,7 @@ export class CanbankHomeComponent implements OnInit {
   }
 
   getTypes() {
-    this.canbankXS.getCount('type').subscribe(
+    this.canbankXC.getCount('type').subscribe(
       (response: any) => {
         if (response['count'] !== '0') {
           this.afterTheEvent(this.displayTypes, +response['count'], this.tIntTyp);
@@ -102,7 +102,7 @@ export class CanbankHomeComponent implements OnInit {
   }
 
   getCountries() {
-    this.canbankXS.getCount('country').subscribe(
+    this.canbankXC.getCount('country').subscribe(
       (response: any) => {
         if (response['count'] !== '0') {
           this.afterTheEvent(this.displayCountries, +response['count'], this.tIntCty);
@@ -124,7 +124,7 @@ export class CanbankHomeComponent implements OnInit {
 
   getOldest() {
     let d = new Date('1993-6-13');
-    this.canbankXS.getOldest().subscribe(
+    this.canbankXC.getOldest().subscribe(
       (response: any) => {
         if (response['count'] !== 0) {
           d = new Date(response['count']);
@@ -149,7 +149,7 @@ export class CanbankHomeComponent implements OnInit {
 
   getNewest() {
     let d = new Date(Date.now());
-    this.canbankXS.getNewest().subscribe(
+    this.canbankXC.getNewest().subscribe(
       (response: any) => {
         if (response['count'] !== 0) {
           d = new Date(response['count']);

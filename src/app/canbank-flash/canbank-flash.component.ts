@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankXsService } from '../canbank-services/canbank-xs.service';
+import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
 
 @Component({
   selector: 'canbank-flash',
@@ -17,11 +17,11 @@ export class CanbankFlashComponent implements OnInit {
   flashMessage: string[] = [];
 
   constructor(
-    private canbankXS: CanbankXsService
+    private canbankXC: CanbankXcService
   ) { }
 
   ngOnInit() {
-    this.flashMessage[0] = this.canbankXS.flashMessage;
+    this.flashMessage[0] = this.canbankXC.flashMessage;
   }
 
   canbankCreate() {
@@ -31,13 +31,13 @@ export class CanbankFlashComponent implements OnInit {
     // TODO: change these dots...
     let tInt = setInterval(() => { this.flashMessage[1] += '.'; }, config.tOut);
 
-    this.canbankXS.createDB().subscribe(
+    this.canbankXC.createDB().subscribe(
       (response: any) => {
         switch (response['status']) {
           case 'success':
             this.flashMessage[0] = this.i18n.msg_created;
             setTimeout(() => {
-              this.canbankXS.canbankMessage = '';
+              this.canbankXC.canbankMessage = '';
               window.location.reload();
             }, config.tOut);
             break;
@@ -51,7 +51,7 @@ export class CanbankFlashComponent implements OnInit {
       },
       (error: any) => {
         this.flashMessage[0] = this.i18n.msg_creation_failed;
-        this.flashMessage[1] = this.canbankXS.canbankMessage;
+        this.flashMessage[1] = this.canbankXC.canbankMessage;
         console.error(error);
       },
       () => { clearInterval(tInt); }

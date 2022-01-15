@@ -10,7 +10,7 @@ export interface canbankConfig {
 var localConfig: canbankConfig = {
   serverUrl: "http://can-bank",
   apiPath: "/api-can-bank",
-  language: "sk",
+  language: "en",
   isDemo: false,
   tOut: 741,
 }

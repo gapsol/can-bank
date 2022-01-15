@@ -3,7 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 import { config } from '../config/config';
-import { CanbankXsService } from '../canbank-services/canbank-xs.service';
+import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
 import { i18n } from '../data/can-i18n';
 
 @Component({
@@ -15,26 +15,26 @@ export class CanbankAddComponent implements OnInit {
   i18n: any;
 
   menuBtnAdd: string = '';
-  canColor = this.canbankXS.canColor;
+  canColor = this.canbankXC.canColor;
   coverIconColor: string = ''; // read from default?
   openerIconColor: string = ''; // read from default?
 
-  canContentType = this.canbankXS.canContentType;
+  canContentType = this.canbankXC.canContentType;
 
-  canCountry = this.canbankXS.canCountry;
+  canCountry = this.canbankXC.canCountry;
   countryIconContent: string = '';
 
-  canLanguage = this.canbankXS.canLanguage;
+  canLanguage = this.canbankXC.canLanguage;
   languageIconContent: string = '';
 
-  canMaterial = this.canbankXS.canMaterial;
+  canMaterial = this.canbankXC.canMaterial;
   materialIconColor: string = '';
   materialIconContent: string = '';
 
-  canSurface = this.canbankXS.canSurface;
+  canSurface = this.canbankXC.canSurface;
   surfaceIconColor: string = '';
 
-  canType = this.canbankXS.canType;
+  canType = this.canbankXC.canType;
   typeIconContent: string = '';
 
   canFormValid: boolean = false;
@@ -83,7 +83,11 @@ export class CanbankAddComponent implements OnInit {
     canFormKeywords: new FormControl(''),
     canFormProdDate: new FormControl(''),
     canFormExpDate: new FormControl(''),
-    canFormCountry: new FormControl(
+    canFormProdCountry: new FormControl(
+      this.canCountry.find(canctr => canctr.default)?.id,
+      Validators.required
+    ),
+    canFormShopCountry: new FormControl(
       this.canCountry.find(canctr => canctr.default)?.id,
       Validators.required
     ),
@@ -101,7 +105,7 @@ export class CanbankAddComponent implements OnInit {
     canFormNotes: new FormControl('')
   });
 
-  constructor(private canbankXS: CanbankXsService) { }
+  constructor(private canbankXC: CanbankXcService) { }
 
   ngOnInit() {
     this.i18n = i18n[config.language];
@@ -255,7 +259,10 @@ export class CanbankAddComponent implements OnInit {
     // TODO: refresh zoznamu
   }
 
-  updateCountry() {
+  updateProdCountry() {
+  }
+
+  updateShopCountry() {
   }
 
   // TODO: katalog jazykov, ikona vlajky SVG
@@ -314,7 +321,7 @@ export class CanbankAddComponent implements OnInit {
 
   addCan(/*f: NgForm*/) {
     console.log('fn addCan activated')
-    this.canbankXS.setBank(this.canForm.value).subscribe(
+    this.canbankXC.setBank(this.canForm.value).subscribe(
       (data: any) => {
         console.log('add can data')
         console.log(data)

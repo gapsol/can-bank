@@ -1,11 +1,7 @@
 <form id="can-display">
-  <div class="input-box">
     <label for="can-form-type">{{ i18n['can_type'] }}</label>
     <div class="input-value-box">{{ canFormType }}</div>
-  </div>
 
-  <div>
-    <div class="input-box">
       <div class="can-sm-12 can-md-6 can-lg-3">
         <label for="can-form-diameter">{{ i18n['diameter'] }}</label>
         <div class="input-value-box">{{ canFormDiameter }}</div>
@@ -22,11 +18,8 @@
         <label for="can-form-volumeFlOz">{{ i18n['volumeFlOz'] }}</label>
         <div class="input-value-box">{{ canFormVolumeFlOz }}</div>
       </div>
-    </div>
-    <div class="defloat"></div>
-  </div>
+    <!--div class="defloat"></div-->
 
-  <div class="input-box">
     <div class="can-sm-12 can-md-6 can-lg-3">
       <label for="can-form-material">{{ i18n['material'] }}</label>
       <div class="input-value-box">{{ canFormMaterial }}</div>
@@ -46,15 +39,11 @@
       <label for="can-form-opener-color">{{ i18n['opener'] }}</label>
       <div class="input-value-box">{{ canFormOpenerColor }}</div>
     </div>
-  </div>
-  <div class="defloat"></div>
+  <!--div class="defloat"></div-->
 
-  <div class="input-box">
     <label for="can-form-brand">{{ i18n['brand'] }}</label>
     <div class="input-value-box">{{ canFormBrand }}</div>
-  </div>
 
-  <div class="input-box">
     <div class="can-sm-12 can-md-12 can-lg-6">
       <label for="can-form-content-name">{{ i18n['content_name'] }}</label>
       <div class="input-value-box">{{ canFormContentName }}</div>
@@ -69,15 +58,12 @@
       <label for="can-form-alcohol">{{ i18n['alcohol'] }}</label>
       <div class="input-value-box">{{ canFormAlcohol }}</div>
     </div>
-  </div>
-  <div class="defloat"></div>
 
-  <div class="input-box">
+  <!--div class="defloat"></div-->
+
     <label for="can-form-keywords">{{ i18n['keywords'] }}</label>
     <div class="input-value-box">{{ canFormKeywords }}</div>
-  </div>
 
-  <div class="input-box">
     <div class="can-sm-12 can-md-6 can-lg-3">
       <label for="can-form-prod-date">{{ i18n['production_date'] }}</label>
       <div class="input-value-box">{{ canFormProdDate }}</div>
@@ -89,18 +75,22 @@
     </div>
 
     <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-country">{{ i18n['country'] }}</label>
-      <div class="input-value-box">{{ canFormCountry }}</div>
+      <label for="can-form-country">{{ i18n['made_in_country'] }}</label>
+      <div class="input-value-box">{{ canFormProdCountry }}</div>
     </div>
 
     <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-language">{{ i18n['language'] }}</label>
+      <label for="can-form-country">{{ i18n['bought_in_country'] }}</label>
+      <div class="input-value-box">{{ canFormShopCountry }}</div>
+    </div>
+
+    <div class="can-sm-12 can-md-6 can-lg-3">
+      <label for="can-form-language">{{ i18n['primary_language'] }}</label>
       <div class="input-value-box">{{ canFormLanguage }}</div>
     </div>
-  </div>
-  <div class="defloat"></div>
 
-  <div class="input-box">
+  <!--div class="defloat"></div-->
+
     <div class="can-sm-12 can-md-12 can-lg-12">
       <label for="can-form-ean">{{ i18n['barcode'] }}</label>
       <div class="input-value-box">{{ canFormEan }}</div>
@@ -109,36 +99,23 @@
     <div class="can-sm-12 can-md-12 can-lg-6">
       <!-- TODO: genrate ean_barcode image -->
     </div>
-  </div>
 
-  <div class="input-box">
     <label for="can-form-notes">{{ i18n['notes'] }}</label>
     <div class="input-value-box">{{ canFormNotes }}</div>
-  </div>
 
-  <div class="input-box">
     <label for="can-form-fname1" class="can-file-button">{{ i18n['photo'] }} 1</label>
     <div class="input-value-box">{{ canFormFname1 }}</div>
-  </div>
 
-  <div class="input-box">
     <label for="can-form-fname2" class="can-file-button">{{ i18n['photo'] }} 2</label>
     <div class="input-value-box">{{ canFormFname2 }}</div>
-  </div>
 
-  <div class="input-box">
     <label for="can-form-fname3" class="can-file-button">{{ i18n['photo'] }} 3</label>
     <div class="input-value-box">{{ canFormFname3 }}</div>
-  </div>
 
-  <div class="input-box">
     <label for="can-form-fname4" class="can-file-button">{{ i18n['photo'] }} 4</label>
     <div class="input-value-box">{{ canFormFname4 }}</div>
-  </div>
 
-  <div class="input-box">
     <label for="can-form-fname5" class="can-file-button">{{ i18n['photo'] }} 5</label>
     <div class="input-value-box">{{ canFormFname5 }}</div>
-  </div>
 
 </form>

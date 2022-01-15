@@ -6,7 +6,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankLmService } from './canbank-lm.service';
+import { CanbankLmService } from './canbank-lmeter.service';
 
 import { canColor } from '../data/can-color';
 import { canContentType } from '../data/can-content';
@@ -19,7 +19,7 @@ import { canType } from '../data/can-type';
 @Injectable({
   providedIn: 'root'
 })
-export class CanbankXsService {
+export class CanbankXcService {
   i18n = i18n[config.language];
   // TODO: read defaults from local file
   /*canColor = canColor;

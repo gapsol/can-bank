@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { CanbankXsService } from './canbank-xs.service';
+import { CanbankXcService } from './canbank-xchange.service';
 
-describe('Service: CanbankXs', () => {
+describe('Service: canbankXC', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CanbankXsService]
+      providers: [CanbankXcService]
     });
   });
 
-  it('should ...', inject([CanbankXsService], (service: CanbankXsService) => {
+  it('should ...', inject([CanbankXcService], (service: CanbankXcService) => {
     expect(service).toBeTruthy();
   }));
 });
