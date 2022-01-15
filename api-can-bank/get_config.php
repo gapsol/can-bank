@@ -17,5 +17,5 @@ function isfull($var)
 
 function gen_uniq()
 {
-  return time();// . rand(10, 99);
+  return time() . rand(100, 999);
 }

@@ -29,7 +29,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     re_file($post->data->canFormFname5, $post->data->canFormEan);*/
     $uniq = gen_uniq();
     $query = 'INSERT INTO `can_bank`
-(`uniq`, `type`, `diameter`, `height`, `volume`, `volumeFlOz`, `material`, `surface`, `cover_color`, `opener_color`, `brand`, `content_name`, `content_type`, `alcohol`, `keywords`, `prod_date`, `exp_date`, `country`, `language`, `ean`, `fname1`, `fname2`, `fname3`, `fname4`, `fname5`, `notes`)
+(`uniq`, `type`, `diameter`, `height`, `volume`, `volumeFlOz`, `material`, `surface`, `cover_color`, `opener_color`, `brand`, `content_name`, `content_type`, `alcohol`, `keywords`, `prod_date`, `exp_date`, `prod_country`, `shop_country`, `language`, `ean`, `fname1`, `fname2`, `fname3`, `fname4`, `fname5`, `notes`)
 VALUES (
 "' . $uniq . '",
 "' . $post->data->canFormType . '",
@@ -48,7 +48,8 @@ VALUES (
 "' . $post->data->canFormKeywords . '",
 "' . $post->data->canFormProdDate . '",
 "' . $post->data->canFormExpDate . '",
-"' . $post->data->canFormCountry . '",
+"' . $post->data->canFormProdCountry . '",
+"' . $post->data->canFormShopCountry . '",
 "' . $post->data->canFormLanguage . '",
 "' . $post->data->canFormEan . '",
 "' . $post->data->canFormFname1 . '",
@@ -78,7 +79,8 @@ VALUES (
 `keywords`="' . $post->data->canFormKeywords . '",
 `prod_date`="' . $post->data->canFormProdDate . '",
 `exp_date`="' . $post->data->canFormExpDate . '",
-`country`="' . $post->data->canFormCountry . '",
+`prod_country`="' . $post->data->canFormProdCountry . '",
+`shop_country`="' . $post->data->canFormShopCountry . '",
 `language`="' . $post->data->canFormLanguage . '",
 `ean`="' . $post->data->canFormEan . '",
 `fname1`="' . $post->data->canFormFname1 . '",

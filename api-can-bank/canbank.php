@@ -94,7 +94,7 @@ function create_canbank_db()
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_bank` (
 `id` int primary key auto_increment not null,
 `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`uniq` varchar(10),
+`uniq` varchar(13),
 `type` int,
 `diameter` int,
 `height` int,
@@ -111,7 +111,8 @@ function create_canbank_db()
 `keywords` varchar(255),
 `prod_date` varchar(10),
 `exp_date` varchar(10),
-`country` int,
+`prod_country` int,
+`shop_country` int,
 `language` int,
 `ean` varchar(13),
 `fname1` varchar(100),
@@ -128,7 +129,7 @@ function create_canbank_db()
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_type` (
 `id` int primary key auto_increment not null,
 `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`uniq` varchar(10),
+`uniq` varchar(13),
 `name` varchar(250),
 `diameter` int,
 `height` int,
@@ -143,7 +144,7 @@ function create_canbank_db()
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_material` (
 `id` int primary key auto_increment not null,
 `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`uniq` varchar(10),
+`uniq` varchar(13),
 `name` varchar(100),
 `abbr` varchar(3),
 `color` varchar(50),
@@ -156,7 +157,7 @@ function create_canbank_db()
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_surface` (
 `id` int primary key auto_increment not null,
 `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`uniq` varchar(10),
+`uniq` varchar(13),
 `name` varchar(100),
 `color` varchar(50),
 `default` tinyint
@@ -168,7 +169,7 @@ function create_canbank_db()
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_color` (
 `id` int primary key auto_increment not null,
 `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`uniq` varchar(10),
+`uniq` varchar(13),
 `name` varchar(100),
 `color` varchar(50),
 `default` tinyint
@@ -180,7 +181,7 @@ function create_canbank_db()
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_content` (
 `id` int primary key auto_increment not null,
 `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`uniq` varchar(10),
+`uniq` varchar(13),
 `name` varchar(100),
 `default` tinyint
 )');
@@ -191,7 +192,7 @@ function create_canbank_db()
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_country` (
 `id` int primary key auto_increment not null,
 `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`uniq` varchar(10),
+`uniq` varchar(13),
 `name` varchar(100),
 `abbr` varchar(3),
 `default` tinyint
@@ -203,7 +204,7 @@ function create_canbank_db()
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_language` (
 `id` int primary key auto_increment not null,
 `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`uniq` varchar(10),
+`uniq` varchar(13),
 `name` varchar(100),
 `abbr` varchar(3),
 `default` tinyint
