@@ -5,7 +5,7 @@ import { config } from '../config/config';
 @Injectable({
   providedIn: 'root'
 })
-export class CanbankLangService {
+export class CanbankLanguageService {
 
   constructor() { }
 

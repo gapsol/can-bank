@@ -3,7 +3,7 @@ import { Injectable, Input } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class CanbankLmService {
+export class CanbankLevelmeterService {
 
   @Input()
   private _levelDb: string = '';

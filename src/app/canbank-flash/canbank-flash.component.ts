@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
+import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
 
 @Component({
   selector: 'canbank-flash',
@@ -17,7 +17,7 @@ export class CanbankFlashComponent implements OnInit {
   flashMessage: string[] = [];
 
   constructor(
-    private canbankXC: CanbankXcService
+    private canbankXC: CanbankXchangeService
   ) { }
 
   ngOnInit() {

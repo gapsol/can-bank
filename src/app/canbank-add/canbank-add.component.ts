@@ -3,8 +3,10 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 import { config } from '../config/config';
-import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
 import { i18n } from '../data/can-i18n';
+import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankRecordService } from '../canbank-services/canbank-record.service';
+import { CanbankInterfaceService } from '../canbank-services/canbank-interface.service';
 
 @Component({
   selector: 'canbank-add',
@@ -12,29 +14,29 @@ import { i18n } from '../data/can-i18n';
   styleUrls: ['./canbank-add.component.css']
 })
 export class CanbankAddComponent implements OnInit {
-  i18n: any;
+  i18n = i18n[config.language];
 
   menuBtnAdd: string = '';
-  canColor = this.canbankXC.canColor;
+  canColor = this.canbankIF.canColor;
   coverIconColor: string = ''; // read from default?
   openerIconColor: string = ''; // read from default?
 
-  canContentType = this.canbankXC.canContentType;
+  canContentType = this.canbankIF.canContentType;
 
-  canCountry = this.canbankXC.canCountry;
+  canCountry = this.canbankIF.canCountry;
   countryIconContent: string = '';
 
-  canLanguage = this.canbankXC.canLanguage;
+  canLanguage = this.canbankIF.canLanguage;
   languageIconContent: string = '';
 
-  canMaterial = this.canbankXC.canMaterial;
+  canMaterial = this.canbankIF.canMaterial;
   materialIconColor: string = '';
   materialIconContent: string = '';
 
-  canSurface = this.canbankXC.canSurface;
+  canSurface = this.canbankIF.canSurface;
   surfaceIconColor: string = '';
 
-  canType = this.canbankXC.canType;
+  canType = this.canbankIF.canType;
   typeIconContent: string = '';
 
   canFormValid: boolean = false;
@@ -75,7 +77,7 @@ export class CanbankAddComponent implements OnInit {
       Validators.required),
     canFormContentName: new FormControl(''),
     canFormContentType: new FormControl(
-      this.canContentType.find(canctp => canctp.default)?.id,
+      this.canbankIF.canContentType.find(canctp => canctp.default)?.id,
       Validators.required
     ),
     canFormAlcohol: new FormControl(0,
@@ -84,15 +86,15 @@ export class CanbankAddComponent implements OnInit {
     canFormProdDate: new FormControl(''),
     canFormExpDate: new FormControl(''),
     canFormProdCountry: new FormControl(
-      this.canCountry.find(canctr => canctr.default)?.id,
+      this.canbankIF.canCountry.find(canctr => canctr.default)?.id,
       Validators.required
     ),
     canFormShopCountry: new FormControl(
-      this.canCountry.find(canctr => canctr.default)?.id,
+      this.canbankIF.canCountry.find(canctr => canctr.default)?.id,
       Validators.required
     ),
     canFormLanguage: new FormControl(
-      this.canLanguage.find(canlang => canlang.default)?.id,
+      this.canbankIF.canLanguage.find(canlang => canlang.default)?.id,
       Validators.required
     ),
     canFormEan: new FormControl('',
@@ -105,10 +107,13 @@ export class CanbankAddComponent implements OnInit {
     canFormNotes: new FormControl('')
   });
 
-  constructor(private canbankXC: CanbankXcService) { }
+  constructor(
+    private canbankXC: CanbankXchangeService,
+    private canbankRC: CanbankRecordService,
+    private canbankIF: CanbankInterfaceService
+    ) { }
 
   ngOnInit() {
-    this.i18n = i18n[config.language];
     this.menuBtnAdd = 'menu-btn-active';
 
     /* use for basic sets from local file
@@ -118,6 +123,7 @@ export class CanbankAddComponent implements OnInit {
           this.sortLanguage();
           this.sortType();
     */
+    this.canbankXC.checkLists();
     this.updateType();
     this.updateMaterial();
     this.updateSurface();
@@ -143,7 +149,14 @@ export class CanbankAddComponent implements OnInit {
   */
   updateType() {
     let canFormVolumeFlOz: string;
+    /*if (this.canType.length === 0) {
+      this.canType = this.canbankXC.canType;
+      console.log(this.canType)
+      this.canForm.value.canFormType = this.canType.find(cantyp => cantyp.default)?.id;
+      console.log(this.canForm.value)
+    }*/
     let canObj = this.canType.find(cantyp => cantyp.id == this.canForm.value.canFormType);
+    // console.log(canObj)
     if (canObj !== undefined) {
       this.typeIconContent = this.reduceVolume(canObj.volume / 1000);
       if (this.typeIconContent[0] == '0') {
@@ -325,6 +338,28 @@ export class CanbankAddComponent implements OnInit {
       (data: any) => {
         console.log('add can data')
         console.log(data)
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormDiameter = this.canForm.value.canFormDiameter;
+        /*this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;
+        this.canbankRC.canFormType = this.canForm.value.canFormType;*/
+//        window.location.pathname = '/display';
       },
       (err: any) => {
         console.log('add can error')

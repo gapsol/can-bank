@@ -183,7 +183,8 @@
         <div class="input-with-icon input-value-box">
           <div class="input-icon input-icon-white"></div>
           <div class="full">
-            <select id="can-form-prod-country" formControlName="canFormProdCountry" (change)="updateProdCountry()" required>
+            <select id="can-form-prod-country" formControlName="canFormProdCountry" (change)="updateProdCountry()"
+              required>
               <option *ngFor="let country of canCountry" [ngValue]="country.id">{{ country.name }}</option>
               <option value="-1">{{ i18n['unknown_country'] }}</option>
               <option value="0" (select)="newCountry()" class="new-option">{{ i18n['add_country'] }}</option>
@@ -197,7 +198,8 @@
         <div class="input-with-icon input-value-box">
           <div class="input-icon input-icon-white"></div>
           <div class="full">
-            <select id="can-form-shop-country" formControlName="canFormShopCountry" (change)="updateShopCountry()" required>
+            <select id="can-form-shop-country" formControlName="canFormShopCountry" (change)="updateShopCountry()"
+              required>
               <option *ngFor="let country of canCountry" [ngValue]="country.id">{{ country.name }}</option>
               <option value="-1">{{ i18n['unknown_country'] }}</option>
               <option value="0" (select)="newCountry()" class="new-option">{{ i18n['add_country'] }}</option>
@@ -268,7 +270,5 @@
       <button type="submit" [disabled]="!canForm.valid">{{ i18n['save'] }}</button>
     </div>
   </form>
-
-  <canbank-display></canbank-display>
 
 </div>

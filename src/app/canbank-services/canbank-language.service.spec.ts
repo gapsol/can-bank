@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { CanbankLangService } from './canbank-language.service';
+import { CanbankLanguageService } from './canbank-language.service';
 
 describe('Service: CanbankLang', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CanbankLangService]
+      providers: [CanbankLanguageService]
     });
   });
 
-  it('should ...', inject([CanbankLangService], (service: CanbankLangService) => {
+  it('should ...', inject([CanbankLanguageService], (service: CanbankLanguageService) => {
     expect(service).toBeTruthy();
   }));
 });

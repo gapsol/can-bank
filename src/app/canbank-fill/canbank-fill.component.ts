@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
+import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
 
 @Component({
   selector: 'canbank-fill',
@@ -15,7 +15,7 @@ export class CanbankFillComponent implements OnInit {
   i18n = i18n[config.language];
   fillBtn: string = this.i18n.msg_fill;
 
-  constructor(private canbankXC: CanbankXcService) { }
+  constructor(private canbankXC: CanbankXchangeService) { }
 
   ngOnInit(): void {
     console.log('FILL component')

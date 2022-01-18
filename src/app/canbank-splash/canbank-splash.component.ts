@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { config } from '../config/config';
-import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
-import { CanbankLmService } from '../canbank-services/canbank-lmeter.service';
+import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankLevelmeterService } from '../canbank-services/canbank-levelmeter.service';
 
 @Component({
   selector: 'canbank-splash',
@@ -30,8 +30,8 @@ export class CanbankSplashComponent implements OnInit {
   canbankUrl: string = '';
 
   constructor(
-    private canbankXC: CanbankXcService,
-    private canbankLM: CanbankLmService,
+    private canbankXC: CanbankXchangeService,
+    private canbankLM: CanbankLevelmeterService,
     private router: Router,
   ) { }
 

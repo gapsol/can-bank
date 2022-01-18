@@ -6,20 +6,13 @@ import { catchError, map } from 'rxjs/operators';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankLmService } from './canbank-lmeter.service';
-
-import { canColor } from '../data/can-color';
-import { canContentType } from '../data/can-content';
-import { canCountry } from '../data/can-country';
-import { canLanguage } from '../data/can-language';
-import { canMaterial } from '../data/can-material';
-import { canSurface } from '../data/can-surface';
-import { canType } from '../data/can-type';
+import { CanbankLevelmeterService } from './canbank-levelmeter.service';
+import { CanbankInterfaceService } from './canbank-interface.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CanbankXcService {
+export class CanbankXchangeService {
   i18n = i18n[config.language];
   // TODO: read defaults from local file
   /*canColor = canColor;
@@ -31,7 +24,8 @@ export class CanbankXcService {
   canType = canType;*/
 
   constructor(
-    private canbankLM: CanbankLmService,
+    private canbankLM: CanbankLevelmeterService,
+    private canbankIF: CanbankInterfaceService,
     private http: HttpClient) { }
 
   @Input()
@@ -46,35 +40,6 @@ export class CanbankXcService {
   private _flashMe: boolean = false;
   get flashMe(): boolean { return this._flashMe; }
   set flashMe(msg: boolean) { this._flashMe = msg; }
-
-  @Input()
-  private _canColor: Array<canColor> = [];
-  get canColor(): Array<canColor> { return this._canColor; }
-  set canColor(obj: Array<canColor>) { this._canColor = obj; }
-  @Input()
-  private _canContentType: Array<canContentType> = [];
-  get canContentType(): Array<canContentType> { return this._canContentType; }
-  set canContentType(obj: Array<canContentType>) { this._canContentType = obj; }
-  @Input()
-  private _canCountry: Array<canCountry> = [];
-  get canCountry(): Array<canCountry> { return this._canCountry; }
-  set canCountry(obj: Array<canCountry>) { this._canCountry = obj; }
-  @Input()
-  private _canLanguage: Array<canLanguage> = [];
-  get canLanguage(): Array<canLanguage> { return this._canLanguage; }
-  set canLanguage(obj: Array<canLanguage>) { this._canLanguage = obj; }
-  @Input()
-  private _canMaterial: Array<canMaterial> = [];
-  get canMaterial(): Array<canMaterial> { return this._canMaterial; }
-  set canMaterial(obj: Array<canMaterial>) { this._canMaterial = obj; }
-  @Input()
-  private _canSurface: Array<canSurface> = [];
-  get canSurface(): Array<canSurface> { return this._canSurface; }
-  set canSurface(obj: Array<canSurface>) { this._canSurface = obj; }
-  @Input()
-  private _canType: Array<canType> = [];
-  get canType(): Array<canType> { return this._canType; }
-  set canType(obj: Array<canType>) { this._canType = obj; }
 
   public canbankUrl = config.serverUrl + config.apiPath;
 
@@ -260,7 +225,7 @@ export class CanbankXcService {
             console.error(response['message']);
           } else {
             this.canbankLM.levelL1 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
-            this._canColor = response['list'];
+            this.canbankIF.canColor = response['list'];
             return response;
           }
         }),
@@ -287,7 +252,7 @@ export class CanbankXcService {
             console.error(response['message']);
           } else {
             this.canbankLM.levelL2 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
-            this._canContentType = response['list'];
+            this.canbankIF.canContentType = response['list'];
             return response;
           }
         }),
@@ -314,7 +279,7 @@ export class CanbankXcService {
             console.error(response['message']);
           } else {
             this.canbankLM.levelL3 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
-            this._canCountry = response['list'];
+            this.canbankIF.canCountry = response['list'];
             return response;
           }
         }),
@@ -341,7 +306,7 @@ export class CanbankXcService {
             console.error(response['message']);
           } else {
             this.canbankLM.levelL4 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
-            this._canLanguage = response['list'];
+            this.canbankIF.canLanguage = response['list'];
             return response;
           }
         }),
@@ -368,7 +333,7 @@ export class CanbankXcService {
             console.error(response['message']);
           } else {
             this.canbankLM.levelL5 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
-            this._canMaterial = response['list'];
+            this.canbankIF.canMaterial = response['list'];
             return response;
           }
         }),
@@ -395,7 +360,7 @@ export class CanbankXcService {
             console.error(response['message']);
           } else {
             this.canbankLM.levelL6 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
-            this._canSurface = response['list'];
+            this.canbankIF.canSurface = response['list'];
             return response;
           }
         }),
@@ -422,7 +387,7 @@ export class CanbankXcService {
             console.error(response['message']);
           } else {
             this.canbankLM.levelL7 = (response['list'].length == 0) ? 'empty' : 'success';
-            this._canType = response['list'];
+            this.canbankIF.canType = response['list'];
             return response;
           }
         }),
@@ -473,6 +438,7 @@ export class CanbankXcService {
   }
 
   public checkLists() {
+    console.log('XC checkLists')
     this.getColor().subscribe(
       (response: any) => { console.log(response) },
       (error: any) => { console.error(error) }

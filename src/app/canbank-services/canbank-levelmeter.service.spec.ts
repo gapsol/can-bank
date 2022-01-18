@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { CanbankLmService } from './canbank-lmeter.service';
+import { CanbankLevelmeterService } from './canbank-levelmeter.service';
 
 describe('Service: CanbankLm', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CanbankLmService]
+      providers: [CanbankLevelmeterService]
     });
   });
 
-  it('should ...', inject([CanbankLmService], (service: CanbankLmService) => {
+  it('should ...', inject([CanbankLevelmeterService], (service: CanbankLevelmeterService) => {
     expect(service).toBeTruthy();
   }));
 });

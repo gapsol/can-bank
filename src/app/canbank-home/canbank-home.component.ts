@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
-import { CanbankXcService } from '../canbank-services/canbank-xchange.service';
-import { CanbankLangService } from '../canbank-services/canbank-language.service';
+import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankLanguageService } from '../canbank-services/canbank-language.service';
 import { canBank } from '../data/can-bank';
 import { canCountry } from '../data/can-country';
 import { canType } from '../data/can-type';
@@ -31,8 +31,8 @@ export class CanbankHomeComponent implements OnInit {
   now: any;
 
   constructor(
-    private canbankXC: CanbankXcService,
-    private canbankLS: CanbankLangService
+    private canbankXC: CanbankXchangeService,
+    private canbankLS: CanbankLanguageService
   ) { }
 
   ngOnInit() {
