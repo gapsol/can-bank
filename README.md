@@ -1,5 +1,5 @@
 repo can-bank
-# Can Bank
+# CanBank
 ## Cans collection registration app
 
 ### Angular based app:
