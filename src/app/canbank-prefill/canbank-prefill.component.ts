@@ -5,26 +5,25 @@ import { i18n } from '../data/can-i18n';
 import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
 
 @Component({
-  selector: 'canbank-fill',
+  selector: 'canbank-prefill',
   template: `
-    <div class="can-fill-h1" (click)="canbankPreFill()">{{ fillBtn }}</div>
+    <div class="can-prefill-h1" (click)="canbankPrefill()">{{ prefillBtn }}</div>
   `,
-  styleUrls: ['./canbank-fill.component.css']
+  styleUrls: ['./canbank-prefill.component.css']
 })
-export class CanbankFillComponent implements OnInit {
+export class CanbankPrefillComponent implements OnInit {
   i18n = i18n[config.language];
-  fillBtn: string = this.i18n.msg_fill;
+  prefillBtn: string = this.i18n.msg_prefill;
 
   constructor(private canbankXC: CanbankXchangeService) { }
 
   ngOnInit(): void {
-    console.log('FILL component')
   }
 
-  canbankPreFill() {
+  canbankPrefill() {
     console.log('preFILL')
-    this.fillBtn = '?';
-    this.canbankXC.preFillDB().subscribe(
+    this.prefillBtn = '?';
+    this.canbankXC.prefillDB().subscribe(
       () => { this.afterTheEvent(); },
       (error: any) => { console.error(error); }
     );

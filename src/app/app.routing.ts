@@ -9,6 +9,7 @@ import { CanbankAddComponent } from './canbank-add/canbank-add.component';
 import { CanbankFindComponent } from './canbank-find/canbank-find.component';
 import { CanbankCategoriesComponent } from './canbank-categories/canbank-categories.component';
 import { CanbankStatsComponent } from './canbank-stats/canbank-stats.component';
+import { CanbankSettingsComponent } from './canbank-settings/canbank-settings.component';
 import { CanbankDisplayComponent } from './canbank-display/canbank-display.component';
 
 const canbankRoutes: Routes = [
@@ -19,6 +20,7 @@ const canbankRoutes: Routes = [
   { path: 'find', component: CanbankFindComponent },
   { path: 'categories', component: CanbankCategoriesComponent },
   { path: 'stats', component: CanbankStatsComponent },
+  { path: 'settings', component: CanbankSettingsComponent },
   { path: 'display', component: CanbankDisplayComponent },
   { path: '', redirectTo: 'splash', pathMatch: 'full' },
   { path: '**', redirectTo: 'splash', pathMatch: 'full' },

@@ -6,110 +6,207 @@ import { Injectable, Input } from '@angular/core';
 export class CanbankRecordService {
 
   @Input()
-  private _canFormType: number = 0;
-  get canFormType(): number { return this._canFormType; }
-  set canFormType(value: number) { this._canFormType = value; }
+  private _isActive: boolean = false;
+  get isActive(): boolean { return this._isActive; }
+  set isActive(state: boolean) { this._isActive = state; }
   @Input()
-  private _canFormDiameter: number = 0;
-  get canFormDiameter(): number { return this._canFormDiameter; }
-  set canFormDiameter(value: number) { this._canFormDiameter = value; }
+  private _isUpdated: Date = new Date();
+  get isUpdated(): Date { return this._isUpdated; }
+  set isUpdated(date: Date) { this._isUpdated = date; }
+
   @Input()
-  private _canFormHeight: number = 0;
-  get canFormHeight(): number { return this._canFormHeight; }
-  set canFormHeight(value: number) { this._canFormHeight = value; }
+  private _canFormType: string = '';
+  get canFormType(): string { return this._canFormType; }
+  set canFormType(value: string) {
+    this._canFormType = value;
+    console.log('_canFormType', this._canFormType)
+    this.updateMe();
+  }
   @Input()
-  private _canFormVolume: number = 0;
-  get canFormVolume(): number { return this._canFormVolume; }
-  set canFormVolume(value: number) { this._canFormVolume = value; }
+  private _canFormDiameter: string = '';
+  get canFormDiameter(): string { return this._canFormDiameter; }
+  set canFormDiameter(value: string) {
+    this._canFormDiameter = value;
+    console.log('_canFormDiameter', this._canFormDiameter)
+    this.updateMe();
+  }
   @Input()
-  private _canFormVolumeFlOz: number = 0;
-  get canFormVolumeFlOz(): number { return this._canFormVolumeFlOz; }
-  set canFormVolumeFlOz(value: number) { this._canFormVolumeFlOz = value; }
+  private _canFormHeight: string = '';
+  get canFormHeight(): string { return this._canFormHeight; }
+  set canFormHeight(value: string) {
+    this._canFormHeight = value;
+    console.log('_canFormHeight', this._canFormHeight)
+    this.updateMe();
+  }
   @Input()
-  private _canFormMaterial: number = 0;
-  get canFormMaterial(): number { return this._canFormMaterial; }
-  set canFormMaterial(value: number) { this._canFormMaterial = value; }
+  private _canFormVolume: string = '';
+  get canFormVolume(): string { return this._canFormVolume; }
+  set canFormVolume(value: string) {
+    this._canFormVolume = value;
+    console.log('_canFormVolume', this._canFormVolume)
+    this.updateMe();
+  }
   @Input()
-  private _canFormSurface: number = 0;
-  get canFormSurface(): number { return this._canFormSurface; }
-  set canFormSurface(value: number) { this._canFormSurface = value; }
+  private _canFormVolumeFlOz: string = '';
+  get canFormVolumeFlOz(): string { return this._canFormVolumeFlOz; }
+  set canFormVolumeFlOz(value: string) {
+    this._canFormVolumeFlOz = value;
+    console.log('_canFormVolumeFlOz', this._canFormVolumeFlOz)
+    this.updateMe();
+  }
   @Input()
-  private _canFormCoverColor: number = 0;
-  get canFormCoverColor(): number { return this._canFormCoverColor; }
-  set canFormCoverColor(value: number) { this._canFormCoverColor = value; }
+  private _canFormMaterial: string = '';
+  get canFormMaterial(): string { return this._canFormMaterial; }
+  set canFormMaterial(value: string) {
+    this._canFormMaterial = value;
+    this.updateMe();
+  }
   @Input()
-  private _canFormOpenerColor: number = 0;
-  get canFormOpenerColor(): number { return this._canFormOpenerColor; }
-  set canFormOpenerColor(value: number) { this._canFormOpenerColor = value; }
+  private _canFormSurface: string = '';
+  get canFormSurface(): string { return this._canFormSurface; }
+  set canFormSurface(value: string) {
+    this._canFormSurface = value;
+    this.updateMe();
+  }
+  @Input()
+  private _canFormCoverColor: string = '';
+  get canFormCoverColor(): string { return this._canFormCoverColor; }
+  set canFormCoverColor(value: string) {
+    this._canFormCoverColor = value;
+    this.updateMe();
+  }
+  @Input()
+  private _canFormOpenerColor: string = '';
+  get canFormOpenerColor(): string { return this._canFormOpenerColor; }
+  set canFormOpenerColor(value: string) {
+    this._canFormOpenerColor = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormBrand: string = '';
   get canFormBrand(): string { return this._canFormBrand; }
-  set canFormBrand(value: string) { this._canFormBrand = value; }
+  set canFormBrand(value: string) {
+    this._canFormBrand = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormContentName: string = '';
   get canFormContentName(): string { return this._canFormContentName; }
-  set canFormContentName(value: string) { this._canFormContentName = value; }
+  set canFormContentName(value: string) {
+    this._canFormContentName = value;
+    this.updateMe();
+  }
   @Input()
-  private _canFormContentType: number = 0;
-  get canFormContentType(): number { return this._canFormContentType; }
-  set canFormContentType(value: number) { this._canFormContentType = value; }
+  private _canFormContentType: string = '';
+  get canFormContentType(): string { return this._canFormContentType; }
+  set canFormContentType(value: string) {
+    this._canFormContentType = value;
+    this.updateMe();
+  }
   @Input()
-  private _canFormAlcohol: number = 0;
-  get canFormAlcohol(): number { return this._canFormAlcohol; }
-  set canFormAlcohol(value: number) { this._canFormAlcohol = value; }
+  private _canFormAlcohol: string = '';
+  get canFormAlcohol(): string { return this._canFormAlcohol; }
+  set canFormAlcohol(value: string) {
+    this._canFormAlcohol = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormKeywords: string = '';
   get canFormKeywords(): string { return this._canFormKeywords; }
-  set canFormKeywords(value: string) { this._canFormKeywords = value; }
+  set canFormKeywords(value: string) {
+    this._canFormKeywords = value;
+    this.updateMe();
+  }
   @Input()
-  private _canFormProdDate: number = 0;
-  get canFormProdDate(): number { return this._canFormProdDate; }
-  set canFormProdDate(value: number) { this._canFormProdDate = value; }
+  private _canFormProdDate: string = '';
+  get canFormProdDate(): string { return this._canFormProdDate; }
+  set canFormProdDate(value: string) {
+    this._canFormProdDate = value;
+    this.updateMe();
+  }
   @Input()
-  private _canFormExpDate: number = 0;
-  get canFormExpDate(): number { return this._canFormExpDate; }
-  set canFormExpDate(value: number) { this._canFormExpDate = value; }
+  private _canFormExpDate: string = '';
+  get canFormExpDate(): string { return this._canFormExpDate; }
+  set canFormExpDate(value: string) {
+    this._canFormExpDate = value;
+    this.updateMe();
+  }
   @Input()
-  private _canFormProdCountry: number = 0;
-  get canFormProdCountry(): number { return this._canFormProdCountry; }
-  set canFormProdCountry(value: number) { this._canFormProdCountry = value; }
+  private _canFormProdCountry: string = '';
+  get canFormProdCountry(): string { return this._canFormProdCountry; }
+  set canFormProdCountry(value: string) {
+    this._canFormProdCountry = value;
+    this.updateMe();
+  }
   @Input()
-  private _canFormShopCountry: number = 0;
-  get canFormShopCountry(): number { return this._canFormShopCountry; }
-  set canFormShopCountry(value: number) { this._canFormShopCountry = value; }
+  private _canFormShopCountry: string = '';
+  get canFormShopCountry(): string { return this._canFormShopCountry; }
+  set canFormShopCountry(value: string) {
+    this._canFormShopCountry = value;
+    this.updateMe();
+  }
   @Input()
-  private _canFormLanguage: number = 0;
-  get canFormLanguage(): number { return this._canFormLanguage; }
-  set canFormLanguage(value: number) { this._canFormLanguage = value; }
+  private _canFormLanguage: string = '';
+  get canFormLanguage(): string { return this._canFormLanguage; }
+  set canFormLanguage(value: string) {
+    this._canFormLanguage = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormEan: string = '';
   get canFormEan(): string { return this._canFormEan; }
-  set canFormEan(value: string) { this._canFormEan = value; }
+  set canFormEan(value: string) {
+    this._canFormEan = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormFname1: string = '';
   get canFormFname1(): string { return this._canFormFname1; }
-  set canFormFname1(value: string) { this._canFormFname1 = value; }
+  set canFormFname1(value: string) {
+    this._canFormFname1 = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormFname2: string = '';
   get canFormFname2(): string { return this._canFormFname2; }
-  set canFormFname2(value: string) { this._canFormFname2 = value; }
+  set canFormFname2(value: string) {
+    this._canFormFname2 = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormFname3: string = '';
   get canFormFname3(): string { return this._canFormFname3; }
-  set canFormFname3(value: string) { this._canFormFname3 = value; }
+  set canFormFname3(value: string) {
+    this._canFormFname3 = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormFname4: string = '';
   get canFormFname4(): string { return this._canFormFname4; }
-  set canFormFname4(value: string) { this._canFormFname4 = value; }
+  set canFormFname4(value: string) {
+    this._canFormFname4 = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormFname5: string = '';
   get canFormFname5(): string { return this._canFormFname5; }
-  set canFormFname5(value: string) { this._canFormFname5 = value; }
+  set canFormFname5(value: string) {
+    this._canFormFname5 = value;
+    this.updateMe();
+  }
   @Input()
   private _canFormNotes: string = '';
   get canFormNotes(): string { return this._canFormNotes; }
-  set canFormNotes(value: string) { this._canFormNotes = value; }
+  set canFormNotes(value: string) {
+    this._canFormNotes = value;
+    this.updateMe();
+  }
 
   constructor() { }
+
+  updateMe() {
+    this._isActive = true;
+    this._isUpdated = new Date();
+  }
 
 }

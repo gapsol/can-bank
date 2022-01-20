@@ -1,3 +1,8 @@
+/*
+* CAN-BANK HOME PAGE
+*  welcome page of the app
+*  shows basic info from database
+*/
 import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';

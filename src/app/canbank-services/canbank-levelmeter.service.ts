@@ -5,6 +5,18 @@ import { Injectable, Input } from '@angular/core';
 })
 export class CanbankLevelmeterService {
 
+  levelMeter = {
+    levelDb: "",
+    levelDt: "",
+    levelL1: "",
+    levelL2: "",
+    levelL3: "",
+    levelL4: "",
+    levelL5: "",
+    levelL6: "",
+    levelL7: ""
+  };
+
   @Input()
   private _levelDb: string = '';
   get levelDb(): string { return this._levelDb; }
@@ -42,6 +54,6 @@ export class CanbankLevelmeterService {
   get levelL7(): string { return this._levelL7; }
   set levelL7(str: string) { this._levelL7 = str; }
 
-constructor() { }
+  constructor() { }
 
 }

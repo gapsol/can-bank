@@ -29,7 +29,7 @@ export var i18n: any = {
     "production_date": "production date",
     "expiration_date": "expiration date",
     "made_in_country": "production country",
-    "bought_in_country": "bought-in country",
+    "shop_in_country": "shopping country",
     "unknown_country": "unknown country",
     "add_country": "add country",
     "primary_language": "primary language",
@@ -47,7 +47,7 @@ export var i18n: any = {
     "msg_created": "CanBank created",
     "msg_db_ready": "CanBank ready",
     "msg_unknown_status": "Unknown status",
-    "msg_fill": "Prefill CanBank",
+    "msg_prefill": "Prefill CanBank",
   },
   "sk": {
     "menu_home": "domov",
@@ -79,7 +79,7 @@ export var i18n: any = {
     "production_date": "dátum výroby",
     "expiration_date": "dátum spotreby",
     "made_in_country": "krajina výrobcu",
-    "bought_in_country": "krajina nákupu",
+    "shop_in_country": "krajina nákupu",
     "unknown_country": "neznáma krajina",
     "add_country": "pridať krajinu",
     "primary_language": "hlavný jazyk",
@@ -97,6 +97,6 @@ export var i18n: any = {
     "msg_created": "CanBank vytvorená",
     "msg_db_ready": "CanBank pripravená",
     "msg_unknown_status": "Neznámy stav",
-    "msg_fill": "Predvyplniť CanBank",
+    "msg_prefill": "Predvyplniť CanBank",
   }
 };

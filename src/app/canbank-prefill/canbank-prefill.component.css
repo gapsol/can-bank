@@ -1,4 +1,4 @@
-.can-fill-h1 {
+.can-prefill-h1 {
   width: fit-content;
   margin: 1em auto;
   border: 3px solid gold;
@@ -6,6 +6,6 @@
   padding: 6px 12px;
   color: gold;
 }
-.can-fill-h1:hover {
+.can-prefill-h1:hover {
   cursor: pointer;
 }

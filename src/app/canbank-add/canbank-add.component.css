@@ -36,14 +36,14 @@ textarea {
   text-align: center;
   border-radius: 6px;
 }
-.input-icon-cover {
+/*.input-icon-cover {
   border-radius: 50%;
   border: 1px solid black;
 }
 .input-icon-opener {
   border-radius: 50% 50% 10% 10%;
   border: 1px solid black;
-}
+}*/
 .input-icon-transparent {
   background-color: transparent;
 }

@@ -1,8 +1,15 @@
+/*
+* CAN-BANK EXCHANGE SERVICE
+* calling REST API for data storing, reading, updating, deleting
+* setting intermediate states using other services
+*/
+
 import { Injectable, Input } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError, map } from 'rxjs/operators';
+// import { rejects } from 'assert';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
@@ -132,7 +139,7 @@ export class CanbankXchangeService {
       )
   }
 
-  public preFillDB(): Observable<object> {
+  public prefillDB(): Observable<object> {
     return this.http.post(`${this.canbankUrl}/db_prefill`, {})
       .pipe(
         map((response: any) => {
@@ -437,36 +444,22 @@ export class CanbankXchangeService {
       )
   }
 
-  public checkLists() {
-    console.log('XC checkLists')
-    this.getColor().subscribe(
-      (response: any) => { console.log(response) },
-      (error: any) => { console.error(error) }
-    )
-    this.getContentType().subscribe(
-      (response: any) => { console.log(response) },
-      (error: any) => { console.error(error); }
-    )
-    this.getCountry().subscribe(
-      (response: any) => { console.log(response) },
-      (error: any) => { console.error(error) }
-    )
-    this.getLanguage().subscribe(
-      (response: any) => { console.log(response) },
-      (error: any) => { console.error(error) }
-    )
-    this.getMaterial().subscribe(
-      (response: any) => { console.log(response) },
-      (error: any) => { console.error(error) }
-    )
-    this.getSurface().subscribe(
-      (response: any) => { console.log(response) },
-      (error: any) => { console.error(error) }
-    )
-    this.getType().subscribe(
-      (response: any) => { console.log(response) },
-      (error: any) => { console.error(error) }
-    )
+  /*
+  * function checkLists()
+  *  background refresh db => interface structures (add form presets)
+  */
+  public async checkLists() {
+    try {
+      await this.getColor().toPromise();
+      await this.getContentType().toPromise();
+      await this.getCountry().toPromise();
+      await this.getLanguage().toPromise();
+      await this.getMaterial().toPromise();
+      await this.getSurface().toPromise();
+      await this.getType().toPromise();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   private handleError(error: HttpErrorResponse): Observable<object> {

@@ -1,3 +1,16 @@
+  /*
+  * DESCRIPTION:
+  * CAN-BANK SPLASH PAGE
+  * starting app
+  * checking existence of the database and tables
+  * checking integrity of the database and tables
+  * loading basic set of interface data
+  *
+  * TODO:
+  * try some requests timing for LM visual effects
+  * move levelmeter specific functions to LM service
+  */
+
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,21 +24,12 @@ import { CanbankLevelmeterService } from '../canbank-services/canbank-levelmeter
   styleUrls: ['./canbank-splash.component.css']
 })
 export class CanbankSplashComponent implements OnInit {
-  levelMeter = {
-    levelDb: "",
-    levelDt: "",
-    levelL1: "",
-    levelL2: "",
-    levelL3: "",
-    levelL4: "",
-    levelL5: "",
-    levelL6: "",
-    levelL7: ""
-  };
+
+  levelMeter = this.canbankLM.levelMeter;
   successMessage: string = '';
   errorMessage: string[] = [];
   flashMe: boolean = false;
-  fillMe: boolean = false;
+  prefillMe: boolean = false;
 
   canbankUrl: string = '';
 
@@ -177,7 +181,7 @@ export class CanbankSplashComponent implements OnInit {
 
   checkFlash(that: any) {
     if (that.getLevelMeterEmpty().length > 0) {
-      that.fillMe = true;
+      that.prefillMe = true;
     } else {
       setTimeout(() => {
         that.router.navigate(['home'])

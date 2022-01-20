@@ -1,125 +1,127 @@
 <div id="can-disp" class="sub-screen">
 
-  <form id="can-display">
-    <label for="can-form-type">{{ i18n['can_type'] }}</label>
-    <div class="input-value-box">{{ canFormType }}</div>
+  <table id="can-disp-table">
+    <tr>
+      <td for="can-form-type">{{ i18n['can_type'] }}</td>
+      <td class="input-value-box">{{ canFormType }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-diameter">{{ i18n['diameter'] }}</label>
-      <div class="input-value-box">{{ canFormDiameter }}</div>
-    </div>
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-height">{{ i18n['height'] }}</label>
-      <div class="input-value-box">{{ canFormHeight }}</div>
-    </div>
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-volume">{{ i18n['volume'] }}</label>
-      <div class="input-value-box">{{ canFormVolume }}</div>
-    </div>
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-volumeFlOz">{{ i18n['volumeFlOz'] }}</label>
-      <div class="input-value-box">{{ canFormVolumeFlOz }}</div>
-    </div>
-    <!--div class="defloat"></div-->
+    <tr>
+      <td for="can-form-diameter">{{ i18n['diameter'] }}</td>
+      <td class="input-value-box">{{ canFormDiameter }}</td>
+    </tr>
+    <tr>
+      <td for="can-form-height">{{ i18n['height'] }}</td>
+      <td class="input-value-box">{{ canFormHeight }}</td>
+    </tr>
+    <tr>
+      <td for="can-form-volume">{{ i18n['volume'] }}</td>
+      <td class="input-value-box">{{ canFormVolume }}</td>
+    </tr>
+    <tr>
+      <td for="can-form-volumeFlOz">{{ i18n['volumeFlOz'] }}</td>
+      <td class="input-value-box">{{ canFormVolumeFlOz }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-material">{{ i18n['material'] }}</label>
-      <div class="input-value-box">{{ canFormMaterial }}</div>
-    </div>
+    <tr>
+      <td for="can-form-material">{{ i18n['material'] }}</td>
+      <td class="input-value-box">{{ canFormMaterial }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-surface">{{ i18n['surface'] }}</label>
-      <div class="input-value-box">{{ canFormSurface }}</div>
-    </div>
+    <tr>
+      <td for="can-form-surface">{{ i18n['surface'] }}</td>
+      <td class="input-value-box">{{ canFormSurface }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-cover-color">{{ i18n['cover'] }}</label>
-      <div class="input-value-box">{{ canFormCoverColor }}</div>
-    </div>
+    <tr>
+      <td for="can-form-cover-color">{{ i18n['cover'] }}</td>
+      <td class="input-value-box">{{ canFormCoverColor }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-opener-color">{{ i18n['opener'] }}</label>
-      <div class="input-value-box">{{ canFormOpenerColor }}</div>
-    </div>
-    <!--div class="defloat"></div-->
+    <tr>
+      <td for="can-form-opener-color">{{ i18n['opener'] }}</td>
+      <td class="input-value-box">{{ canFormOpenerColor }}</td>
+    </tr>
 
-    <label for="can-form-brand">{{ i18n['brand'] }}</label>
-    <div class="input-value-box">{{ canFormBrand }}</div>
+    <tr>
+      <td for="can-form-brand">{{ i18n['brand'] }}</td>
+      <td class="input-value-box">{{ canFormBrand }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-12 can-lg-6">
-      <label for="can-form-content-name">{{ i18n['content_name'] }}</label>
-      <div class="input-value-box">{{ canFormContentName }}</div>
-    </div>
+    <tr>
+      <td for="can-form-content-name">{{ i18n['content_name'] }}</td>
+      <td class="input-value-box">{{ canFormContentName }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-content-type">{{ i18n['content_type'] }}</label>
-      <div class="input-value-box">{{ canFormContentType }}</div>
-    </div>
+    <tr>
+      <td for="can-form-content-type">{{ i18n['content_type'] }}</td>
+      <td class="input-value-box">{{ canFormContentType }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-alcohol">{{ i18n['alcohol'] }}</label>
-      <div class="input-value-box">{{ canFormAlcohol }}</div>
-    </div>
+    <tr>
+      <td for="can-form-alcohol">{{ i18n['alcohol'] }}</td>
+      <td class="input-value-box">{{ canFormAlcohol }}</td>
+    </tr>
 
-    <!--div class="defloat"></div-->
+    <tr>
+      <td for="can-form-keywords">{{ i18n['keywords'] }}</td>
+      <td class="input-value-box">{{ canFormKeywords }}</td>
+    </tr>
 
-    <label for="can-form-keywords">{{ i18n['keywords'] }}</label>
-    <div class="input-value-box">{{ canFormKeywords }}</div>
+    <tr>
+      <td for="can-form-prod-date">{{ i18n['production_date'] }}</td>
+      <td class="input-value-box">{{ canFormProdDate }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-prod-date">{{ i18n['production_date'] }}</label>
-      <div class="input-value-box">{{ canFormProdDate }}</div>
-    </div>
+    <tr>
+      <td for="can-form-exp-date">{{ i18n['expiration_date'] }}</td>
+      <td class="input-value-box">{{ canFormExpDate }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-exp-date">{{ i18n['expiration_date'] }}</label>
-      <div class="input-value-box">{{ canFormExpDate }}</div>
-    </div>
+    <tr>
+      <td for="can-form-country">{{ i18n['made_in_country'] }}</td>
+      <td class="input-value-box">{{ canFormProdCountry }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-country">{{ i18n['made_in_country'] }}</label>
-      <div class="input-value-box">{{ canFormProdCountry }}</div>
-    </div>
+    <tr>
+      <td for="can-form-country">{{ i18n['shop_in_country'] }}</td>
+      <td class="input-value-box">{{ canFormShopCountry }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-country">{{ i18n['bought_in_country'] }}</label>
-      <div class="input-value-box">{{ canFormShopCountry }}</div>
-    </div>
+    <tr>
+      <td for="can-form-language">{{ i18n['primary_language'] }}</td>
+      <td class="input-value-box">{{ canFormLanguage }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-6 can-lg-3">
-      <label for="can-form-language">{{ i18n['primary_language'] }}</label>
-      <div class="input-value-box">{{ canFormLanguage }}</div>
-    </div>
+    <tr>
+      <td for="can-form-notes">{{ i18n['notes'] }}</td>
+      <td class="input-value-box">{{ canFormNotes }}</td>
+    </tr>
 
-    <!--div class="defloat"></div-->
+    <tr>
+      <td for="can-form-ean">{{ i18n['barcode'] }}</td>
+      <td class="input-value-box">{{ canFormEan }}</td>
+    </tr>
 
-    <div class="can-sm-12 can-md-12 can-lg-12">
-      <label for="can-form-ean">{{ i18n['barcode'] }}</label>
-      <div class="input-value-box">{{ canFormEan }}</div>
-    </div>
-
-    <div class="can-sm-12 can-md-12 can-lg-6">
+    <!tr>
       <!-- TODO: genrate ean_barcode image -->
-    </div>
+      <! /tr>
 
-    <label for="can-form-notes">{{ i18n['notes'] }}</label>
-    <div class="input-value-box">{{ canFormNotes }}</div>
+  </table>
 
-    <label for="can-form-fname1" class="can-file-button">{{ i18n['photo'] }} 1</label>
-    <div class="input-value-box">{{ canFormFname1 }}</div>
+  <!--td for="can-form-fname1" class="can-file-button">{{ i18n['photo'] }} 1</td>
+  <td class="input-value-box">{{ canFormFname1 }}</td>
 
-    <label for="can-form-fname2" class="can-file-button">{{ i18n['photo'] }} 2</label>
-    <div class="input-value-box">{{ canFormFname2 }}</div>
+  <td for="can-form-fname2" class="can-file-button">{{ i18n['photo'] }} 2</td>
+  <td class="input-value-box">{{ canFormFname2 }}</td>
 
-    <label for="can-form-fname3" class="can-file-button">{{ i18n['photo'] }} 3</label>
-    <div class="input-value-box">{{ canFormFname3 }}</div>
+  <td for="can-form-fname3" class="can-file-button">{{ i18n['photo'] }} 3</td>
+  <td class="input-value-box">{{ canFormFname3 }}</td>
 
-    <label for="can-form-fname4" class="can-file-button">{{ i18n['photo'] }} 4</label>
-    <div class="input-value-box">{{ canFormFname4 }}</div>
+  <td for="can-form-fname4" class="can-file-button">{{ i18n['photo'] }} 4</td>
+  <td class="input-value-box">{{ canFormFname4 }}</td>
 
-    <label for="can-form-fname5" class="can-file-button">{{ i18n['photo'] }} 5</label>
-    <div class="input-value-box">{{ canFormFname5 }}</div>
-
-  </form>
+  <td for="can-form-fname5" class="can-file-button">{{ i18n['photo'] }} 5</td>
+  <td class="input-value-box">{{ canFormFname5 }}</td-->
 
 </div>

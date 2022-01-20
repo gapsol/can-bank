@@ -1,0 +1,20 @@
+#can-disp-table {
+  width: 100%;
+  max-width: 741px;
+  margin: auto;
+  border-spacing: 0;
+}
+#can-disp-table td {
+  border: 0;
+  padding: 6px;
+}
+#can-disp-table tr td:nth-child(1) {
+  text-align: right;
+  max-width: 50%;
+}
+#can-disp-table tr td:nth-child(2) {
+  min-width: 50%;
+}
+#can-disp-table tr:nth-child(2n) {
+  background-color: yellow;
+}

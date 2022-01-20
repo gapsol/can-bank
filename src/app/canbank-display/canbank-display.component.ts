@@ -6,38 +6,37 @@ import { CanbankRecordService } from '../canbank-services/canbank-record.service
 
 @Component({
   selector: 'canbank-display',
-//  template: `<p>DISPLAY</p>`,
   templateUrl: './canbank-display.component.html',
   styleUrls: ['./canbank-display.component.css']
 })
 export class CanbankDisplayComponent implements OnInit {
   i18n = i18n[config.language];
-  canFormType: any;
-  canFormDiameter: any;
-  canFormHeight: any;
-  canFormVolume: any;
-  canFormVolumeFlOz: any;
-  canFormMaterial: any;
-  canFormSurface: any;
-  canFormCoverColor: any;
-  canFormOpenerColor: any;
-  canFormBrand: any;
-  canFormContentName: any;
-  canFormContentType: any;
-  canFormAlcohol: any;
-  canFormKeywords: any;
-  canFormProdDate: any;
-  canFormExpDate: any;
-  canFormProdCountry: any;
-  canFormShopCountry: any;
-  canFormLanguage: any;
-  canFormEan: any;
-  canFormFname1: any;
-  canFormFname2: any;
-  canFormFname3: any;
-  canFormFname4: any;
-  canFormFname5: any;
-  canFormNotes: any;
+  canFormType: string = '';
+  canFormDiameter: string = '';
+  canFormHeight: string = '';
+  canFormVolume: string = '';
+  canFormVolumeFlOz: string = '';
+  canFormMaterial: string = '';
+  canFormSurface: string = '';
+  canFormCoverColor: string = '';
+  canFormOpenerColor: string = '';
+  canFormBrand: string = '';
+  canFormContentName: string = '';
+  canFormContentType: string = '';
+  canFormAlcohol: string = '';
+  canFormKeywords: string = '';
+  canFormProdDate: string = '';
+  canFormExpDate: string = '';
+  canFormProdCountry: string = '';
+  canFormShopCountry: string = ''
+  canFormLanguage: string = '';
+  canFormEan: string = '';
+  canFormFname1: string = '';
+  canFormFname2: string = '';
+  canFormFname3: string = '';
+  canFormFname4: string = '';
+  canFormFname5: string = '';
+  canFormNotes: string = '';
 
   constructor(private canbankRC: CanbankRecordService) { }
 
