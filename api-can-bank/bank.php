@@ -15,8 +15,16 @@ require_once 'json_responses.php';
 $query = '';
 switch ($_SERVER['REQUEST_METHOD']) {
   case 'GET':
-    if (isset($_GET['id'])) {
+    if (isset($_GET['id']) && $_GET['id'] > 0) {
       $query = 'SELECT * FROM `can_bank` WHERE id=' . $_GET['id'];
+    } else if (isset($_GET['text'])) {
+      $query = 'SELECT * FROM `can_bank` WHERE
+      `brand` LIKE "%'.$_GET['text'].'%" OR
+      `content_name` LIKE "%'.$_GET['text'].'%" OR
+      `keywords` LIKE "%'.$_GET['text'].'%" OR
+      `ean` LIKE "%'.$_GET['text'].'%" OR
+      `notes` LIKE "%'.$_GET['text'].'%"
+      LIMIT 10';
     }
     break;
   case 'POST':
@@ -98,12 +106,10 @@ WHERE `id`=' . $_REQUEST['id'];
     json_error($mysqli, 500, 'No request');
 }
 
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
+$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
 if ($mysqli->connect_error) {
   json_error($mysqli, 500, $mysqli->connect_error);
 }
-
-$mysqli->select_db(DB_NAME);
 if ($mysqli->error) {
   json_error($mysqli, 500, $mysqli->error);
 }
@@ -113,7 +119,11 @@ if ($mysqli->error) {
   json_error($mysqli, 500, $mysqli->error);
 }
 
-json_return($mysqli, 'data', $result);
+$return = [];
+while ($row = $result->fetch_assoc()) {
+  array_push($return, $row);
+}
+json_return($mysqli, 'data', $return);
 
 /*function re_file($file, $ean)
 {
