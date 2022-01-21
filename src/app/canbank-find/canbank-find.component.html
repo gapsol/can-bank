@@ -1,26 +1,12 @@
 <div id="can-find" class="sub-screen">
 
   <h1 class="title">canFind</h1>
-  <form (ngSubmit)="canFind()">
     <div class="input-box">
-      <label for="find">Find me!</label>
-      <input type="text" id="find" name="findMe" required minlength="3" [(ngModel)]="findMe.findString">
-      <!--div *ngIf="local.invalid && (local.dirty || local.touched)" class="alert">
-        <div *ngIf="local.errors?.['required']">
-          Name is required.
-        </div>
-        <div *ngIf="local.errors?.['minlength']">
-          Name must be at least 4 characters long.
-        </div>
-        <div *ngIf="local.errors?.['forbiddenName']">
-          Name cannot be Bob.
-        </div>
-      </div-->
+      <label for="find">{{ i18n['find_it'] }}</label>
+      <input type="text" id="find" required minlength="3" [(ngModel)]="find" (input)="canFind()">
     </div>
 
-    <div class="input-box">
-      <button type="submit">Hľadať</button>
+    <div *ngFor="let item of canList">
+      <a (click)="canDisplay(item.id)">{{ item.text }}</a>
     </div>
-  </form>
-
 </div>

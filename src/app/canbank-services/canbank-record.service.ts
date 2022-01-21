@@ -19,7 +19,6 @@ export class CanbankRecordService {
   get canFormType(): string { return this._canFormType; }
   set canFormType(value: string) {
     this._canFormType = value;
-    console.log('_canFormType', this._canFormType)
     this.updateMe();
   }
   @Input()
@@ -27,7 +26,6 @@ export class CanbankRecordService {
   get canFormDiameter(): string { return this._canFormDiameter; }
   set canFormDiameter(value: string) {
     this._canFormDiameter = value;
-    console.log('_canFormDiameter', this._canFormDiameter)
     this.updateMe();
   }
   @Input()
@@ -35,7 +33,6 @@ export class CanbankRecordService {
   get canFormHeight(): string { return this._canFormHeight; }
   set canFormHeight(value: string) {
     this._canFormHeight = value;
-    console.log('_canFormHeight', this._canFormHeight)
     this.updateMe();
   }
   @Input()
@@ -43,7 +40,6 @@ export class CanbankRecordService {
   get canFormVolume(): string { return this._canFormVolume; }
   set canFormVolume(value: string) {
     this._canFormVolume = value;
-    console.log('_canFormVolume', this._canFormVolume)
     this.updateMe();
   }
   @Input()
@@ -51,7 +47,6 @@ export class CanbankRecordService {
   get canFormVolumeFlOz(): string { return this._canFormVolumeFlOz; }
   set canFormVolumeFlOz(value: string) {
     this._canFormVolumeFlOz = value;
-    console.log('_canFormVolumeFlOz', this._canFormVolumeFlOz)
     this.updateMe();
   }
   @Input()

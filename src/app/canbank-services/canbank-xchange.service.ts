@@ -408,9 +408,12 @@ export class CanbankXchangeService {
   }
 
   // getBank -
-  public getBank(): Observable<object> {
+  public getBank(id: number, text?: string): Observable<object> {
     console.log('getBank')
-    return this.http.get(`${this.canbankUrl}/bank`)
+    const params = new HttpParams()
+      .set('id', id)
+      .set('text', text!);
+    return this.http.get(`${this.canbankUrl}/bank`, { params })
       .pipe(
         map((response: any) => {
           if (response['status'] == 'error') {

@@ -16,7 +16,8 @@ export interface canBank {
   keywords: string,
   prod_date: string,
   exp_date: string,
-  country: number,
+  prod_country: number,
+  shop_country: number,
   language: number,
   ean: string,
   fname1: string,
@@ -24,7 +25,7 @@ export interface canBank {
   fname3: string,
   fname4: string,
   fname5: string,
-  note: string
+  notes: string
 }
 
 export var canBank: Array<canBank> = [
@@ -46,7 +47,8 @@ export var canBank: Array<canBank> = [
     keywords: "string",
     prod_date: "2000-10-10",
     exp_date: "2001-4-10",
-    country: 1,
+    prod_country: 1,
+    shop_country: 1,
     language: 1,
     ean: "string",
     fname1: "File",
@@ -54,6 +56,6 @@ export var canBank: Array<canBank> = [
     fname3: "File",
     fname4: "File",
     fname5: "File",
-    note: "string"
+    notes: "string"
   },
 ]

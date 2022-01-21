@@ -7,13 +7,11 @@
 #can-disp-table td {
   border: 0;
   padding: 6px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 #can-disp-table tr td:nth-child(1) {
+  width: 35%;
   text-align: right;
-  max-width: 50%;
-}
-#can-disp-table tr td:nth-child(2) {
-  min-width: 50%;
 }
 #can-disp-table tr:nth-child(2n) {
   background-color: yellow;
