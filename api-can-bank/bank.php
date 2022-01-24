@@ -1,12 +1,23 @@
 <?php
 
 /*
- * REST API for canBank application
- * script: /bank => POST: insert, GET:{0} stats {id} select, PUT:{id} update, DELETE:{id} delete
+ * REST API for CanBank application
+ * script: /bank =>
+ *  POST: insert
+ *  GET:{0} stats {id} select, {0, text} find
+ *  PUT:{id} update
+ *  DELETE:{id} delete
  *
  * filename scheme:
  * canbank/cb_ean_index.ext [cb_85801139009230_1.jpeg]
  * canbank/cb_datetime_index.ext [cb_211221122112_47.jpg]
+ *
+ * TODO:
+ *  GET {0}
+ *  GET {0, text} - atomize finding text
+ *  GET {id}
+ *  PUT {id}
+ *  DELETE {id}
  */
 require_once 'get_config.php';
 require_once 'get_headers.php';
@@ -18,23 +29,19 @@ switch ($_SERVER['REQUEST_METHOD']) {
     if (isset($_GET['id']) && $_GET['id'] > 0) {
       $query = 'SELECT * FROM `can_bank` WHERE id=' . $_GET['id'];
     } else if (isset($_GET['text'])) {
-      $query = 'SELECT * FROM `can_bank` WHERE
-      `brand` LIKE "%'.$_GET['text'].'%" OR
-      `content_name` LIKE "%'.$_GET['text'].'%" OR
-      `keywords` LIKE "%'.$_GET['text'].'%" OR
-      `ean` LIKE "%'.$_GET['text'].'%" OR
-      `notes` LIKE "%'.$_GET['text'].'%"
-      LIMIT 10';
+      $query = get_find_query($_GET['text']);
     }
     break;
   case 'POST':
     $json = file_get_contents('php://input');
     $post = json_decode($json);
-    /*re_file($post->data->canFormFname1, $post->data->canFormEan);
+    /*
+    re_file($post->data->canFormFname1, $post->data->canFormEan);
     re_file($post->data->canFormFname2, $post->data->canFormEan);
     re_file($post->data->canFormFname3, $post->data->canFormEan);
     re_file($post->data->canFormFname4, $post->data->canFormEan);
-    re_file($post->data->canFormFname5, $post->data->canFormEan);*/
+    re_file($post->data->canFormFname5, $post->data->canFormEan);
+    */
     $uniq = gen_uniq();
     $query = 'INSERT INTO `can_bank`
 (`uniq`, `type`, `diameter`, `height`, `volume`, `volumeFlOz`, `material`, `surface`, `cover_color`, `opener_color`, `brand`, `content_name`, `content_type`, `alcohol`, `keywords`, `prod_date`, `exp_date`, `prod_country`, `shop_country`, `language`, `ean`, `fname1`, `fname2`, `fname3`, `fname4`, `fname5`, `notes`)
@@ -125,7 +132,20 @@ while ($row = $result->fetch_assoc()) {
 }
 json_return($mysqli, 'data', $return);
 
-/*function re_file($file, $ean)
+function get_find_query($text)
+{
+  $query = $text;
+  $query = 'SELECT * FROM `can_bank` WHERE
+      `brand` LIKE "%' . $_GET['text'] . '%" OR
+      `content_name` LIKE "%' . $_GET['text'] . '%" OR
+      `keywords` LIKE "%' . $_GET['text'] . '%" OR
+      `ean` LIKE "%' . $_GET['text'] . '%" OR
+      `notes` LIKE "%' . $_GET['text'] . '%"
+      LIMIT 10';
+  return $query;
+}
+/*
+function re_file($file, $ean)
 {
   if ($file === '') return false;
   do {
@@ -135,4 +155,5 @@ json_return($mysqli, 'data', $return);
 
   } while (file_exists($fname_base . '*.*'));
   $filename[1] = $fname_base . '_1' . 'ext';  // $post->data->canFormFname1
-}*/
+}
+*/
