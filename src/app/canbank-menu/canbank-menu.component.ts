@@ -1,3 +1,11 @@
+/*
+ * CanBank menu
+ *
+ * TODO:
+ *  DECIDE width threshold for text<->icon change
+ *  DECIDE whether to use text menu or icon only
+ *  CREATE icons nad icon style
+ */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 

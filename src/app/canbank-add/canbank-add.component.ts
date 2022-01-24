@@ -1,3 +1,11 @@
+/*
+ * CanBank ADD
+ *  form for adding new can to the database
+ *
+ * TODO:
+ *  DECIDE whether to use local types defaults
+ *  REPLACE H1 word canAdd with GR-style icon (+)
+ */
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
@@ -48,13 +56,6 @@ export class CanbankAddComponent implements OnInit {
   typeIconContent: string = '';
 
   canFormValid: boolean = false;
-
-  /*
-    canReqDiameter: boolean = false;
-    canReqHeight: boolean = false;
-    canReqVolume: boolean = false;
-    canReqVolumeFlOz: boolean = false;
-  */
 
   canForm = new FormGroup({
     canFormType: new FormControl(0, Validators.required),

@@ -1,13 +1,22 @@
 <div id="can-categories" class="sub-screen">
 
-  <h1 class="title">canCtg</h1>
-  <!--ul>
-    <li *ngFor="let ctg of categories">{{ ctg.type }}
-      <ol>
-        <li *ngFor="let item of ctg.data">{{ item.name }}</li>
+  <h1>canCtg</h1>
+  <ul class="can-categories">
+    <div *ngFor="let ctg of categories; index as i">
+      <li (click)="toggleMe(i)">
+        <div *ngIf="show[i]; then caretopen; else caretclosed"></div>
+        <ng-template #caretclosed>&gt;</ng-template>
+        <ng-template #caretopen>v</ng-template>
+        {{ ctg.type }}
+      </li>
+      <ol *ngIf="show[i]">
+        <div *ngFor="let item of ctg.data">
+          <li>{{ item.name }}</li>
+        </div>
       </ol>
-    </li>
-  </ul-->
+      <input *ngIf="show[i]" type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.class" />
+    </div>
+  </ul>
 
 </div>
 

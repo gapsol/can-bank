@@ -9,6 +9,8 @@
   * TODO:
   * try some requests timing for LM visual effects
   * move levelmeter specific functions to LM service
+  * Try to change calling strategy in checkLists fnc
+  * Look at afterTheEvent function, whether is optimal
   */
 
 import { Component, OnInit } from '@angular/core';
@@ -183,9 +185,7 @@ export class CanbankSplashComponent implements OnInit {
     if (that.getLevelMeterEmpty().length > 0) {
       that.prefillMe = true;
     } else {
-      setTimeout(() => {
-        that.router.navigate(['home'])
-      }, config.tOut);
+      setTimeout(() => { that.router.navigate(['home']) }, config.tOut);
     }
   }
 

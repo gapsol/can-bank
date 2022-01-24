@@ -1,0 +1,9 @@
+input {
+  width: calc(100% - 4em);
+}
+.can-categories {
+  list-style: none;
+}
+.can-ctg-list {
+  display: none;
+}

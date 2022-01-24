@@ -1,9 +1,3 @@
-input,
-select,
-textarea {
-  border-width: 1px;
-  border-style: solid;
-}
 .can-file-button {
   display: block;
   width: fit-content;

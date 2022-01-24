@@ -1,12 +1,16 @@
 <div id="can-find" class="sub-screen">
 
-  <h1 class="title">canFind</h1>
+  <h1>canFind</h1>
+
+  <form>
     <div class="input-box">
       <label for="find">{{ i18n['find_it'] }}</label>
-      <input type="text" id="find" required minlength="3" [(ngModel)]="find" (input)="canFind()">
+      <input type="text" name="find" id="find" required minlength="3" [(ngModel)]="find" (input)="canFind()">
     </div>
+  </form>
 
-    <div *ngFor="let item of canList">
-      <a (click)="canDisplay(item.id)">{{ item.text }}</a>
-    </div>
+  <div *ngFor="let item of canList">
+    <a (click)="canDisplay(item.id)">{{ item.text }}</a>
+  </div>
+
 </div>

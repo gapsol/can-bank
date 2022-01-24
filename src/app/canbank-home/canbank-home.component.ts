@@ -2,6 +2,10 @@
 * CAN-BANK HOME PAGE
 *  welcome page of the app
 *  shows basic info from database
+*
+* TODO:
+*  DEMO version - remove or?
+*  IS? import { canBank } necessary
 */
 import { Component, OnInit } from '@angular/core';
 
@@ -9,8 +13,6 @@ import { config } from '../config/config';
 import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
 import { CanbankLanguageService } from '../canbank-services/canbank-language.service';
 import { canBank } from '../data/can-bank';
-import { canCountry } from '../data/can-country';
-import { canType } from '../data/can-type';
 
 @Component({
   selector: 'canbank-home',
