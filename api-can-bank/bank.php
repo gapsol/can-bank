@@ -21,6 +21,7 @@
  */
 require_once 'get_config.php';
 require_once 'get_headers.php';
+require_once 'get_connection.php';
 require_once 'json_responses.php';
 
 $query = '';
@@ -30,6 +31,16 @@ switch ($_SERVER['REQUEST_METHOD']) {
       $query = 'SELECT * FROM `can_bank` WHERE id=' . $_GET['id'];
     } else if (isset($_GET['text'])) {
       $query = get_find_query($_GET['text']);
+    }
+
+    if (isset($query) && isfull($query)) {
+      $mysqli = my_connect();
+      $result = my_query($mysqli, $query);
+      $return = [];
+      while ($row = $result->fetch_assoc()) {
+        array_push($return, $row);
+      }
+      json_return($mysqli, 'data', $return);
     }
     break;
   case 'POST':
@@ -43,7 +54,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     re_file($post->data->canFormFname5, $post->data->canFormEan);
     */
     $uniq = gen_uniq();
-    $query = 'INSERT INTO `can_bank`
+    $query = 'INSERT IGNORE INTO `can_bank`
 (`uniq`, `type`, `diameter`, `height`, `volume`, `volumeFlOz`, `material`, `surface`, `cover_color`, `opener_color`, `brand`, `content_name`, `content_type`, `alcohol`, `keywords`, `prod_date`, `exp_date`, `prod_country`, `shop_country`, `language`, `ean`, `fname1`, `fname2`, `fname3`, `fname4`, `fname5`, `notes`)
 VALUES (
 "' . $uniq . '",
@@ -75,6 +86,11 @@ VALUES (
 "' . $post->data->canFormNotes . '"
 )';
     // $_FILE
+    if (isset($query) && isfull($query)) {
+      $mysqli = my_connect();
+      $result = my_query($mysqli, $query);
+      json_return($mysqli, 'data', $result);
+    }
     break;
   case 'PUT':
     $query = 'UPDATE IGNORE `can_bank` SET
@@ -112,25 +128,6 @@ WHERE `id`=' . $_REQUEST['id'];
   default:
     json_error($mysqli, 500, 'No request');
 }
-
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-if ($mysqli->connect_error) {
-  json_error($mysqli, 500, $mysqli->connect_error);
-}
-if ($mysqli->error) {
-  json_error($mysqli, 500, $mysqli->error);
-}
-
-$result = $mysqli->query($query);
-if ($mysqli->error) {
-  json_error($mysqli, 500, $mysqli->error);
-}
-
-$return = [];
-while ($row = $result->fetch_assoc()) {
-  array_push($return, $row);
-}
-json_return($mysqli, 'data', $return);
 
 function get_find_query($text)
 {
