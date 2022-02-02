@@ -1,0 +1,55 @@
+<div class="sub-screen">
+  <h1>colorForm</h1>
+
+  <style>
+    .tabtr:nth-child(2n+1) {
+      background-color: #ffc800;
+      /* FFD700 gold */
+    }
+
+    .tabtr:nth-child(2n) {
+      background-color: #ffe800;
+      /* FFD700 gold */
+    }
+
+    .tabtr td {
+      padding: 3px;
+    }
+  </style>
+  <table style="width: 75%; margin: auto;border-spacing: 0px;">
+    <tr style="background-color: blue;color: gold;">
+      <th style="width:50%;">{{ i18n.name }}</th>
+      <th></th>
+      <th>{{ i18n.color }}</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let item of canColorRows" class="tabtr">
+      <td style="text-align: center;">{{ item.name }}</td>
+      <td style="text-align: center;">
+        <button style="width:0.75em;height:0.75em;vertical-align:text-bottom;" [style]="item.style"
+          (click)="setDefaultCanColor(item.id)"></button>
+      </td>
+      <td style="text-align: center;">{{ item.color}}</td>
+      <td><button style="background-color: red;" (click)="deleteCanColor(item.id)">x</button></td>
+    </tr>
+  </table>
+
+  <p></p>
+
+  <button class="can-ctg-open-btn" (click)="openForm = !openForm" *ngIf="!openForm">+</button>
+
+  <form *ngIf="openForm" [formGroup]="canForm" (submit)="submitCanColor()">
+    <label for="canFormName">{{ i18n.name }}</label>
+    <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
+
+    <label for="canFormColor">{{ i18n.color }}</label>
+    <div id="canFormColor" style="display: flex;">
+      <input type="color" formControlName="canFormPicker" (input)="checkColorPicker('picker')"
+        class="can-ctg-color-picker" required /><br>
+      <input type="text" formControlName="canFormColor" minlength="3" (input)="checkColorPicker('color')"
+        class="can-ctg-color-input" required />
+    </div>
+
+    <button class="can-ctg-btn" [disabled]="canForm.invalid">+</button>
+  </form>
+</div>

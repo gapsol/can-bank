@@ -299,7 +299,7 @@ export class CanbankAddComponent implements OnInit {
 
   addCan(/*f: NgForm*/) {
     this.canbankXC.setBank(this.canForm.value).subscribe(
-      (data: any) => {
+      () => {
         this.canbankRC.canFormType = this.canType[this.canForm.value.canFormType].name;
         this.canbankRC.canFormDiameter = this.canForm.value.canFormTypeDetails.canFormDiameter;
         this.canbankRC.canFormHeight = this.canForm.value.canFormTypeDetails.canFormHeight;

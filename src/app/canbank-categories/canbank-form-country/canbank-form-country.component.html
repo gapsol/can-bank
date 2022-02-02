@@ -1,0 +1,22 @@
+<div class="sub-screen">
+  <h1>countryForm</h1>
+
+  <li> (click)="toggleMe()"
+    <div *ngIf="show; then caretopen; else caretclosed"></div>
+    <ng-template #caretclosed>►</ng-template>
+    <ng-template #caretopen>▼</ng-template>
+    Country
+  </li>
+  <!--ul *ngIf="show[i]" class="can-ctg-list">
+    <div *ngFor="let item of ctg.data">
+      <li>■ {{ item.name }}</li>
+    </div>
+  </ul>
+  <form *ngIf="show[i]">
+    <div style="display: flex;">
+      <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name" (input)="validate(categories[i])" minlength="3" class="can-ctg-input" />
+      <input type="color" *ngIf="i == 2 || i == 3 || i == 4" [(ngModel)]="ctg.color" class="can-ctg-picker" />
+      <button class="can-ctg-btn" (click)="saveCtg(categories[i])" [disabled]="invalid[i]">+</button>
+    </div>
+  </form-->
+</div>

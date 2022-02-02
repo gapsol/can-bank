@@ -36,7 +36,16 @@ html, body {
   margin: 0;
   height: 100%;
   background-color: gold;
+  font-family: Arial, Helvetica, sans-serif/*Verdana, Geneva, Tahoma, sans-serif;*/
+}
+header, nav, h1, label,
+.title,
+.can-splash-success {
   font-family: Limelight;
+}
+h1 {
+  text-align: center;
+  color: blue;
 }
 a {
   text-decoration: none;
@@ -62,6 +71,7 @@ input, select, textarea, button {
 input, select, textarea {
   width: calc(100% - 10px);
   border-width: 1px;
+  border-style: solid;
 }
 button {
   width: 100%;
@@ -82,9 +92,6 @@ button:disabled {
   border: 3px dashed lime;
   background-color: silver;
   color: gray;
-}
-.title {
-  text-align: center;
 }
 .odometer {
   font-family: Gill Sans MT, sans-serif; /* Bahnschrift / Consolas / DejaVu Sans Mono*/

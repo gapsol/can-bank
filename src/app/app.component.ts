@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'canbank',
   template: `
     <canbank-head></canbank-head>
     <canbank-menu></canbank-menu>
@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title: string = 'can-bank';
 
   constructor() { }
 

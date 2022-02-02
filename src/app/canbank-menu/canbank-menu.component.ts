@@ -43,7 +43,7 @@ export class CanbankMenuComponent implements OnInit {
     { uri: '/settings', i18n: this.i18n['menu_settings'], svg: '' },
   ];
   menuLength: number = 100 / this.menuList.length;
-  menuWidth: string = `width: calc(${this.menuLength}% - 1px);`;
+  menuWidth: string = `width: ${this.menuLength}%;`;
   isMenu: boolean = false;
 
   constructor(private router: Router) { }

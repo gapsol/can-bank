@@ -1,9 +1,54 @@
-input {
-  width: calc(100% - 4em);
-}
 .can-categories {
   list-style: none;
 }
 .can-ctg-list {
-  display: none;
+  position: relative;
+  left: -1em;
+  list-style: none;
+}
+.can-ctg-input {
+  padding-left: 0.5em;
+}
+.can-ctg-color-input {
+  border-radius: 0 6px 6px 0;
+  padding-left: 0.5em;
+}
+.can-ctg-color-picker {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px 0 0 6px;
+}
+.can-ctg-btn {
+  margin: 0.5em 0;
+}
+.can-ctg-open-btn {
+  display: block;
+  width: 1em;
+  height: 1em;
+  margin: auto;
+}
+
+.canbank-menu {
+  margin-top: 3em;
+}
+.menu-btn {
+  width: 66%;
+  max-width: 471px;
+  margin: 3px auto;
+  border-radius: 1em;
+  padding: 3px 0;
+  text-align: center;
+  border-width: 0 1px 3px 0;
+  border-style: solid;
+  border-color: blue;
+  background-image: url('../../assets/img/bg_nav_blue.png');
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 3em 2em;
+}
+
+.menu-btn,
+.menu-btn a {
+  background-color: gold;
+  color: blue;
 }

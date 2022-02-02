@@ -1,0 +1,7 @@
+{
+  "/api-can-bank/*": {
+      "target": "http://can-bank/",
+      "secure": false,
+      "logLevel": "debug"
+  }
+}

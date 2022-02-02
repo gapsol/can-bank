@@ -1,54 +1,179 @@
 <div id="can-categories" class="sub-screen">
 
   <h1>canCtg</h1>
-  <ul class="can-categories">
-    <div *ngFor="let ctg of categories; index as i">
+
+  <!--ul class="can-categories">
+
+    <div>
+      <li (click)="toggleMe(0)">
+        <div *ngIf="show[0]; then caretopen; else caretclosed"></div>
+        <ng-template #caretclosed>►</ng-template>
+        <ng-template #caretopen>▼</ng-template>
+        Type
+      </li>
+      <ul *ngIf="show[0]" class="can-ctg-list">
+        <div *ngFor="let item of ctg.data">
+          <li>■ {{ item.name }}</li>
+        </div>
+      </ul>
+      <form [formGroup]="canFormType">
+        <div *ngIf="show[0]" style="display: flex;">
+          <input type="text" name="type" #name="ngModel" [(ngModel)]="canTypeName"
+          minlength="3" required class="can-ctg-input" />
+          <button class="can-ctg-btn" (click)="saveCtg(categories[0])" [disabled]="name.invalid">+</button>
+        </div>
+      </form>
+    </div>
+
+    <div>
+      <li (click)="toggleMe(1)">
+        <div *ngIf="show; then caretopen; else caretclosed"></div>
+        <ng-template #caretclosed>►</ng-template>
+        <ng-template #caretopen>▼</ng-template>
+        Content type
+      </li>
+      <ul *ngIf="show[1]" class="can-ctg-list">
+        <div *ngFor="let item of ctg.data">
+          <li>■ {{ item.name }}</li>
+        </div>
+      </ul>
+      <form *ngIf="show[1]" [formGroup]="canFormContent">
+        <div style="display: flex;">
+          <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name"
+            minlength="3" class="can-ctg-input" />
+          <button class="can-ctg-btn" (click)="saveCtg(categories[1])" [disabled]="canFormContent.valid">+</button>
+        </div>
+      </form>
+    </div>
+
+    <div>
+      <li (click)="toggleMe(2)">
+        <div *ngIf="show; then caretopen; else caretclosed"></div>
+        <ng-template #caretclosed>►</ng-template>
+        <ng-template #caretopen>▼</ng-template>
+        Material
+      </li>
+      <ul *ngIf="show[2]" class="can-ctg-list">
+        <div *ngFor="let item of ctg.data">
+          <li>■ {{ item.name }}</li>
+        </div>
+      </ul>
+      <form *ngIf="show[2]" [formGroup]="canFormMaterial">
+        <div style="display: flex;">
+          <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name"
+            minlength="3" class="can-ctg-input" />
+          <input type="color" [(ngModel)]="ctg.color" class="can-ctg-picker" />
+          <button class="can-ctg-btn" (click)="saveCtg(categories[2])" [disabled]="canFormMaterial.valid">+</button>
+        </div>
+      </form>
+    </div>
+
+    <div>
+      <li (click)="toggleMe(3)">
+        <div *ngIf="show; then caretopen; else caretclosed"></div>
+        <ng-template #caretclosed>►</ng-template>
+        <ng-template #caretopen>▼</ng-template>
+        Surface
+      </li>
+      <ul *ngIf="show[3]" class="can-ctg-list">
+        <div *ngFor="let item of ctg.data">
+          <li>■ {{ item.name }}</li>
+        </div>
+      </ul>
+      <form *ngIf="show[3]" [formGroup]="canFormSurface">
+        <div style="display: flex;">
+          <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name"
+            minlength="3" class="can-ctg-input" />
+          <input type="color" [(ngModel)]="ctg.color" class="can-ctg-picker" />
+          <button class="can-ctg-btn" (click)="saveCtg(categories[3])" [disabled]="canFormSurface.valid">+</button>
+        </div>
+      </form>
+    </div>
+
+    <div>
+      <li (click)="toggleMe(4)">
+        <div *ngIf="show; then caretopen; else caretclosed"></div>
+        <ng-template #caretclosed>►</ng-template>
+        <ng-template #caretopen>▼</ng-template>
+        Color
+      </li>
+      <ul *ngIf="show[4]" class="can-ctg-list">
+        <div *ngFor="let item of type.data">
+          <li>■ {{ item.name }}</li>
+        </div>
+      </ul>
+      <form *ngIf="show[4]" [formGroup]="canFormColor">
+        <div style="display: flex;">
+          <input type="text" name="{{ type.class }}" [(ngModel)]="type.name" (input)="validate(categories[0])"
+            minlength="3" class="can-ctg-input" />
+            <input type="color" [(ngModel)]="ctg.color" class="can-ctg-picker" />
+            <button class="can-ctg-btn" (click)="saveCtg(categories[4])" [disabled]="canFormColor.valid">+</button>
+        </div>
+      </form>
+    </div>
+
+    <div>
+      <li (click)="toggleMe(5)">
+        <div *ngIf="show; then caretopen; else caretclosed"></div>
+        <ng-template #caretclosed>►</ng-template>
+        <ng-template #caretopen>▼</ng-template>
+        Country
+      </li>
+      <ul *ngIf="show[5]" class="can-ctg-list">
+        <div *ngFor="let item of ctg.data">
+          <li>■ {{ item.name }}</li>
+        </div>
+      </ul>
+      <form *ngIf="show[5]" [formGroup]="canFormCountry">
+        <div style="display: flex;">
+          <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name"
+            minlength="3" class="can-ctg-input" />
+          <button class="can-ctg-btn" (click)="saveCtg(categories[5])" [disabled]="canFormCountry.valid">+</button>
+        </div>
+      </form>
+    </div>
+
+    <div>
+      <li (click)="toggleMe(6)">
+        <div *ngIf="show[6]; then caretopen; else caretclosed"></div>
+        <ng-template #caretclosed>►</ng-template>
+        <ng-template #caretopen>▼</ng-template>
+        Language
+      </li>
+      <ul *ngIf="show[6]" class="can-ctg-list">
+        <div *ngFor="let item of ctg.data">
+          <li>■ {{ item.name }}</li>
+        </div>
+      </ul>
+      <form *ngIf="show[6]" [formGroup]="canFormLanguage">
+        <div style="display: flex;">
+          <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name"
+            minlength="3" class="can-ctg-input" />
+          <button class="can-ctg-btn" (click)="saveCtg(categories[6])" [disabled]="canFormLanguage.valid">+</button>
+        </div>
+      </form>
+    </div-->
+
+    <!--div *ngFor="let ctg of categories; index as i">
       <li (click)="toggleMe(i)">
         <div *ngIf="show[i]; then caretopen; else caretclosed"></div>
-        <ng-template #caretclosed>&gt;</ng-template>
-        <ng-template #caretopen>v</ng-template>
+        <ng-template #caretclosed>►</ng-template>
+        <ng-template #caretopen>▼</ng-template>
         {{ ctg.type }}
       </li>
-      <ol *ngIf="show[i]">
+      <ul *ngIf="show[i]" class="can-ctg-list">
         <div *ngFor="let item of ctg.data">
-          <li>{{ item.name }}</li>
+          <li>■ {{ item.name }}</li>
         </div>
-      </ol>
-      <input *ngIf="show[i]" type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.class" />
+      </ul>
+      <form *ngIf="show[i]">
+        <div style="display: flex;">
+          <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name"  minlength="3" class="can-ctg-input" />
+          <input type="color" *ngIf="i == 2 || i == 3 || i == 4" [(ngModel)]="ctg.color" class="can-ctg-picker" />
+          <button class="can-ctg-btn" (click)="saveCtg(categories[i])" [disabled]="">+</button>
+        </div>
+      </form>
     </div>
-  </ul>
+  </ul-->
 
 </div>
-
-<!--
-    <form>
-    <div class="input-box">F
-      <label>categories
-        <input type="text" class="input-initial">
-      </label>
-    </div>
-
-    <div class="input-box">
-      <label>categories
-        <input type="text" class="input-empty">
-      </label>
-    </div>
-
-    <div class="input-box">
-      <label>categories
-        <input type="text" class="input-valid">
-      </label>
-    </div>
-
-    <div class="input-box">
-      <label>categories
-        <input type="text" class="input-invalid">
-      </label>
-    </div>
-
-    <div class="input-box">
-      <button type="submit" (click)="canCategories();">Pridať</button>
-    </div>
-  </form>
-
--->

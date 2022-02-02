@@ -245,6 +245,47 @@ export class CanbankXchangeService {
       )
   }
 
+  // POST /color?formdata
+  // setColor - save new color
+  public setColor(formdata: object): Observable<object> {
+    return this.http.post(`${this.canbankUrl}/color`, { "data": formdata })
+      .pipe(
+        map((response: any) => { return response; }),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return this.handleError(error);
+        })
+      )
+  }
+
+  // PUT /color?formdata
+  // updateColor - update existing color
+  public updateColor(formdata: object): Observable<object> {
+    return this.http.put(`${this.canbankUrl}/color`, { "data": formdata })
+      .pipe(
+        map((response: any) => { return response; }),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return this.handleError(error);
+        })
+      )
+  }
+
+  // DELETE /color?id
+  // deleteColor - delete color
+  public deleteColor(id: number): Observable<object> {
+    const params = new HttpParams()
+    .set("id", id );
+    return this.http.delete(`${this.canbankUrl}/color`, { params })
+    .pipe(
+      map((response: any) => { return response; }),
+      catchError((error: HttpErrorResponse) => {
+        console.error(error);
+        return this.handleError(error);
+      })
+    )
+  }
+
   // GET /content?id
   // getContentType - get list of content types (id = 0) or content type by id (!= 0)
   public getContentType(id: number = 0): Observable<object> {
@@ -271,6 +312,8 @@ export class CanbankXchangeService {
         })
       )
   }
+
+  public setContentType(formdata: object) { }
 
   // GET /country?id
   // getCountry - get list of countries (id = 0) or country by id (!= 0)
@@ -299,6 +342,8 @@ export class CanbankXchangeService {
       )
   }
 
+  public setCountry(formdata: object) { }
+
   // GET /language?id
   // getLanguage - get list of languages (id = 0) or language by id (!= 0)
   public getLanguage(id: number = 0): Observable<object> {
@@ -325,6 +370,8 @@ export class CanbankXchangeService {
         })
       )
   }
+
+  public setLanguage(formdata: object) { }
 
   // GET /material?id
   // getMaterial - get list of materials (id = 0) or material by id (!= 0)
@@ -353,6 +400,8 @@ export class CanbankXchangeService {
       )
   }
 
+  public setMaterial(formdata: object) { }
+
   // GET /surface?id
   // getSurface - get list of surfaces (id = 0) or surface by id (!= 0)
   public getSurface(id: number = 0): Observable<object> {
@@ -379,6 +428,8 @@ export class CanbankXchangeService {
         })
       )
   }
+
+  public setSurface(formdata: object) { }
 
   // GET /type?id
   // getType - get list of types (id = 0) or type by id (!= 0)
@@ -407,9 +458,10 @@ export class CanbankXchangeService {
       )
   }
 
+  public setType(formdata: object) { }
+
   // getBank -
   public getBank(id: number, text?: string): Observable<object> {
-    console.log('getBank')
     const params = new HttpParams()
       .set('id', id)
       .set('text', text!);
@@ -430,8 +482,6 @@ export class CanbankXchangeService {
 
   // setBank -
   public setBank(formdata: object): Observable<object> {
-    console.log('setBank')
-    console.log(formdata)
     return this.http.post(`${this.canbankUrl}/bank`, { "data": formdata })
       .pipe(
         map((response: any) => {

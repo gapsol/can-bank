@@ -6,7 +6,7 @@
 .menu-btn {
   display: inline-block;
   height: 2em;
-  border-right: 1px solid gold;
+  /*border-right: 1px solid gold;*/
   line-height: 2em;
   text-align: center;
   font-weight: bold;
@@ -19,8 +19,13 @@
 .menu-btn-active {
   background-color: gold !important;
   color: blue !important;
+  background-image: url('../../assets/img/bg_nav_blue.png') !important;
 }
 .anchor-btn {
   display: inline-block;
   width: 100%;
+  background-image: url('../../assets/img/bg_nav_gold.png');
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: 20% 100%;
 }
