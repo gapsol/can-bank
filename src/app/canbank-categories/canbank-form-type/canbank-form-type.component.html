@@ -1,22 +1,71 @@
 <div class="sub-screen">
-  <h1>typeForm</h1>
+  <h1>canTypeForm</h1>
 
-  <li> (click)="toggleMe()"
-    <div *ngIf="show; then caretopen; else caretclosed"></div>
-    <ng-template #caretclosed>►</ng-template>
-    <ng-template #caretopen>▼</ng-template>
-    Type
-  </li>
-  <!--ul *ngIf="show[i]" class="can-ctg-list">
-    <div *ngFor="let item of ctg.data">
-      <li>■ {{ item.name }}</li>
+  <style>
+    .tabtr:nth-child(2n+1) {
+      background-color: #ffc800;
+      /* FFD700 gold */
+    }
+
+    .tabtr:nth-child(2n) {
+      background-color: #ffe800;
+      /* FFD700 gold */
+    }
+
+    .tabtr td {
+      padding: 3px;
+    }
+  </style>
+  <table style="width: 75%;
+  margin: auto;
+  border-spacing: 0px;">
+    <tr style="background-color: blue;
+    color: gold;">
+      <th style="width:50%;">{{ i18n.name }}</th>
+      <th></th>
+      <th>{{ i18n.color }}</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let item of canContentRows" class="tabtr">
+      <td style="text-align: center;">{{ item.name }}</td>
+      <td style="text-align: center;">
+        <button style="width:0.75em;
+        height:0.75em;
+        vertical-align:text-bottom;" [style]="" (click)="setDefaultCanContentType(item.id)"></button>
+      </td>
+      <td style="text-align: center;"></td>
+      <td><a style="background-color: red;
+        color: white;
+        width: 1em;
+        display: block;
+        text-align: center;
+        border-radius: 3px;
+        height: 1em;
+        line-height: 1em;" (click)="deleteCanContentType(item.id)"><b>x</b></a></td>
+    </tr>
+  </table>
+
+  <p></p>
+
+  <button class="can-ctg-open-btn" (click)="openForm = !openForm" *ngIf="!openForm">+</button>
+
+  <!--
+  // TODO:
+  // no color picker - select-option colors from db
+  //
+  -->
+  <form *ngIf="openForm" [formGroup]="canForm" (submit)="submitCanContentType()">
+    <label for="canFormName">{{ i18n.name }}</label>
+    <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
+
+    <label for="canFormColor">{{ i18n.color }}</label>
+    <div id="canFormColor" style="display: flex;">
+      <input type="color" formControlName="canFormPicker" (input)="checkColorPicker('picker')"
+        class="can-ctg-color-picker" required /><br>
+      <input type="text" formControlName="canFormColor" minlength="3" (input)="checkColorPicker('color')"
+        class="can-ctg-color-input" required />
     </div>
-  </ul>
-  <form *ngIf="show[i]">
-    <div style="display: flex;">
-      <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name" (input)="validate(categories[i])" minlength="3" class="can-ctg-input" />
-      <input type="color" *ngIf="i == 2 || i == 3 || i == 4" [(ngModel)]="ctg.color" class="can-ctg-picker" />
-      <button class="can-ctg-btn" (click)="saveCtg(categories[i])" [disabled]="invalid[i]">+</button>
-    </div>
-  </form-->
+
+    <button class="can-ctg-btn" [disabled]="canForm.invalid">+</button>
+  </form>
 </div>

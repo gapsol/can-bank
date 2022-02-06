@@ -1,22 +1,31 @@
 <div class="sub-screen">
   <h1>contentForm</h1>
 
-  <li (click)="toggleMe()">
-    <div *ngIf="show; then caretopen; else caretclosed"></div>
-    <ng-template #caretclosed>►</ng-template>
-    <ng-template #caretopen>▼</ng-template>
-    Content type
-  </li>
-  <!--ul *ngIf="show[i]" class="can-ctg-list">
-    <div *ngFor="let item of ctg.data">
-      <li>■ {{ item.name }}</li>
-    </div>
-  </ul>
-  <form *ngIf="show[i]">
-    <div style="display: flex;">
-      <input type="text" name="{{ ctg.class }}" [(ngModel)]="ctg.name" (input)="validate(categories[i])" minlength="3" class="can-ctg-input" />
-      <input type="color" *ngIf="i == 2 || i == 3 || i == 4" [(ngModel)]="ctg.color" class="can-ctg-picker" />
-      <button class="can-ctg-btn" (click)="saveCtg(categories[i])" [disabled]="invalid[i]">+</button>
-    </div>
-  </form-->
+  <table class="tab-list">
+    <thead>
+      <tr>
+        <th>[F]</th>
+        <th>{{ i18n.ctg_content_type }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of canContentRows">
+        <td><button class="btn-sign" [style]="item.style" (click)="setDefaultCanContent(item.id)"></button></td>
+        <td class="tab-90">{{ item.name }}</td>
+        <td><button class="btn-del" (click)="deleteCanContent(item.id)"><span>×</span></button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p></p>
+
+  <button class="can-ctg-open-btn" (click)="openForm = !openForm" *ngIf="!openForm">+</button>
+
+  <form *ngIf="openForm" [formGroup]="canForm" (submit)="submitCanContent()">
+    <label for="canFormName">{{ i18n.name }}</label>
+    <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
+
+    <button class="can-ctg-btn" [disabled]="canForm.invalid">+</button>
+  </form>
 </div>

@@ -9,25 +9,25 @@ export var canSurface: Array<canSurface> = [
   {
     id: 1,
     name: "lesklý",
-    color: "lightgray",
+    color: "#fff0b0",
     default: true
   },
   {
     id: 2,
     name: "matný",
-    color: "silver",
+    color: "#b0b0b0",
     default: false
   },
   {
     id: 3,
     name: "fólia",
-    color: "yellow",
+    color: "#b0b0ff",
     default: false
   },
   {
     id: 4,
     name: "papier",
-    color: "white",
+    color: "#ffffff",
     default: false
   },
 ]

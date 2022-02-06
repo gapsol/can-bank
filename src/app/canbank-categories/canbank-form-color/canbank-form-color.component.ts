@@ -36,19 +36,21 @@ export class CanbankFormColorComponent implements OnInit {
 
   ngOnInit() {
     this.getCanColors();
-    this.checkColorPicker('picker');
   }
 
+  // TODO:
+  // classify style
   getCanColors(): void {
     this.canbankXC.getColor(0).subscribe(
       () => {
         this.canbankIF.canColor.forEach((e) => {
-          let eStyle = 'background-color:' + e.color;
-          eStyle += (e.default) ? ';border: 3px solid black;' : '';
+          let eStyle = 'background-color:' + e.color + ';';
+          eStyle += (e.default) ? 'border-style:solid;border-width:2px;border-color:white gray gray white;' : '';
           this.canColorRows.push({
             id: e.id,
             name: e.name,
             color: e.color,
+            code: e.code,
             default: e.default,
             style: eStyle
           });
@@ -115,7 +117,9 @@ export class CanbankFormColorComponent implements OnInit {
         this.canForm.value.canFormId = data['list'].id;
         this.canForm.value.canFormName = data['list'].name;
         this.canForm.value.canFormColor = data['list'].color;
+        this.canForm.value.canFormPicker = data['list'].code;
         this.canForm.value.canFormDefault = 1;
+        if (data['list'].default === '1') { return }
         this.canbankXC.updateColor(this.canForm.value).subscribe(
           () => { location.reload(); },
           (error: any) => { console.error(error); }
