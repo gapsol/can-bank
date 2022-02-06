@@ -2,6 +2,7 @@
 
 require_once 'get_headers.php';
 require_once 'get_config.php';
+require_once 'get_connection.php';
 require_once 'json_responses.php';
 
 $j = [];

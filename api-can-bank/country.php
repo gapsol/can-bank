@@ -2,56 +2,137 @@
 
 /*
  * REST API for canBank application
- * script: /color => POST: insert, GET:{0} stats {id} select, PUT:{id} update, DELETE:{id} delete
+ * script: /country => POST: insert, GET:{0} stats {id} select, PUT:{id} update, DELETE:{id} delete
  */
 require_once 'get_config.php';
 require_once 'get_headers.php';
+require_once 'get_connection.php';
 require_once 'json_responses.php';
 
-$mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
-if ($mysqli->connect_error) {
-  json_error($mysqli, 401, $mysqli->connect_error);
-}
-if ($mysqli->error) {
-  json_error($mysqli, 500, $mysqli->error);
-}
-
-$query = '';
 switch ($_SERVER['REQUEST_METHOD']) {
   case 'GET':
-    if (isset($_GET['id'])) {
-      switch ($_GET['id']) {
-        case 0:
-          $query = 'SELECT * FROM `can_country` ORDER BY `name`';
-          break;
-        default:
-          $query = 'SELECT * FROM `can_country` WHERE id=' . $_GET['id'];
-      }
-    }
+    getIt();
+    break;
+  case 'POST':
+    postIt();
+    break;
+  case 'PUT':
+    putIt();
+    break;
+  case 'DELETE':
+    deleteIt();
     break;
   default:
-    json_error($mysqli, 400, 'Bad request');
+    json_success($mysqli);
 }
 
-if (isset($query) && isfull($query)) {
-  $result = $mysqli->query($query);
-  if ($mysqli->error) {
-    json_error($mysqli, 500, $mysqli->error);
-  }
-
-  switch ($_GET['id']) {
-    case 0:
-      $return = [];
-      while ($row = $result->fetch_assoc()) {
-        $row['default'] = ($row['default'] == 1) ? true : false;
-        array_push($return, $row);
-      }
+function getIt()
+{
+  if (
+    isset($_GET)
+    && isset($_GET['id'])
+    && $_GET['id'] >= 0
+  ) {
+    switch ($_GET['id']) {
+      case 0:
+        $query = 'SELECT * FROM `can_country` ORDER BY `default` DESC, `name`';
+        break;
+      default:
+        $query = 'SELECT * FROM `can_country` WHERE id = ' . $_GET['id'];
+    }
+    $mysqli = my_connect();
+    $result = my_query($mysqli, $query);
+    switch ($_GET['id']) {
+      case 0:
+        $return = [];
+        while ($row = $result->fetch_assoc()) {
+          $row['default'] = ($row['default'] == 1) ? true : false;
+          array_push($return, $row);
+        }
+        break;
+      default:
+        $return = $result->fetch_assoc();
+    }
+    if (count($return) > 0) {
       json_return($mysqli, 'list', $return);
-      break;
-    default:
-      $return = $result->fetch_assoc();
-      json_return($mysqli, 'item', $return);
+    } else {
+      json_error_nocontent($mysqli);
+    }
+  } else {
+    json_error_notacceptable();
   }
-} else {
-  json_error($mysqli, 400, 'Bad request');
+}
+
+function postIt()
+{
+  $json = file_get_contents('php://input');
+  $post = json_decode($json);
+  if (
+    isset($post->canFormName)
+    && isset($post->canFormAbbr)
+  ) {
+    $uniq = gen_uniq();
+    $query = 'INSERT IGNORE INTO `can_country`
+      (`uniq`, `name`, `abbr`, `default`)
+      VALUES (
+      "' . $uniq . '",
+      "' . $post->canFormName . '",
+      "' . $post->canFormAbbr . '",
+      "false"
+      )';
+    $mysqli = my_connect();
+    my_query($mysqli, $query);
+    json_success($mysqli);
+  } else {
+    json_error_notacceptable();
+  }
+}
+
+function putIt()
+{
+  $json = file_get_contents('php://input');
+  $post = json_decode($json);
+  if (
+    isset($post->canFormId)
+    && isset($post->canFormName)
+    && isset($post->canFormAbbr)
+    && isset($post->canFormDefault)
+  ) {
+    $query = 'UPDATE IGNORE `can_country` SET `default` = false WHERE `default` = true';
+    $mysqli = my_connect();
+    my_query($mysqli, $query);
+    $uniq = gen_uniq();
+    $query = 'UPDATE IGNORE `can_country`
+      SET
+        `uniq` = "' . $uniq . '",
+        `name` = "' . $post->canFormName . '",
+        `abbr` = "' . $post->canFormAbbr . '",
+        `default` = "' . $post->canFormDefault . '"
+      WHERE
+        `id` = ' . $post->canFormId;
+    my_query($mysqli, $query);
+    json_success($mysqli);
+  } else {
+    json_error_notacceptable();
+  }
+}
+
+function deleteIt()
+{
+  if (
+    isset($_REQUEST)
+    && isset($_REQUEST['id'])
+    && $_REQUEST['id'] > 0
+  ) {
+    $query = 'DELETE FROM `can_country` WHERE `id` = ' . $_REQUEST['id'];
+    $mysqli = my_connect();
+    my_query($mysqli, $query);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
+  } else {
+    json_error_notacceptable();
+  }
 }
