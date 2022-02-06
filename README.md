@@ -18,8 +18,6 @@ ng serve --open
 ### TODOs:
 - ADD part:
 -- files handling
-- CATEGORIES part:
--- editing forms
 - STATS part:
 -- generate report
 - SETTINGS part:
