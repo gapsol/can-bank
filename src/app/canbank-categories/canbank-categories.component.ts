@@ -38,12 +38,13 @@ interface menuItem {
 
 @Component({
   selector: 'canbank-categories',
-//  templateUrl: './canbank-categories.component.html',
   template: `
   <div class="sub-screen">
+    <h1>canCategories</h1>
+
     <nav class="canbank-menu">
       <div class="menu-btn" *ngFor="let item of menuList">
-        <a [routerLink]="item.uri" routerLinkActive="menu-btn-active" class="anchor-btn">
+        <a [routerLink]="item.uri" class="anchor-btn"><!-- routerLinkActive="menu-btn-active" -->
           <span>{{ item.i18n }}</span>
         </a>
       </div>

@@ -3,13 +3,11 @@
 * calling REST API for data storing, reading, updating, deleting
 * setting intermediate states using other services
 */
-
 import { Injectable, Input } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError, map } from 'rxjs/operators';
-// import { rejects } from 'assert';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
@@ -248,7 +246,7 @@ export class CanbankXchangeService {
   // POST /color?formdata
   // setColor - save new color
   public setColor(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/color`, { "data": formdata })
+    return this.http.post(`${this.canbankUrl}/color`, (formdata))
       .pipe(
         map((response: any) => { return response; }),
         catchError((error: HttpErrorResponse) => {
@@ -261,7 +259,7 @@ export class CanbankXchangeService {
   // PUT /color?formdata
   // updateColor - update existing color
   public updateColor(formdata: object): Observable<object> {
-    return this.http.put(`${this.canbankUrl}/color`, { "data": formdata })
+    return this.http.put(`${this.canbankUrl}/color`, (formdata))
       .pipe(
         map((response: any) => { return response; }),
         catchError((error: HttpErrorResponse) => {
@@ -626,17 +624,39 @@ export class CanbankXchangeService {
   }
 
   public setType(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/material`, (formdata))
+    console.log(formdata)
+    return this.http.post(`${this.canbankUrl}/type`, (formdata))
+      .pipe(
+        map(response => response),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return this.handleError(error);
+        })
+      )
   }
 
   public updateType(formdata: object): Observable<object> {
-    return this.http.put(`${this.canbankUrl}/material`, (formdata))
+    return this.http.put(`${this.canbankUrl}/type`, (formdata))
+      .pipe(
+        map(response => response),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return this.handleError(error);
+        })
+      )
   }
 
   public deleteType(id: number): Observable<object> {
     const params = new HttpParams()
       .set('id', id)
-    return this.http.delete(`${this.canbankUrl}/material`, { params })
+    return this.http.delete(`${this.canbankUrl}/type`, { params })
+      .pipe(
+        map(response => response),
+        catchError((error: HttpErrorResponse) => {
+          console.error(error);
+          return this.handleError(error);
+        })
+      )
   }
 
   // getBank -

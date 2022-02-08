@@ -1,3 +1,25 @@
+table {
+  margin: auto;
+  border-spacing: 0px;
+}
+table thead tr {
+  background-color: blue;
+  color: gold;
+}
+table td, table th {
+  text-align: center;
+  padding: 3px 5px;
+}
+table .tab-90 {
+  width: 90%;
+}
+table tbody tr:nth-child(2n + 1) {
+  background-color: #ffc800;
+}
+table tbody tr:nth-child(2n) {
+  background-color: #ffe800;
+}
+
 .can-categories {
   list-style: none;
 }
@@ -16,23 +38,24 @@
 .can-ctg-color-picker:required:invalid {
   background-color: red;
 }
-.can-ctg-btn {
+.can-ctg-submit-btn {
   margin: 0.5em 0;
+  font-size: 1em;
+  font-weight: bold;
 }
 .can-ctg-open-btn {
-  display: block;
-  width: 1em;
-  height: 1em;
-  margin: auto;
+  margin-top: 1em;
+  font-size: 1em;
+  font-weight: bold;
 }
 
 .canbank-menu {
   margin-top: 3em;
 }
 .menu-btn {
-  width: 66%;
+  width: 69%;
   max-width: 471px;
-  margin: 3px auto;
+  margin: 6px auto;
   border-radius: 1em;
   padding: 3px 0;
   text-align: center;
@@ -51,42 +74,30 @@
   color: blue;
 }
 
-.tab-list {
-  width: 75%;
-  margin: auto;
-  border-spacing: 0px;
-}
-.tab-list thead tr {
-  background-color: blue;
-  color: gold;
-}
-.tab-list td {
-  text-align: center;
-  padding: 3px 5px;
-}
-.tab-list .tab-90 {
-  width: 90%;
-}
-.tab-list tbody tr:nth-child(2n + 1) {
-  background-color: #ffc800;
-}
-.tab-list tbody tr:nth-child(2n) {
-  background-color: #ffe800;
+.btn-flag {
+  font-weight: bold;
+  color: black;
 }
 .btn-del {
-  vertical-align: text-bottom;
-  width: 0.75em;
-  height: 0.75em;
   background-color: red;
   color: white;
 }
 .btn-del span {
-  position: relative;
-  top: -5px;
-  left: -1px;
+  line-height: 1em;
+  font-size: 2em;
 }
-.btn-sign {
+.btn-flag, .btn-del {
+  width: 2em;
   vertical-align: text-bottom;
-  width: 0.75em;
-  height: 0.75em;
+}
+.btn-open {
+  background-color: gold;
+  color: blue;
+}
+.check-2em {
+  width: 2em;
+  height: 2em;
+}
+.check-right {
+  float: right;
 }

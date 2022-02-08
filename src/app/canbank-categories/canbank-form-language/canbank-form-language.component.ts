@@ -19,14 +19,14 @@ interface styledLanguage extends canLanguage {
 })
 export class CanbankFormLanguageComponent implements OnInit {
   i18n = i18n[config.language];
-  openForm: boolean = false;
   canForm = new FormGroup({
     canFormId: new FormControl(),
     canFormName: new FormControl('', Validators.required),
     canFormAbbr: new FormControl('', Validators.required),
-    canFormDefault: new FormControl()
+    canFormDefault: new FormControl(false)
   });
   canLanguageRows: styledLanguage[] = [];
+  openClass: string = '';
 
   constructor(
     private canbankXC: CanbankXchangeService,
@@ -77,6 +77,7 @@ export class CanbankFormLanguageComponent implements OnInit {
     // TODO:
     // language valid only when so far not exists
     // language valid only when it fits htmllanguages array
+    // load ISO langs tab
     if (this.checkCanLanguage()) {
       this.canbankXC.setLanguage(this.canForm.value).subscribe(
         () => { location.reload(); },
@@ -96,6 +97,16 @@ export class CanbankFormLanguageComponent implements OnInit {
       () => { location.reload(); },
       (error: any) => { console.error(error); }
     );
+  }
+
+  openForm() {
+    this.openClass = 'btn-open';
+    setTimeout(() => {
+      let element = document.getElementById('openBtn');
+      if (element) {
+        element.scrollIntoView(true);
+      }
+    });
   }
 
 }

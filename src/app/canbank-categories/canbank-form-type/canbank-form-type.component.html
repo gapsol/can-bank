@@ -1,71 +1,45 @@
 <div class="sub-screen">
-  <h1>canTypeForm</h1>
+  <h1 class="title">canTypeForm</h1>
 
-  <style>
-    .tabtr:nth-child(2n+1) {
-      background-color: #ffc800;
-      /* FFD700 gold */
-    }
-
-    .tabtr:nth-child(2n) {
-      background-color: #ffe800;
-      /* FFD700 gold */
-    }
-
-    .tabtr td {
-      padding: 3px;
-    }
-  </style>
-  <table style="width: 75%;
-  margin: auto;
-  border-spacing: 0px;">
-    <tr style="background-color: blue;
-    color: gold;">
-      <th style="width:50%;">{{ i18n.name }}</th>
-      <th></th>
-      <th>{{ i18n.color }}</th>
-      <th></th>
-    </tr>
-    <tr *ngFor="let item of canContentRows" class="tabtr">
-      <td style="text-align: center;">{{ item.name }}</td>
-      <td style="text-align: center;">
-        <button style="width:0.75em;
-        height:0.75em;
-        vertical-align:text-bottom;" [style]="" (click)="setDefaultCanContentType(item.id)"></button>
-      </td>
-      <td style="text-align: center;"></td>
-      <td><a style="background-color: red;
-        color: white;
-        width: 1em;
-        display: block;
-        text-align: center;
-        border-radius: 3px;
-        height: 1em;
-        line-height: 1em;" (click)="deleteCanContentType(item.id)"><b>x</b></a></td>
-    </tr>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th class="tab-90">{{ i18n.ctg_type }}</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of canTypeRows">
+        <td><button class="btn-flag" [style]="item.style" (click)="setDefaultCanType(item.id)"></button></td>
+        <td>{{ item.name }}</td>
+        <td><button class="btn-del" (click)="deleteCanType(item.id)"><span>×</span></button></td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass" (click)="openForm()">+</button>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 
-  <p></p>
-
-  <button class="can-ctg-open-btn" (click)="openForm = !openForm" *ngIf="!openForm">+</button>
-
-  <!--
-  // TODO:
-  // no color picker - select-option colors from db
-  //
-  -->
-  <form *ngIf="openForm" [formGroup]="canForm" (submit)="submitCanContentType()">
+  <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanType()">
     <label for="canFormName">{{ i18n.name }}</label>
-    <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
-
-    <label for="canFormColor">{{ i18n.color }}</label>
-    <div id="canFormColor" style="display: flex;">
-      <input type="color" formControlName="canFormPicker" (input)="checkColorPicker('picker')"
-        class="can-ctg-color-picker" required /><br>
-      <input type="text" formControlName="canFormColor" minlength="3" (input)="checkColorPicker('color')"
-        class="can-ctg-color-input" required />
+    <input id="canFormName" type="text" formControlName="canFormName" required />
+    <label for="canFormDiameter">{{ i18n.diameter }}</label>
+    <input id="canFormDiameter" type="number" min="0" step="1" formControlName="canFormDiameter" required /><br>
+    <label for="canFormHeight">{{ i18n.height }}</label>
+    <input id="canFormHeight" type="number" min="0" step="1" formControlName="canFormHeight" required />
+    <label for="canFormVolume">{{ i18n.volume }}</label>
+    <input id="canFormVolume" type="number" min="0" step="1" formControlName="canFormVolume" required />
+    <label for="canFormVolumeFlOz">{{ i18n.volumeFlOz }}</label>
+    <input id="canFormVolumeFlOz" type="number" min="0" step="0.1" formControlName="canFormVolumeFlOz" required />
+    <div>
+      <input id="canFormDefault" type="checkbox" formControlName="canFormDefault" class="check-2em check-right" />
+      <label for="canFormDefault">{{ i18n.check_default }}</label>
     </div>
 
-    <button class="can-ctg-btn" [disabled]="canForm.invalid">+</button>
+    <button type="submit" class="can-ctg-submit-btn" [disabled]="canForm.invalid">+</button>
   </form>
 </div>

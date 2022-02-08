@@ -20,19 +20,20 @@ interface styledColor extends canColor {
 })
 export class CanbankFormColorComponent implements OnInit {
   i18n = i18n[config.language];
-  openForm: boolean = false;
   canForm = new FormGroup({
     canFormId: new FormControl(),
     canFormName: new FormControl('', Validators.required),
     canFormColor: new FormControl('', Validators.required),
     canFormPicker: new FormControl('', Validators.required),
-    canFormDefault: new FormControl()
+    canFormDefault: new FormControl(false)
   });
   canColorRows: styledColor[] = [];
+  openClass: string = '';
 
   constructor(
     private canbankXC: CanbankXchangeService,
-    private canbankIF: CanbankInterfaceService) { }
+    private canbankIF: CanbankInterfaceService
+  ) { }
 
   ngOnInit() {
     this.getCanColors();
@@ -112,21 +113,27 @@ export class CanbankFormColorComponent implements OnInit {
   }
 
   setDefaultCanColor(id: number): void {
-    this.canbankXC.getColor(id).subscribe(
-      (data: any) => {
-        this.canForm.value.canFormId = data['list'].id;
-        this.canForm.value.canFormName = data['list'].name;
-        this.canForm.value.canFormColor = data['list'].color;
-        this.canForm.value.canFormPicker = data['list'].code;
-        this.canForm.value.canFormDefault = 1;
-        if (data['list'].default === '1') { return }
-        this.canbankXC.updateColor(this.canForm.value).subscribe(
-          () => { location.reload(); },
-          (error: any) => { console.error(error); }
-        );
-      },
+    let color = this.canbankIF.canColor.find(e => e.id === id);
+    if (color === undefined || color.default === true) { return }
+    this.canForm.value.canFormId = color.id;
+    this.canForm.value.canFormName = color.name;
+    this.canForm.value.canFormColor = color.color;
+    this.canForm.value.canFormPicker = color.code;
+    this.canForm.value.canFormDefault = 1;
+    this.canbankXC.updateColor(this.canForm.value).subscribe(
+      () => { location.reload(); },
       (error: any) => { console.error(error); }
     );
+  }
+
+  openForm() {
+    this.openClass = 'btn-open';
+    setTimeout(() => {
+      let element = document.getElementById('openBtn');
+      if (element) {
+        element.scrollIntoView(true);
+      }
+    });
   }
 
 }

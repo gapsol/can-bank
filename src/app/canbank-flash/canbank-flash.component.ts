@@ -7,7 +7,7 @@ import { CanbankXchangeService } from '../canbank-services/canbank-xchange.servi
 @Component({
   selector: 'canbank-flash',
   template: `
-    <h1 class="can-flash-plus" (click)="canbankCreate()">+</h1>
+    <h1 class="title" class="can-flash-plus" (click)="canbankCreate()">+</h1>
     <div class="can-flash-h1" *ngFor="let item of flashMessage">{{ item }}</div>
   `,
   styleUrls: ['./canbank-flash.component.css']

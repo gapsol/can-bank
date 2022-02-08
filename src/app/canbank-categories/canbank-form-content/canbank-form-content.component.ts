@@ -19,13 +19,13 @@ interface styledContentType extends canContentType {
 })
 export class CanbankFormContentComponent implements OnInit {
   i18n = i18n[config.language];
-  openForm: boolean = false;
   canForm = new FormGroup({
     canFormId: new FormControl(),
     canFormName: new FormControl('', Validators.required),
-    canFormDefault: new FormControl()
+    canFormDefault: new FormControl(false)
   });
   canContentRows: styledContentType[] = [];
+  openClass: string = '';
 
   constructor(
     private canbankXC: CanbankXchangeService,
@@ -93,6 +93,16 @@ export class CanbankFormContentComponent implements OnInit {
       () => { location.reload(); },
       (error: any) => { console.error(error); }
     );
+  }
+
+  openForm() {
+    this.openClass = 'btn-open';
+    setTimeout(() => {
+      let element = document.getElementById('openBtn');
+      if (element) {
+        element.scrollIntoView(true);
+      }
+    });
   }
 
 }

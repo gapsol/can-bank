@@ -1,31 +1,30 @@
 <div class="sub-screen">
-  <h1>colorForm</h1>
+  <h1 class="title">colorForm</h1>
 
-  <table class="tab-list">
+  <table>
     <thead>
-      <tr style="background-color: blue;
-      color: gold;">
-        <th style="width:50%;">{{ i18n.name }}</th>
+      <tr>
         <th></th>
-        <th>{{ i18n.color }}</th>
+        <th class="tab-90">{{ i18n.name }} / {{ i18n.color }}</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of canColorRows">
-        <td>{{ item.name }}</td>
-        <td><button class="btn-sign" [style]="item.style" (click)="setDefaultCanColor(item.id)"></button></td>
-        <td>{{ item.color }}</td>
+        <td><button class="btn-flag" [style]="item.style" (click)="setDefaultCanColor(item.id)"></button></td>
+        <td>{{ item.name }} / {{ item.color }}</td>
         <td><button class="btn-del" (click)="deleteCanColor(item.id)"><span>×</span></button></td>
       </tr>
     </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass" (click)="openForm()">+</button>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 
-  <p></p>
-
-  <button class="can-ctg-open-btn" (click)="openForm = !openForm" *ngIf="!openForm">+</button>
-
-  <form *ngIf="openForm" [formGroup]="canForm" (submit)="submitCanColor()">
+  <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanColor()">
     <label for="canFormName">{{ i18n.name }}</label>
     <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
 
@@ -36,7 +35,11 @@
       <input type="text" formControlName="canFormColor" minlength="3" (input)="checkColorPicker('color')"
         class="can-ctg-input btn-right" required />
     </div>
+    <div>
+      <input id="canFormDefault" type="checkbox" formControlName="canFormDefault" class="check-2em check-right" />
+      <label for="canFormDefault">{{ i18n.check_default }}</label>
+    </div>
 
-    <button class="can-ctg-btn" [disabled]="canForm.invalid">+</button>
+    <button type="submit" class="can-ctg-submit-btn" [disabled]="canForm.invalid">+</button>
   </form>
 </div>

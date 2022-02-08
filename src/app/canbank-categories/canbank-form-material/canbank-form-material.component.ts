@@ -4,7 +4,6 @@ import { Validators } from '@angular/forms';
 
 import { config } from '../../config/config';
 import { i18n } from '../../data/can-i18n';
-import { htmlColors } from '../../data/html-colors';
 import { CanbankXchangeService } from '../../canbank-services/canbank-xchange.service';
 import { CanbankInterfaceService } from '../../canbank-services/canbank-interface.service';
 import { canMaterial } from '../../data/can-material';
@@ -20,14 +19,15 @@ interface styledMaterial extends canMaterial {
 })
 export class CanbankFormMaterialComponent implements OnInit {
   i18n = i18n[config.language];
-  openForm: boolean = false;
   canForm = new FormGroup({
     canFormId: new FormControl(),
     canFormName: new FormControl('', Validators.required),
     canFormPicker: new FormControl('', Validators.required),
-    canFormDefault: new FormControl()
+    canFormAbbr: new FormControl('', Validators.required),
+    canFormDefault: new FormControl(false)
   });
   canMaterialRows: styledMaterial[] = [];
+  openClass: string = '';
 
   constructor(
     private canbankXC: CanbankXchangeService,
@@ -73,6 +73,7 @@ export class CanbankFormMaterialComponent implements OnInit {
     // material valid only when so far not exists
     // material valid only when it fits htmlmaterials array
     if (this.checkCanMaterial()) {
+      this.canForm.value.canFormDefault = (this.canForm.value.canFormDefault) ? 1 : 0;
       this.canbankXC.setMaterial(this.canForm.value).subscribe(
         () => { location.reload(); },
         (error: any) => { console.error(error); }
@@ -86,6 +87,7 @@ export class CanbankFormMaterialComponent implements OnInit {
     this.canForm.value.canFormId = material.id;
     this.canForm.value.canFormName = material.name;
     this.canForm.value.canFormPicker = material.color;
+    this.canForm.value.canFormAbbr = material.abbr;
     this.canForm.value.canFormDefault = 1;
 
     this.canbankXC.updateMaterial(this.canForm.value).subscribe(
@@ -101,6 +103,16 @@ export class CanbankFormMaterialComponent implements OnInit {
         (error: any) => { console.error(error); }
       );
     }
+  }
+
+  openForm() {
+    this.openClass = 'btn-open';
+    setTimeout(() => {
+      let element = document.getElementById('openBtn');
+      if (element) {
+        element.scrollIntoView(true);
+      }
+    });
   }
 
 }

@@ -1,9 +1,13 @@
 export var i18n: any = {
   "en": {
+    // main menu
     "menu_home": "home",
     "menu_add": "add",
     "menu_find": "find",
     "menu_categories": "categories",
+    "menu_stats": "stats",
+    "menu_settings": "settings",
+    // categories menu
     "ctg_type": "type",
     "ctg_content_type": "content type",
     "ctg_material": "material",
@@ -11,18 +15,17 @@ export var i18n: any = {
     "ctg_color": "color",
     "ctg_country": "country",
     "ctg_language": "language",
+    // categories names
     "name": "name",
-    "type": "type",
     "abbreviation": "abbreviation",
     "color": "color",
-    "menu_stats": "stats",
-    "menu_settings": "settings",
     "can_type": "can type",
     "add_can_type": "add can type",
     "diameter": "diameter [mm]",
     "height": "height [mm]",
     "volume": "volume [ml]",
     "volumeFlOz": "volume [fl oz]",
+    "check_default": "set as default",
     "material": "material",
     "add_material": "add material",
     "surface": "surface",
@@ -85,6 +88,7 @@ export var i18n: any = {
     "height": "výška [mm]",
     "volume": "objem [ml]",
     "volumeFlOz": "objem [fl oz]",
+    "check_default": "nastav ako prevolené",
     "material": "materiál",
     "add_material": "pridať materiál",
     "surface": "povrh",
