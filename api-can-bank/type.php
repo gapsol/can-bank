@@ -9,9 +9,6 @@ require_once 'get_headers.php';
 require_once 'get_connection.php';
 require_once 'json_responses.php';
 
-$mysqli = my_connect();
-
-$query = '';
 switch ($_SERVER['REQUEST_METHOD']) {
   case 'GET':
     getIt();
@@ -26,131 +23,136 @@ switch ($_SERVER['REQUEST_METHOD']) {
     deleteIt();
     break;
   default:
-    json_error($mysqli, 400, 'Bad request');
+    json_success();
 }
 
 function getIt()
 {
-  global $mysqli;
-
   if (
-    isset($_GET['id'])
-    && isfull($_GET['id'])
+    isset($_GET)
+    && isset($_GET['id'])
+    && $_GET['id'] >= 0
   ) {
     switch ($_GET['id']) {
       case 0:
-        $query = 'SELECT * FROM `can_type` ORDER BY `name` DESC';
+        $query = 'SELECT * FROM `can_type` ORDER BY `default` DESC, `name`';
         break;
       default:
-        $query = 'SELECT * FROM `can_type` WHERE id=' . $_GET['id'];
+        $query = 'SELECT * FROM `can_type` WHERE id = ' . $_GET['id'];
     }
-
-    $result = $mysqli->query($query);
-    if ($mysqli->error) {
-      json_error($mysqli, 500, $mysqli->error);
+    $mysqli = my_connect();
+    $result = my_query($mysqli, $query);
+    $return = [];
+    while ($row = $result->fetch_assoc()) {
+      $row['default'] = ($row['default'] == 1) ? true : false;
+      array_push($return, $row);
     }
-
-    switch ($_GET['id']) {
-      case 0:
-        $return = [];
-        while ($row = $result->fetch_assoc()) {
-          $row['default'] = ($row['default'] == 1) ? true : false;
-          array_push($return, $row);
-        }
-        json_return($mysqli, 'list', $return);
-        break;
-      default:
-        $return = $result->fetch_assoc();
-        json_return($mysqli, 'item', $return);
+    if (count($return) > 0) {
+      json_return($mysqli, 'list', $return);
+    } else {
+      json_error_nocontent($mysqli);
     }
   } else {
-    json_error($mysqli, 400);
+    json_error_notacceptable();
   }
 }
 
 function postIt()
 {
-  global $mysqli;
-
+  $json = file_get_contents('php://input');
+  $post = json_decode($json);
   if (
-    isset($_REQUEST)
-    && isset($_REQUEST['name'])
-    && isset($_REQUEST['diameter'])
-    && isset($_REQUEST['height'])
-    && isset($_REQUEST['volume'])
-    && isset($_REQUEST['volumeFlOz'])
-    && isset($_REQUEST['default'])
+    isset($post)
+    && isset($post->canFormName)
+    && isset($post->canFormDiameter)
+    && isset($post->canFormHeight)
+    && isset($post->canFormVolume)
+    && isset($post->canFormVolumeFlOz)
+    && isset($post->canFormDefault)
   ) {
+    $mysqli = my_connect();
+    if ($post->canFormDefault) {
+      $query = 'UPDATE IGNORE `can_type` SET `default` = false WHERE `default` = true';
+      my_query($mysqli, $query);
+    }
     $uniq = gen_uniq();
-    $query = 'INSERT IGNORE INTO `can_type` (`id`, `uniq`, `name`, `diameter`, `height`, `volume`, `volumeFlOz`, `default`)
-    VALUES (0,
-    "' . $uniq . '",
-    "' . $_REQUEST['name'] . '",
-    "' . $_REQUEST['diameter'] . '",
-    "' . $_REQUEST['height'] . '",
-    "' . $_REQUEST['volume'] . '",
-    "' . $_REQUEST['volumeFlOz'] . '",
-    "' . $_REQUEST['default'] . '")';
+    $query = 'INSERT IGNORE INTO `can_type` (`uniq`, `name`, `diameter`, `height`, `volume`, `volumeFlOz`, `default`)
+      VALUES (
+        "' . $uniq . '",
+        "' . $post->canFormName . '",
+        "' . $post->canFormDiameter . '",
+        "' . $post->canFormHeight . '",
+        "' . $post->canFormVolume . '",
+        "' . $post->canFormVolumeFlOz . '",
+        "' . $post->canFormDefault . '"
+      )';
+    my_query($mysqli, $query);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
-    json_error($mysqli, 400);
-  }
-
-  if ($mysqli->query($query)) {
-    json_success($mysqli);
-  } else if ($mysqli->error) {
-    json_error($mysqli, 500, $mysqli->error);
-  } else {
-    json_error($mysqli, 500);
+    json_error_notacceptable();
   }
 }
 
 function putIt()
 {
-  global $mysqli;
-
+  $json = file_get_contents('php://input');
+  $post = json_decode($json);
   if (
-    isset($_REQUEST['id'])
-    && $_REQUEST['id'] > 0
+    isset($post)
+    && isset($post->canFormId)
+    && isset($post->canFormName)
+    && isset($post->canFormDiameter)
+    && isset($post->canFormHeight)
+    && isset($post->canFormVolume)
+    && isset($post->canFormVolumeFlOz)
+    && isset($post->canFormDefault)
   ) {
-    $query = 'UPDATE IGNORE `can_type` SET
-    `name` = "' . $_REQUEST['name'] . '",
-    `diameter` = "' . $_REQUEST['diameter'] . '",
-    `height` = "' . $_REQUEST['height'] . '",
-    `volume` = "' . $_REQUEST['volume'] . '",
-    `volumeFlOz` = "' . $_REQUEST['volumeFlOz'] . '",
-    `default` = "' . $_REQUEST['default'] . '"
-    WHERE `id` = ' . $_REQUEST['id'];
+    $query = 'UPDATE IGNORE `can_type` SET `default` = false WHERE `default` = true';
+    $mysqli = my_connect();
+    my_query($mysqli, $query);
+    $uniq = gen_uniq();
+    $query = 'UPDATE IGNORE `can_type`
+      SET
+        `uniq` = "' . $uniq . '",
+        `name` = "' . $post->canFormName . '",
+        `diameter` = "' . $post->canFormDiameter . '",
+        `height` = "' . $post->canFormHeight . '",
+        `volume` = "' . $post->canFormVolume . '",
+        `volumefloz` = "' . $post->canFormVolumeFlOz . '",
+        `default` = "' . $post->canFormDefault . '"
+      WHERE
+        `id` = ' . $post->canFormId;
+    my_query($mysqli, $query);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
-    json_error($mysqli, 400);
-  }
-
-  if ($mysqli->query($query)) {
-    json_success($mysqli);
-  } else if ($mysqli->error) {
-    json_error($mysqli, 500, $mysqli->error);
-  } else {
-    json_error($mysqli, 500);
+    json_error_notacceptable();
   }
 }
 
 function deleteIt()
 {
-  global $mysqli;
-
   if (
-    isset($_REQUEST['id'])
+    isset($_REQUEST)
+    && isset($_REQUEST['id'])
     && $_REQUEST['id'] > 0
   ) {
-    $query = 'DELETE IGNORE FROM `can_type` WHERE `id`=' . $_REQUEST['id'];
+    $query = 'DELETE FROM `can_type` WHERE `id` = ' . $_REQUEST['id'];
+    $mysqli = my_connect();
+    my_query($mysqli, $query);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
-    json_error($mysqli, 400);
-  }
-
-  if ($mysqli->query($query)) {
-    json_success($mysqli);
-  } else if ($mysqli->error) {
-    json_error($mysqli, 500, $mysqli->error);
-  } else {
-    json_error($mysqli, 500);
+    json_error_notacceptable();
   }
 }

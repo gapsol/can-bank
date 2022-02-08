@@ -23,6 +23,7 @@ function my_query($mysqli, $query)
   return $result;
 }
 
-function my_close($mysqli) {
+function my_close($mysqli)
+{
   return $mysqli->close();
 }

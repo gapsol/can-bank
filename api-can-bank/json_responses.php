@@ -6,7 +6,7 @@
  */
 
 // errorneous exit with error message json
-function json_error($connection = null, $code = 400, $message = '')
+function json_error($connection = null, $code = 400, $message = null, $info = null)
 {
   $response = [
     200 => 'OK',
@@ -15,6 +15,7 @@ function json_error($connection = null, $code = 400, $message = '')
     401 => 'Unauthorized',
     404 => 'Not found',
     406 => 'Not Acceptable',
+    410 => 'Gone',
     500 => 'Internal Server Error'
   ];
 
@@ -26,14 +27,15 @@ function json_error($connection = null, $code = 400, $message = '')
   }
   http_response_code($code);
   $j['status'] = 'error';
-  $j['message'] = ($message === '') ? $response[$code] : $message;
+  $j['message'] = (!isset($message)) ? $response[$code] : $message;
+  if (isset($info)) { $j['info'] = $info; }
   print json_encode($j);
   exit();
 }
 
 function json_error_nocontent($connection = null, $message = '')
 {
-  json_error($connection, 204, $message);
+  json_error($connection, 410, $message);
 }
 
 function json_error_badrequest($connection = null, $message = '')
@@ -51,9 +53,9 @@ function json_error_notfound($connection = null, $message = '')
   json_error($connection, 404, $message);
 }
 
-function json_error_notacceptable($connection = null, $message = '')
+function json_error_notacceptable($connection = null, $message = '', $info = null)
 {
-  json_error($connection, 406, $message);
+  json_error($connection, 406, $message, $info);
 }
 
 function json_error_server($connection = null, $message = '')

@@ -39,24 +39,13 @@ function getIt()
         $query = 'SELECT * FROM `can_material` WHERE id = ' . $_GET['id'];
     }
     $mysqli = my_connect();
-    $result = $mysqli->query($query);
-    switch ($_GET['id']) {
-      case 0:
-        $return = [];
-        while ($row = $result->fetch_assoc()) {
-          $row['default'] = ($row['default'] == 1) ? true : false;
-          array_push($return, $row);
-        }
-        break;
-      default:
-        $return = $result->fetch_assoc();
-        $return['default'] = ($return['default'] == 1) ? true : false;
+    $result = my_query($mysqli, $query);
+    $return = [];
+    while ($row = $result->fetch_assoc()) {
+      $row['default'] = ($row['default'] == 1) ? true : false;
+      array_push($return, $row);
     }
-    if (count($return) > 0) {
-      json_return($mysqli, 'list', $return);
-    } else {
-      json_error_nocontent($mysqli);
-    }
+    json_return($mysqli, 'list', $return);
   } else {
     json_error_notacceptable();
   }
@@ -68,20 +57,30 @@ function postIt()
   $post = json_decode($json);
   if (
     isset($post->canFormName)
+    && isset($post->canFormAbbr)
     && isset($post->canFormPicker)
+    && isset($post->canFormDefault)
   ) {
+    $mysqli = my_connect();
+    if ($post->canFormDefault) {
+      $query = 'UPDATE IGNORE `can_material` SET `default` = false WHERE `default` = true';
+      my_query($mysqli, $query);
+    }
     $uniq = gen_uniq();
-    $query = 'INSERT IGNORE INTO `can_material`
-      (`uniq`, `name`, `color`, `default`)
+    $query = 'INSERT IGNORE INTO `can_material` (`uniq`, `name`, `abbr`, `color`, `default`)
       VALUES (
       "' . $uniq . '",
       "' . $post->canFormName . '",
+      "' . $post->canFormAbbr . '",
       "' . $post->canFormPicker . '",
-      "false"
+      "' . $post->canFormDefault . '"
       )';
-    $mysqli = my_connect();
     my_query($mysqli, $query);
-    json_success($mysqli);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
     json_error_notacceptable();
   }
@@ -94,6 +93,7 @@ function putIt()
   if (
     isset($post->canFormId)
     && isset($post->canFormName)
+    && isset($post->canFormAbbr)
     && isset($post->canFormPicker)
     && isset($post->canFormDefault)
   ) {
@@ -105,12 +105,17 @@ function putIt()
       SET
         `uniq` = "' . $uniq . '",
         `name` = "' . $post->canFormName . '",
+        `abbr` = "' . $post->canFormAbbr . '",
         `color` = "' . $post->canFormPicker . '",
         `default` = "' . $post->canFormDefault . '"
       WHERE
         `id` = ' . $post->canFormId;
     my_query($mysqli, $query);
-    json_success($mysqli);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
     json_error_notacceptable();
   }

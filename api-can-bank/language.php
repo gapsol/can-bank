@@ -4,9 +4,6 @@
  * REST API for canBank application
  * script: /language => POST: insert, GET:{0} stats {id} select, PUT:{id} update, DELETE:{id} delete
  */
-
- // TODO:
- // choose from ISO list
 require_once 'get_config.php';
 require_once 'get_headers.php';
 require_once 'get_connection.php';
@@ -26,7 +23,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     deleteIt();
     break;
   default:
-    json_success($mysqli);
+    json_success();
 }
 
 function getIt()
@@ -45,16 +42,10 @@ function getIt()
     }
     $mysqli = my_connect();
     $result = my_query($mysqli, $query);
-    switch ($_GET['id']) {
-      case 0:
-        $return = [];
-        while ($row = $result->fetch_assoc()) {
-          $row['default'] = ($row['default'] == 1) ? true : false;
-          array_push($return, $row);
-        }
-        break;
-      default:
-        $return = $result->fetch_assoc();
+    $return = [];
+    while ($row = $result->fetch_assoc()) {
+      $row['default'] = ($row['default'] == 1) ? true : false;
+      array_push($return, $row);
     }
     if (count($return) > 0) {
       json_return($mysqli, 'list', $return);
@@ -73,7 +64,13 @@ function postIt()
   if (
     isset($post->canFormName)
     && isset($post->canFormAbbr)
+    && isset($post->canFormDefault)
   ) {
+    $mysqli = my_connect();
+    if ($post->canFormDefault) {
+      $query = 'UPDATE IGNORE `can_language` SET `default` = false WHERE `default` = true';
+      my_query($mysqli, $query);
+    }
     $uniq = gen_uniq();
     $query = 'INSERT IGNORE INTO `can_language`
       (`uniq`, `name`, `abbr`, `default`)
@@ -81,11 +78,14 @@ function postIt()
       "' . $uniq . '",
       "' . $post->canFormName . '",
       "' . $post->canFormAbbr . '",
-      "false"
+      "' . $post->canFormDefault . '"
       )';
-    $mysqli = my_connect();
     my_query($mysqli, $query);
-    json_success($mysqli);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
     json_error_notacceptable();
   }
@@ -114,7 +114,11 @@ function putIt()
       WHERE
         `id` = ' . $post->canFormId;
     my_query($mysqli, $query);
-    json_success($mysqli);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
     json_error_notacceptable();
   }

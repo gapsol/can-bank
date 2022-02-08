@@ -23,7 +23,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     deleteIt();
     break;
   default:
-    json_success($mysqli);
+    json_success();
 }
 
 function getIt()
@@ -42,16 +42,10 @@ function getIt()
     }
     $mysqli = my_connect();
     $result = my_query($mysqli, $query);
-    switch ($_GET['id']) {
-      case 0:
-        $return = [];
-        while ($row = $result->fetch_assoc()) {
-          $row['default'] = ($row['default'] == 1) ? true : false;
-          array_push($return, $row);
-        }
-        break;
-      default:
-        $return = $result->fetch_assoc();
+    $return = [];
+    while ($row = $result->fetch_assoc()) {
+      $row['default'] = ($row['default'] == 1) ? true : false;
+      array_push($return, $row);
     }
     if (count($return) > 0) {
       json_return($mysqli, 'list', $return);
@@ -67,18 +61,29 @@ function postIt()
 {
   $json = file_get_contents('php://input');
   $post = json_decode($json);
-  if (isset($post->canFormName)) {
+  if (
+    isset($post)
+    && isset($post->canFormName)
+    && isset($post->canFormDefault)
+  ) {
+    $mysqli = my_connect();
+    if ($post->canFormDefault) {
+      $query = 'UPDATE IGNORE `can_content` SET `default` = false WHERE `default` = true';
+      my_query($mysqli, $query);
+    }
     $uniq = gen_uniq();
-    $query = 'INSERT IGNORE INTO `can_content`
-      (`uniq`, `name`, `default`)
+    $query = 'INSERT IGNORE INTO `can_content` (`uniq`, `name`, `default`)
       VALUES (
       "' . $uniq . '",
       "' . $post->canFormName . '",
-      "false"
+      "' . $post->canFormDefault . '"
       )';
-    $mysqli = my_connect();
     my_query($mysqli, $query);
-    json_success($mysqli);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
     json_error_notacceptable();
   }
@@ -89,7 +94,8 @@ function putIt()
   $json = file_get_contents('php://input');
   $post = json_decode($json);
   if (
-    isset($post->canFormId)
+    isset($post)
+    && isset($post->canFormId)
     && isset($post->canFormName)
     && isset($post->canFormDefault)
   ) {
@@ -105,7 +111,11 @@ function putIt()
       WHERE
         `id` = ' . $post->canFormId;
     my_query($mysqli, $query);
-    json_success($mysqli);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
   } else {
     json_error_notacceptable();
   }
