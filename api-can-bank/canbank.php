@@ -12,16 +12,16 @@ require_once 'json_responses.php';
 
 switch ($_SERVER['REQUEST_METHOD']) {
   case 'GET':
-    get_canbank_state();
+    getCanbank();
     break;
   case 'POST':
-    create_canbank_db();
+    createCanbank();
     break;
   default:
     json_success();
 }
 
-function get_canbank_state()
+function getCanbank()
 {
   $mysqli = my_connect();
 
@@ -73,7 +73,7 @@ function get_canbank_state()
   json_success($mysqli, 'Database ready!');
 }
 
-function create_canbank_db()
+function createCanbank()
 {
   $mysqli = my_connect();
 

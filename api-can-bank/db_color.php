@@ -1,6 +1,5 @@
 <?php
 
-// if ($_SERVER['REQUEST_URI'] == '/favicon.ico') return false;
 require_once 'get_headers.php';
 require_once 'get_config.php';
 require_once 'get_connection.php';
