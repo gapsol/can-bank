@@ -6,11 +6,10 @@
     <div class="input-box">
       <label for="can-form-type">{{ i18n['can_type'] }}</label>
       <div class="input-value-box input-with-icon">
-        <div class="input-icon input-icon-silver">{{ typeIconContent }}</div>
         <div class="full">
           <select id="can-form-type" class="full" formControlName="canFormType" (change)="updateType()" required>
             <option *ngFor="let type of canType" [ngValue]="type.id">{{ type.name }}</option>
-            <option value="0" (select)="newType()" class="new-option">{{ i18n['add_can_type'] }}</option>
+            <!--option value="0" (select)="newType()" class="new-option">{{ i18n['add_can_type'] }}</option-->
           </select>
         </div>
       </div>
@@ -50,11 +49,11 @@
       <div class="can-sm-12 can-md-6 can-lg-3">
         <label for="can-form-material">{{ i18n['material'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon" [class]="materialIconColor">{{ materialIconContent }}</div>
+          <div class="input-icon" [style]="materialIconColor"></div>
           <div class="full">
             <select id="can-form-material" formControlName="canFormMaterial" (change)="updateMaterial()" required>
               <option *ngFor="let material of canMaterial" [ngValue]="material.id">{{ material.name }}</option>
-              <option value="0" (select)="newMaterial()" class="new-option">{{ i18n['add_material'] }}</option>
+              <!--option value="0" (select)="newMaterial()" class="new-option">{{ i18n['add_material'] }}</option-->
             </select>
           </div>
         </div>
@@ -63,11 +62,11 @@
       <div class="can-sm-12 can-md-6 can-lg-3">
         <label for="can-form-surface">{{ i18n['surface'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon" [class]="surfaceIconColor"></div>
+          <div class="input-icon" [style]="surfaceIconColor"></div>
           <div class="full">
             <select id="can-form-surface" formControlName="canFormSurface" (change)="updateSurface()" required>
               <option *ngFor="let surface of canSurface" [ngValue]="surface.id">{{ surface.name }}</option>
-              <option value="0" (select)="newSurface()" class="new-option">{{ i18n['add_surface'] }}</option>
+              <!--option value="0" (select)="newSurface()" class="new-option">{{ i18n['add_surface'] }}</option-->
             </select>
           </div>
         </div>
@@ -76,11 +75,11 @@
       <div class="can-sm-12 can-md-6 can-lg-3">
         <label for="can-form-cover-color">{{ i18n['cover'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-cover" [class]="coverIconColor"></div>
+          <div class="input-icon input-icon-cover" [style]="coverIconColor"></div>
           <div class="full">
             <select id="can-form-cover-color" formControlName="canFormCoverColor" (change)="updateCover()" required>
               <option *ngFor="let color of canColor" [ngValue]="color.id">{{ color.name }}</option>
-              <option value="0" (select)="newColor()" class="new-option">{{ i18n['add_color'] }}</option>
+              <!--option value="0" (select)="newColor()" class="new-option">{{ i18n['add_color'] }}</option-->
             </select>
           </div>
         </div>
@@ -89,12 +88,12 @@
       <div class="can-sm-12 can-md-6 can-lg-3">
         <label for="can-form-opener-color">{{ i18n['opener'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-opener" [class]="openerIconColor"></div>
+          <div class="input-icon input-icon-opener" [style]="openerIconColor"></div>
           <div class="full">
             <select id="can-form-opener-color" formControlName="canFormOpenerColor" (change)="updateOpener()" required>
               <option *ngFor="let color of canColor" [ngValue]="color.id">{{ color.name }}</option>
               <option value="-1">nie je</option>
-              <option value="0" (select)="newColor()" class="new-option">{{ i18n['add_color'] }}</option>
+              <!--option value="0" (select)="newColor()" class="new-option">{{ i18n['add_color'] }}</option-->
             </select>
           </div>
         </div>
@@ -124,7 +123,7 @@
           <select id="can-form-content-type" formControlName="canFormContentType" required>
             <option *ngFor="let contyp of canContentType" [ngValue]="contyp.id">{{ contyp.name }}</option>
             <option value="-1">{{ i18n['unknown_content_type'] }}</option>
-            <option value="0" (select)="newContentType()" class="new-option">{{ i18n['add_content_type'] }}</option>
+            <!--option value="0" (select)="newContentType()" class="new-option">{{ i18n['add_content_type'] }}</option-->
           </select>
         </div>
       </div>
@@ -168,7 +167,7 @@
         <label for="can-form-ean">{{ i18n['barcode'] }}</label>
         <div class="input-value-box">
           <input id="can-form-ean" type="text" maxlength="13" pattern="[0-9]{1,13}" formControlName="canFormEan"
-            (change)="updateEan()" required />
+            (change)="displayEan()" required />
         </div>
       </div>
 
@@ -181,13 +180,13 @@
       <div class="can-sm-12 can-md-6 can-lg-4">
         <label for="can-form-country">{{ i18n['made_in_country'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-white"></div>
+          <div class="input-icon input-icon-flag"></div>
           <div class="full">
             <select id="can-form-prod-country" formControlName="canFormProdCountry" (change)="updateProdCountry()"
               required>
               <option *ngFor="let country of canCountry" [ngValue]="country.id">{{ country.name }}</option>
               <option value="-1">{{ i18n['unknown_country'] }}</option>
-              <option value="0" (select)="newCountry()" class="new-option">{{ i18n['add_country'] }}</option>
+              <!--option value="0" (select)="newCountry()" class="new-option">{{ i18n['add_country'] }}</option-->
             </select>
           </div>
         </div>
@@ -196,13 +195,13 @@
       <div class="can-sm-12 can-md-6 can-lg-4">
         <label for="can-form-country">{{ i18n['shop_in_country'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-white"></div>
+          <div class="input-icon input-icon-flag"></div>
           <div class="full">
             <select id="can-form-shop-country" formControlName="canFormShopCountry" (change)="updateShopCountry()"
               required>
               <option *ngFor="let country of canCountry" [ngValue]="country.id">{{ country.name }}</option>
               <option value="-1">{{ i18n['unknown_country'] }}</option>
-              <option value="0" (select)="newCountry()" class="new-option">{{ i18n['add_country'] }}</option>
+              <!--option value="0" (select)="newCountry()" class="new-option">{{ i18n['add_country'] }}</option-->
             </select>
           </div>
         </div>
@@ -211,12 +210,12 @@
       <div class="can-sm-12 can-md-12 can-lg-4">
         <label for="can-form-language">{{ i18n['primary_language'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-white"></div>
+          <div class="input-icon input-icon-flag"></div>
           <div class="full">
             <select id="can-form-language" formControlName="canFormLanguage" (change)="updateLanguage()" required>
               <option *ngFor="let lang of canLanguage" [ngValue]="lang.id">{{ lang.name }}</option>
               <option value="-1">{{ i18n['unknown_language'] }}</option>
-              <option value="0" (select)="newLanguage()" class="new-option">{{ i18n['add_language'] }}</option>
+              <!--option value="0" (select)="newLanguage()" class="new-option">{{ i18n['add_language'] }}</option-->
             </select>
           </div>
         </div>

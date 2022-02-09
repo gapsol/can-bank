@@ -97,7 +97,7 @@ export class CanbankXchangeService {
             console.error(response['message']);
           } else {
             this.canbankLM.levelDb = this.canbankLM.levelDt = 'success';
-            if (response['message'] == 'Database ready!') {
+            if (response['message'] === 'Database ready!') {
               this._canbankMessage = this.i18n.msg_db_ready;
             }
           }
@@ -124,7 +124,7 @@ export class CanbankXchangeService {
     return this.http.post(`${this.canbankUrl}/canbank`, {})
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             console.error(response['message']);
           }
           return response;
@@ -141,7 +141,7 @@ export class CanbankXchangeService {
     return this.http.post(`${this.canbankUrl}/db_prefill`, {})
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             console.error(response['message']);
           }
           return response;
@@ -162,7 +162,7 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/counter`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             console.error(response['message']);
           }
           return response;
@@ -183,7 +183,7 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/counter`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             console.error(response['message']);
           }
           return response;
@@ -204,7 +204,7 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/counter`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             console.error(response['message']);
           }
           return response;
@@ -225,11 +225,11 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/color`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             this.canbankLM.levelL1 = 'error';
             console.error(response['message']);
           } else {
-            this.canbankLM.levelL1 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
+            this.canbankLM.levelL1 = (/*response['list'] && */response['list'].length === 0) ? 'empty' : 'success';
             this.canbankIF.canColor = response['list'];
             return response;
           }
@@ -246,7 +246,7 @@ export class CanbankXchangeService {
   // POST /color?formdata
   // setColor - save new color
   public setColor(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/color`, (formdata))
+    return this.http.post(`${this.canbankUrl}/color`, formdata)
       .pipe(
         map((response: any) => { return response; }),
         catchError((error: HttpErrorResponse) => {
@@ -259,7 +259,7 @@ export class CanbankXchangeService {
   // PUT /color?formdata
   // updateColor - update existing color
   public updateColor(formdata: object): Observable<object> {
-    return this.http.put(`${this.canbankUrl}/color`, (formdata))
+    return this.http.put(`${this.canbankUrl}/color`, formdata)
       .pipe(
         map((response: any) => { return response; }),
         catchError((error: HttpErrorResponse) => {
@@ -293,11 +293,11 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/content`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             this.canbankLM.levelL2 = 'error';
             console.error(response['message']);
           } else {
-            this.canbankLM.levelL2 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
+            this.canbankLM.levelL2 = (/*response['list'] && */response['list'].length === 0) ? 'empty' : 'success';
             this.canbankIF.canContentType = response['list'];
             return response;
           }
@@ -312,7 +312,7 @@ export class CanbankXchangeService {
   }
 
   public setContentType(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/content`, (formdata))
+    return this.http.post(`${this.canbankUrl}/content`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -323,7 +323,7 @@ export class CanbankXchangeService {
   }
 
   public updateContentType(formdata: object): Observable<object> {
-    return this.http.put(`${this.canbankUrl}/content`, (formdata))
+    return this.http.put(`${this.canbankUrl}/content`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -356,11 +356,11 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/country`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             this.canbankLM.levelL3 = 'error';
             console.error(response['message']);
           } else {
-            this.canbankLM.levelL3 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
+            this.canbankLM.levelL3 = (/*response['list'] && */response['list'].length === 0) ? 'empty' : 'success';
             this.canbankIF.canCountry = response['list'];
             return response;
           }
@@ -375,7 +375,7 @@ export class CanbankXchangeService {
   }
 
   public setCountry(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/country`, (formdata))
+    return this.http.post(`${this.canbankUrl}/country`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -386,7 +386,7 @@ export class CanbankXchangeService {
   }
 
   public updateCountry(formdata: object): Observable<object> {
-    return this.http.put(`${this.canbankUrl}/country`, (formdata))
+    return this.http.put(`${this.canbankUrl}/country`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -418,11 +418,11 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/language`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             this.canbankLM.levelL4 = 'error';
             console.error(response['message']);
           } else {
-            this.canbankLM.levelL4 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
+            this.canbankLM.levelL4 = (/*response['list'] && */response['list'].length === 0) ? 'empty' : 'success';
             this.canbankIF.canLanguage = response['list'];
             return response;
           }
@@ -437,7 +437,7 @@ export class CanbankXchangeService {
   }
 
   public setLanguage(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/language`, (formdata))
+    return this.http.post(`${this.canbankUrl}/language`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -448,8 +448,7 @@ export class CanbankXchangeService {
   }
 
   public updateLanguage(formdata: object): Observable<object> {
-    console.log(formdata)
-    return this.http.put(`${this.canbankUrl}/language`, (formdata))
+    return this.http.put(`${this.canbankUrl}/language`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -481,11 +480,11 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/material`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             this.canbankLM.levelL5 = 'error';
             console.error(response['message']);
           } else {
-            this.canbankLM.levelL5 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
+            this.canbankLM.levelL5 = (/*response['list'] && */response['list'].length === 0) ? 'empty' : 'success';
             this.canbankIF.canMaterial = response['list'];
             return response;
           }
@@ -500,7 +499,7 @@ export class CanbankXchangeService {
   }
 
   public setMaterial(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/material`, (formdata))
+    return this.http.post(`${this.canbankUrl}/material`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -511,7 +510,7 @@ export class CanbankXchangeService {
   }
 
   public updateMaterial(formdata: object): Observable<object> {
-    return this.http.put(`${this.canbankUrl}/material`, (formdata))
+    return this.http.put(`${this.canbankUrl}/material`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -543,11 +542,11 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/surface`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             this.canbankLM.levelL6 = 'error';
             console.error(response['message']);
           } else {
-            this.canbankLM.levelL6 = (/*response['list'] && */response['list'].length == 0) ? 'empty' : 'success';
+            this.canbankLM.levelL6 = (/*response['list'] && */response['list'].length === 0) ? 'empty' : 'success';
             this.canbankIF.canSurface = response['list'];
           }
           return response;
@@ -562,7 +561,7 @@ export class CanbankXchangeService {
   }
 
   public setSurface(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/surface`, (formdata))
+    return this.http.post(`${this.canbankUrl}/surface`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -573,7 +572,7 @@ export class CanbankXchangeService {
   }
 
   public updateSurface(formdata: object): Observable<object> {
-    return this.http.put(`${this.canbankUrl}/surface`, (formdata))
+    return this.http.put(`${this.canbankUrl}/surface`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -605,11 +604,11 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/type`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             this.canbankLM.levelL7 = 'error';
             console.error(response['message']);
           } else {
-            this.canbankLM.levelL7 = (response['list'].length == 0) ? 'empty' : 'success';
+            this.canbankLM.levelL7 = (response['list'].length === 0) ? 'empty' : 'success';
             this.canbankIF.canType = response['list'];
             return response;
           }
@@ -624,8 +623,7 @@ export class CanbankXchangeService {
   }
 
   public setType(formdata: object): Observable<object> {
-    console.log(formdata)
-    return this.http.post(`${this.canbankUrl}/type`, (formdata))
+    return this.http.post(`${this.canbankUrl}/type`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -636,7 +634,7 @@ export class CanbankXchangeService {
   }
 
   public updateType(formdata: object): Observable<object> {
-    return this.http.put(`${this.canbankUrl}/type`, (formdata))
+    return this.http.put(`${this.canbankUrl}/type`, formdata)
       .pipe(
         map(response => response),
         catchError((error: HttpErrorResponse) => {
@@ -667,7 +665,7 @@ export class CanbankXchangeService {
     return this.http.get(`${this.canbankUrl}/bank`, { params })
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             console.error(response['message']);
           }
           return response;
@@ -681,10 +679,10 @@ export class CanbankXchangeService {
 
   // setBank -
   public setBank(formdata: object): Observable<object> {
-    return this.http.post(`${this.canbankUrl}/bank`, { "data": formdata })
+    return this.http.post(`${this.canbankUrl}/bank`, formdata)
       .pipe(
         map((response: any) => {
-          if (response['status'] == 'error') {
+          if (response['status'] === 'error') {
             console.error(response['message']);
           }
           return response;

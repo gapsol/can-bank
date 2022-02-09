@@ -16,6 +16,7 @@ export var i18n: any = {
     "ctg_country": "country",
     "ctg_language": "language",
     // categories names
+    "found": "found",
     "name": "name",
     "abbreviation": "abbreviation",
     "color": "color",
@@ -76,6 +77,7 @@ export var i18n: any = {
     "ctg_color": "farba",
     "ctg_country": "krajina",
     "ctg_language": "jazyk",
+    "found": "nájdené",
     "name": "názov",
     "type": "druh",
     "abbreviation": "skratka",

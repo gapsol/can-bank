@@ -10,7 +10,8 @@ import { CanbankInterfaceService } from '../../canbank-services/canbank-interfac
 import { canColor } from '../../data/can-color';
 
 interface styledColor extends canColor {
-  style: string
+  style: string,
+  class: string
 }
 
 @Component({
@@ -39,21 +40,20 @@ export class CanbankFormColorComponent implements OnInit {
     this.getCanColors();
   }
 
-  // TODO:
-  // classify style
   getCanColors(): void {
     this.canbankXC.getColor(0).subscribe(
       () => {
         this.canbankIF.canColor.forEach((e) => {
           let eStyle = 'background-color:' + e.color + ';';
-          eStyle += (e.default) ? 'border-style:solid;border-width:2px;border-color:white gray gray white;' : '';
+          let eClass = (e.default) ? 'btn-default' : '';
           this.canColorRows.push({
             id: e.id,
             name: e.name,
             color: e.color,
             code: e.code,
             default: e.default,
-            style: eStyle
+            style: eStyle,
+            class: eClass
           });
         });
       },

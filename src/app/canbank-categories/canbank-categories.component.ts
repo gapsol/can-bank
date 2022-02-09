@@ -40,7 +40,7 @@ interface menuItem {
   selector: 'canbank-categories',
   template: `
   <div class="sub-screen">
-    <h1>canCategories</h1>
+    <h1 class="title">canCategories</h1>
 
     <nav class="canbank-menu">
       <div class="menu-btn" *ngFor="let item of menuList">

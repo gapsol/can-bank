@@ -11,6 +11,8 @@
 @media screen and (min-width: 481px) and (max-width: 960px) {
   .can-md-6 { width: 50%; }
   .can-md-12 { width: 100%; }
+}
+@media screen and (min-width: 481px) {
   form, table { width: 69%; max-width: 741px; }
 }
 @media screen and (max-width: 480px) {
@@ -68,6 +70,30 @@ h1.title {
 a {
   text-decoration: none;
 }
+
+table {
+  margin: auto;
+  border-spacing: 0px;
+}
+table thead tr {
+  background-color: blue;
+  color: gold;
+}
+table td,
+table th {
+  text-align: center;
+  padding: 3px 5px;
+}
+table .tab-90 {
+  width: 90%;
+}
+table tbody tr:nth-child(2n + 1) {
+  background-color: #ffc800;
+}
+table tbody tr:nth-child(2n) {
+  background-color: #ffe800;
+}
+
 form {
   margin: auto;
   margin-bottom: 1em;
@@ -92,6 +118,7 @@ label {
 input, select, textarea, button {
   border-radius: 6px;
 }
+
 button {
   width: 100%;
   min-width: 2em;
@@ -109,6 +136,7 @@ button:disabled {
   background-color: gray;
   color: silver;
 }
+
 .test {
   border: 3px dashed lime;
   background-color: silver;

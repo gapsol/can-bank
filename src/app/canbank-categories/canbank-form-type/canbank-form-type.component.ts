@@ -9,7 +9,8 @@ import { CanbankInterfaceService } from '../../canbank-services/canbank-interfac
 import { canType } from '../../data/can-type';
 
 interface styledType extends canType {
-  style: string
+  style: string,
+  class: string
 }
 
 @Component({
@@ -45,7 +46,7 @@ export class CanbankFormTypeComponent implements OnInit {
       () => {
         this.canbankIF.canType.forEach((e) => {
           let eStyle = 'background-color:silver;';
-          eStyle += (e.default) ? 'border-style:solid;border-width:2px;border-color:white gray gray white;' : '';
+          let eClass = (e.default) ? 'btn-default' : '';
           this.canTypeRows.push({
             id: e.id,
             name: e.name,
@@ -54,7 +55,8 @@ export class CanbankFormTypeComponent implements OnInit {
             volume: e.volume,
             volumeFlOz: e.volumeFlOz,
             default: e.default,
-            style: eStyle
+            style: eStyle,
+            class: eClass
           });
         });
       },
@@ -92,7 +94,7 @@ export class CanbankFormTypeComponent implements OnInit {
   }
 
   setDefaultCanType(id: number): void {
-    let type = this.canbankIF.canType.find(e => e.id == id);
+    let type = this.canbankIF.canType.find(e => e.id === id);
     if (type === undefined || type.default === true) { return }
     this.canForm.value.canFormId = type.id;
     this.canForm.value.canFormName = type.name;

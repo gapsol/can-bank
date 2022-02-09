@@ -9,7 +9,8 @@ import { CanbankInterfaceService } from '../../canbank-services/canbank-interfac
 import { canLanguage } from '../../data/can-language';
 
 interface styledLanguage extends canLanguage {
-  style: string
+  style: string,
+  class: string
 }
 
 @Component({
@@ -42,13 +43,14 @@ export class CanbankFormLanguageComponent implements OnInit {
       () => {
         this.canbankIF.canLanguage.forEach((e) => {
           let eStyle = 'background-color:silver;';
-          eStyle += (e.default) ? 'border-style:solid;border-width:2px;border-color:white gray gray white;' : '';
+          let eClass = (e.default) ? 'btn-default' : '';
           this.canLanguageRows.push({
             id: e.id,
             name: e.name,
             abbr: e.abbr,
             default: e.default,
-            style: eStyle
+            style: eStyle,
+            class: eClass
           });
         });
       },

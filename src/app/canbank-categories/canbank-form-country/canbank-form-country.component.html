@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of canCountryRows">
-        <td><button class="btn-flag" [style]="item.style" (click)="setDefaultCanCountry(item.id)">P</button></td>
+        <td><button class="btn-flag" [style]="item.style" [class]="item.class" (click)="setDefaultCanCountry(item.id)">P</button></td>
         <td>{{ item.name }} [{{ item.abbr }}]</td>
         <td><button class="btn-del" (click)="deleteCanCountry(item.id)"><span>×</span></button></td>
       </tr>

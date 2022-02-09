@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let item of canColorRows">
-        <td><button class="btn-flag" [style]="item.style" (click)="setDefaultCanColor(item.id)"></button></td>
+        <td><button class="btn-flag" [style]="item.style" [class]="item.class" (click)="setDefaultCanColor(item.id)"></button></td>
         <td>{{ item.name }} / {{ item.color }}</td>
         <td><button class="btn-del" (click)="deleteCanColor(item.id)"><span>×</span></button></td>
       </tr>

@@ -9,7 +9,8 @@ import { CanbankInterfaceService } from '../../canbank-services/canbank-interfac
 import { canMaterial } from '../../data/can-material';
 
 interface styledMaterial extends canMaterial {
-  style: string
+  style: string,
+  class: string
 }
 
 @Component({
@@ -45,14 +46,15 @@ export class CanbankFormMaterialComponent implements OnInit {
       () => {
         this.canbankIF.canMaterial.forEach((e) => {
           let eStyle = 'background-color:' + e.color + ';';
-          eStyle += (e.default) ? 'border-style:solid;border-width:2px;border-color:white gray gray white;' : '';
+          let eClass = (e.default) ? 'btn-default' : '';
           this.canMaterialRows.push({
             id: e.id,
             name: e.name,
             abbr: e.abbr,
             color: e.color,
             default: e.default,
-            style: eStyle
+            style: eStyle,
+            class: eClass
           });
         });
       },
@@ -82,7 +84,7 @@ export class CanbankFormMaterialComponent implements OnInit {
   }
 
   setDefaultCanMaterial(id: number): void {
-    let material = this.canbankIF.canMaterial.find(e => e.id == id);
+    let material = this.canbankIF.canMaterial.find(e => e.id === id);
     if (material === undefined || material.default === true) { return }
     this.canForm.value.canFormId = material.id;
     this.canForm.value.canFormName = material.name;

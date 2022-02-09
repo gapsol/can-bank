@@ -10,7 +10,8 @@ import { CanbankInterfaceService } from '../../canbank-services/canbank-interfac
 import { canSurface } from '../../data/can-surface';
 
 interface styledSurface extends canSurface {
-  style: string
+  style: string,
+  class: string
 }
 
 @Component({
@@ -45,13 +46,14 @@ export class CanbankFormSurfaceComponent implements OnInit {
       () => {
         this.canbankIF.canSurface.forEach((e) => {
           let eStyle = 'background-color:' + e.color + ';';
-          eStyle += (e.default) ? 'border-style:solid;border-width:2px;border-color:white gray gray white;' : '';
+          let eClass = (e.default) ? 'btn-default' : '';
           this.canSurfaceRows.push({
             id: e.id,
             name: e.name,
             color: e.color,
             default: e.default,
-            style: eStyle
+            style: eStyle,
+            class: eClass
           });
         });
       },
@@ -80,7 +82,7 @@ export class CanbankFormSurfaceComponent implements OnInit {
   }
 
   setDefaultCanSurface(id: number): void {
-    let surface = this.canbankIF.canSurface.find(e => e.id == id);
+    let surface = this.canbankIF.canSurface.find(e => e.id === id);
     if (surface === undefined || surface.default === true) { return }
     this.canForm.value.canFormId = surface.id;
     this.canForm.value.canFormName = surface.name;

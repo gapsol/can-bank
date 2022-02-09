@@ -6,7 +6,6 @@
   border-radius: 6px;
   border-color: gold;
   padding: 1px 6px;
-  /*background-color: navy;*/
   color: navy;
 }
 .new-option {
@@ -26,45 +25,14 @@
 }
 .input-icon {
   width: 2em;
-  line-height: 2em;
-  text-align: center;
   border-radius: 6px;
 }
-/*.input-icon-cover {
-  border-radius: 50%;
-  border: 1px solid black;
-}
-.input-icon-opener {
-  border-radius: 50% 50% 10% 10%;
-  border: 1px solid black;
-}*/
-.input-icon-transparent {
-  background-color: transparent;
+.input-icon-flag {
+  background-image: url(../../assets/img/check32.png);
 }
 .input-icon-white {
   background-color: white;
 }
-.input-icon-lightgray {
-  background-color: lightgray;
-}
-.input-icon-silver {
-  background-color: silver;
-}
-.input-icon-gray {
-  background-color: gray;
-}
-.input-icon-yellow {
-  background-color: yellow;
-}
-.input-icon-gold {
-  background-color: gold;
-}
-.input-icon-red {
-  background-color: red;
-}
-.input-icon-green {
-  background-color: green;
-}
-.input-icon-blue {
-  background-color: blue;
+#can-form-diameter, #can-form-height, #can-form-volume, #can-form-volumeFlOz {
+  background-color: #DEF;
 }

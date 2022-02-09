@@ -9,7 +9,8 @@ import { CanbankInterfaceService } from '../../canbank-services/canbank-interfac
 import { canContentType } from '../../data/can-content';
 
 interface styledContentType extends canContentType {
-  style: string
+  style: string,
+  class: string
 }
 
 @Component({
@@ -41,12 +42,13 @@ export class CanbankFormContentComponent implements OnInit {
       () => {
         this.canbankIF.canContentType.forEach((e) => {
           let eStyle = 'background-color:silver;';
-          eStyle += (e.default) ? 'border-style:solid;border-width:2px;border-color:white gray gray white;' : '';
+          let eClass = (e.default) ? 'btn-default' : '';
           this.canContentRows.push({
             id: e.id,
             name: e.name,
             default: e.default,
-            style: eStyle
+            style: eStyle,
+            class: eClass
           });
         });
       },

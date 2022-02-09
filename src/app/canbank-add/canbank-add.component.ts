@@ -1,10 +1,6 @@
 /*
  * CanBank ADD
  *  form for adding new can to the database
- *
- * TODO:
- *  DECIDE whether to use local types defaults
- *  REPLACE H1 word canAdd with GR-style icon (+)
  */
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -34,8 +30,8 @@ export class CanbankAddComponent implements OnInit {
 
   menuBtnAdd: string = '';
   canColor: Array<canColor> = [];
-  coverIconColor: string = ''; // read from default?
-  openerIconColor: string = ''; // read from default?
+  coverIconColor: string = '';
+  openerIconColor: string = '';
 
   canContentType: Array<canContentType> = [];
 
@@ -127,13 +123,6 @@ export class CanbankAddComponent implements OnInit {
         this.updateSurface();
         this.updateType();
       });
-    /* use for basic sets from local file
-          this.sortColor();
-          this.sortContentType();
-          this.sortCountry();
-          this.sortLanguage();
-          this.sortType();
-    */
   }
 
   /*
@@ -161,14 +150,14 @@ export class CanbankAddComponent implements OnInit {
       this.canForm.value.canFormType = this.canType.find(cantyp => cantyp.default)?.id;
       console.log(this.canForm.value)
     }*/
-    let canObj = this.canType.find(cantyp => cantyp.id == this.canForm.value.canFormType);
+    let canObj = this.canType.find(cantyp => cantyp.id === this.canForm.value.canFormType);
     // console.log(canObj)
     if (canObj !== undefined) {
       this.typeIconContent = this.reduceVolume(canObj.volume / 1000);
-      if (this.typeIconContent[0] == '0') {
+      if (this.typeIconContent[0] === '0') {
         this.typeIconContent = this.typeIconContent.slice(1);
       }
-      if (canObj.volumeFlOz == 0) {
+      if (canObj.volumeFlOz === 0) {
         // let volumeFlOz_IM = canObj.volume / 28.4130742;
         let volumeFlOz_US = canObj.volume / 29.5735296;
         canFormVolumeFlOz = volumeFlOz_US.toFixed(3);
@@ -217,9 +206,11 @@ export class CanbankAddComponent implements OnInit {
   }
 
   updateMaterial() {
-    let canObj = this.canMaterial.find(canmat => canmat.id == this.canForm.value.canFormMaterial);
-    this.materialIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
-    this.materialIconContent = (canObj !== undefined) ? canObj.abbr : '?';
+    let canObj = this.canMaterial.find(canmat => canmat.id === this.canForm.value.canFormMaterial);
+    if (canObj !== undefined) {
+      this.materialIconColor = 'background-color:' + canObj.color;
+      this.materialIconContent = canObj.abbr;
+    }
   }
 
   newMaterial() {
@@ -227,8 +218,10 @@ export class CanbankAddComponent implements OnInit {
   }
 
   updateSurface() {
-    let canObj = this.canSurface.find(cansfc => cansfc.id == this.canForm.value.canFormSurface);
-    this.surfaceIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
+    let canObj = this.canSurface.find(cansfc => cansfc.id === this.canForm.value.canFormSurface);
+    if (canObj !== undefined) {
+      this.surfaceIconColor = 'background-color:' + canObj.color;
+    }
   }
 
   newSurface() {
@@ -237,14 +230,18 @@ export class CanbankAddComponent implements OnInit {
 
   updateCover() {
     // TODO: zmenit tvar ikonky
-    let canObj = this.canColor.find(cancol => cancol.id == this.canForm.value.canFormCoverColor);
-    this.coverIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
+    let canObj = this.canColor.find(cancol => cancol.id === this.canForm.value.canFormCoverColor);
+    if (canObj !== undefined) {
+      this.coverIconColor = 'background-color:' + canObj.color;
+    }
   }
 
   updateOpener() {
     // TODO: zmenit tvar ikonky
-    let canObj = this.canColor.find(cancol => cancol.id == this.canForm.value.canFormOpenerColor);
-    this.openerIconColor = (canObj !== undefined) ? 'input-icon-' + canObj.color : 'input-icon-transparent';
+    let canObj = this.canColor.find(cancol => cancol.id === this.canForm.value.canFormOpenerColor);
+    if (canObj !== undefined) {
+      this.openerIconColor = 'background-color:' + canObj.color;
+    }
   }
 
   newColor() {
@@ -273,15 +270,18 @@ export class CanbankAddComponent implements OnInit {
     // TODO: zobrazit slova ako bloky
   }
 
+  updateProdCountry() {
+  }
+
+  updateShopCountry() {
+  }
+
   // TODO: katalog krajin, ikona vlajky SVG
   newCountry() {
     // TODO: refresh zoznamu
   }
 
-  updateProdCountry() {
-  }
-
-  updateShopCountry() {
+  updateLanguage() {
   }
 
   // TODO: katalog jazykov, ikona vlajky SVG
@@ -289,36 +289,43 @@ export class CanbankAddComponent implements OnInit {
     // TODO: refresh zoznamu
   }
 
-  updateLanguage() {
-  }
-
   // TODO: zobrazit Ean graficky
   // TODO: hladat existujuce barkody podla zadavaneho textu
-  updateEan() {
+  displayEan() {
   }
 
-  addCan(/*f: NgForm*/) {
+  addCan() {
     this.canbankXC.setBank(this.canForm.value).subscribe(
       () => {
-        this.canbankRC.canFormType = this.canType[this.canForm.value.canFormType].name;
+        let help: any;
+        help = this.canType.find(i => i.id === this.canForm.value.canFormType);
+        this.canbankRC.canFormType = help.name;
         this.canbankRC.canFormDiameter = this.canForm.value.canFormTypeDetails.canFormDiameter;
         this.canbankRC.canFormHeight = this.canForm.value.canFormTypeDetails.canFormHeight;
         this.canbankRC.canFormVolume = this.canForm.value.canFormTypeDetails.canFormVolume;
         this.canbankRC.canFormVolumeFlOz = this.canForm.value.canFormTypeDetails.canFormVolumeFlOz;
-        this.canbankRC.canFormMaterial = this.canMaterial[this.canForm.value.canFormMaterial].name;
-        this.canbankRC.canFormSurface = this.canSurface[this.canForm.value.canFormSurface].name;
-        this.canbankRC.canFormCoverColor = this.canColor[this.canForm.value.canFormCoverColor].name;
-        this.canbankRC.canFormOpenerColor = this.canColor[this.canForm.value.canFormOpenerColor].name;
+        help = this.canMaterial.find(i => i.id === this.canForm.value.canFormMaterial);
+        this.canbankRC.canFormMaterial = help.name;
+        help = this.canSurface.find(i => i.id === this.canForm.value.canFormSurface);
+        this.canbankRC.canFormSurface = help.name;
+        help = this.canColor.find(i => i.id === this.canForm.value.canFormCoverColor);
+        this.canbankRC.canFormCoverColor = help.name;
+        help = this.canColor.find(i => i.id === this.canForm.value.canFormOpenerColor);
+        this.canbankRC.canFormOpenerColor = help.name;
         this.canbankRC.canFormBrand = this.canForm.value.canFormBrand;
         this.canbankRC.canFormContentName = this.canForm.value.canFormContentName;
-        this.canbankRC.canFormContentType = this.canContentType[this.canForm.value.canFormContentType].name;
+        help = this.canContentType.find(i => i.id === this.canForm.value.canFormContentType);
+        this.canbankRC.canFormContentType = help.name;
         this.canbankRC.canFormAlcohol = this.canForm.value.canFormAlcohol;
         this.canbankRC.canFormKeywords = this.canForm.value.canFormKeywords;
         this.canbankRC.canFormProdDate = this.canForm.value.canFormProdDate;
         this.canbankRC.canFormExpDate = this.canForm.value.canFormExpDate;
-        this.canbankRC.canFormProdCountry = this.canCountry[this.canForm.value.canFormProdCountry].name;
-        this.canbankRC.canFormShopCountry = this.canCountry[this.canForm.value.canFormShopCountry].name;
-        this.canbankRC.canFormLanguage = this.canLanguage[this.canForm.value.canFormLanguage].name;
+        help = this.canCountry.find(i => i.id === this.canForm.value.canFormProdCountry);
+        this.canbankRC.canFormProdCountry = help.name;
+        help = this.canCountry.find(i => i.id === this.canForm.value.canFormShopCountry);
+        this.canbankRC.canFormShopCountry = help.name;
+        help = this.canLanguage.find(i => i.id === this.canForm.value.canFormLanguage);
+        this.canbankRC.canFormLanguage = help.name;
         this.canbankRC.canFormEan = this.canForm.value.canFormEan;
         this.canbankRC.canFormFname1 = this.canForm.value.canFormFname1;
         this.canbankRC.canFormFname2 = this.canForm.value.canFormFname2;
@@ -333,25 +340,6 @@ export class CanbankAddComponent implements OnInit {
         console.error(err)
       }
     );
-    //    this.resetAlerts();
-
-    /*this.canbankFindService.store(this.can).subscribe(
-      (res) => {
-        // Update the list of cars
-        this.cans.push(res)
-
-        // Inform the user
-        this.success = 'Created successfully';
-        console.log('Created successfully');
-        console.log(this.cans)
-
-        // Reset the form f.reset();
-      },
-      (err) => {
-        this.error = err.message;
-        console.error(err);
-      }
-    );*/
   }
 
 }

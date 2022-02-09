@@ -1,25 +1,3 @@
-table {
-  margin: auto;
-  border-spacing: 0px;
-}
-table thead tr {
-  background-color: blue;
-  color: gold;
-}
-table td, table th {
-  text-align: center;
-  padding: 3px 5px;
-}
-table .tab-90 {
-  width: 90%;
-}
-table tbody tr:nth-child(2n + 1) {
-  background-color: #ffc800;
-}
-table tbody tr:nth-child(2n) {
-  background-color: #ffe800;
-}
-
 .can-categories {
   list-style: none;
 }
@@ -44,9 +22,18 @@ table tbody tr:nth-child(2n) {
   font-weight: bold;
 }
 .can-ctg-open-btn {
+  width: 2em;
   margin-top: 1em;
+  border-radius: 50%;
   font-size: 1em;
   font-weight: bold;
+}
+.btn-open {
+  border-style: solid;
+  border-color: blue;
+  border-width: 0 0 2px;
+  background-color: gold;
+  color: blue;
 }
 
 .canbank-menu {
@@ -74,6 +61,17 @@ table tbody tr:nth-child(2n) {
   color: blue;
 }
 
+.btn-left {
+  border-radius: 6px 0 0 6px;
+}
+.btn-right {
+  border-radius: 0 6px 6px 0;
+}
+.btn-default {
+  border-style: solid;
+  border-width: 2px;
+  border-color: white gray gray white;
+}
 .btn-flag {
   font-weight: bold;
   color: black;
@@ -86,13 +84,10 @@ table tbody tr:nth-child(2n) {
   line-height: 1em;
   font-size: 2em;
 }
-.btn-flag, .btn-del {
+.btn-flag,
+.btn-del {
   width: 2em;
   vertical-align: text-bottom;
-}
-.btn-open {
-  background-color: gold;
-  color: blue;
 }
 .check-2em {
   width: 2em;

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
@@ -38,35 +39,42 @@ export class CanbankDisplayComponent implements OnInit {
   canFormFname5: string = '';
   canFormNotes: string = '';
 
-  constructor(private canbankRC: CanbankRecordService) { }
+  constructor(
+    private router: Router,
+    private canbankRC: CanbankRecordService
+  ) { }
 
   ngOnInit(): void {
-    this.canFormType = this.canbankRC.canFormType;
-    this.canFormDiameter = this.canbankRC.canFormDiameter;
-    this.canFormHeight = this.canbankRC.canFormHeight;
-    this.canFormVolume = this.canbankRC.canFormVolume;
-    this.canFormVolumeFlOz = this.canbankRC.canFormVolumeFlOz;
-    this.canFormMaterial = this.canbankRC.canFormMaterial;
-    this.canFormSurface = this.canbankRC.canFormSurface;
-    this.canFormCoverColor = this.canbankRC.canFormCoverColor;
-    this.canFormOpenerColor = this.canbankRC.canFormOpenerColor;
-    this.canFormBrand = this.canbankRC.canFormBrand;
-    this.canFormContentName = this.canbankRC.canFormContentName;
-    this.canFormContentType = this.canbankRC.canFormContentType;
-    this.canFormAlcohol = this.canbankRC.canFormAlcohol;
-    this.canFormKeywords = this.canbankRC.canFormKeywords;
-    this.canFormProdDate = this.canbankRC.canFormProdDate;
-    this.canFormExpDate = this.canbankRC.canFormExpDate;
-    this.canFormProdCountry = this.canbankRC.canFormProdCountry;
-    this.canFormShopCountry = this.canbankRC.canFormShopCountry;
-    this.canFormLanguage = this.canbankRC.canFormLanguage;
-    this.canFormEan = this.canbankRC.canFormEan;
-    this.canFormFname1 = this.canbankRC.canFormFname1;
-    this.canFormFname2 = this.canbankRC.canFormFname2;
-    this.canFormFname3 = this.canbankRC.canFormFname3;
-    this.canFormFname4 = this.canbankRC.canFormFname4;
-    this.canFormFname5 = this.canbankRC.canFormFname5;
-    this.canFormNotes = this.canbankRC.canFormNotes;
+    if (this.canbankRC.isActive) {
+      this.canFormType = this.canbankRC.canFormType;
+      this.canFormDiameter = this.canbankRC.canFormDiameter;
+      this.canFormHeight = this.canbankRC.canFormHeight;
+      this.canFormVolume = this.canbankRC.canFormVolume;
+      this.canFormVolumeFlOz = this.canbankRC.canFormVolumeFlOz;
+      this.canFormMaterial = this.canbankRC.canFormMaterial;
+      this.canFormSurface = this.canbankRC.canFormSurface;
+      this.canFormCoverColor = this.canbankRC.canFormCoverColor;
+      this.canFormOpenerColor = this.canbankRC.canFormOpenerColor;
+      this.canFormBrand = this.canbankRC.canFormBrand;
+      this.canFormContentName = this.canbankRC.canFormContentName;
+      this.canFormContentType = this.canbankRC.canFormContentType;
+      this.canFormAlcohol = this.canbankRC.canFormAlcohol;
+      this.canFormKeywords = this.canbankRC.canFormKeywords;
+      this.canFormProdDate = this.canbankRC.canFormProdDate;
+      this.canFormExpDate = this.canbankRC.canFormExpDate;
+      this.canFormProdCountry = this.canbankRC.canFormProdCountry;
+      this.canFormShopCountry = this.canbankRC.canFormShopCountry;
+      this.canFormLanguage = this.canbankRC.canFormLanguage;
+      this.canFormEan = this.canbankRC.canFormEan;
+      this.canFormFname1 = this.canbankRC.canFormFname1;
+      this.canFormFname2 = this.canbankRC.canFormFname2;
+      this.canFormFname3 = this.canbankRC.canFormFname3;
+      this.canFormFname4 = this.canbankRC.canFormFname4;
+      this.canFormFname5 = this.canbankRC.canFormFname5;
+      this.canFormNotes = this.canbankRC.canFormNotes;
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
 
 }

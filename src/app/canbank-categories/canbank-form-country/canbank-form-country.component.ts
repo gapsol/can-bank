@@ -9,7 +9,8 @@ import { CanbankInterfaceService } from '../../canbank-services/canbank-interfac
 import { canCountry } from '../../data/can-country';
 
 interface styledCountry extends canCountry {
-  style: string
+  style: string,
+  class: string
 }
 
 @Component({
@@ -42,13 +43,14 @@ export class CanbankFormCountryComponent implements OnInit {
       () => {
         this.canbankIF.canCountry.forEach((e) => {
           let eStyle = 'background-color:silver;';
-          eStyle += (e.default) ? 'border-style:solid;border-width:2px;border-color:white gray gray white;' : '';
+          let eClass = (e.default) ? 'btn-default' : '';
           this.canCountryRows.push({
             id: e.id,
             name: e.name,
             abbr: e.abbr,
             default: e.default,
-            style: eStyle
+            style: eStyle,
+            class: eClass
           });
         });
       },

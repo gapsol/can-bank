@@ -28,7 +28,8 @@ interface menuItem {
         </a>
       </div>
     </nav>
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onActivate()"></router-outlet>
+}
   `,
   styleUrls: ['./canbank-menu.component.css']
 })
@@ -54,4 +55,7 @@ export class CanbankMenuComponent implements OnInit {
     })
   }
 
+  onActivate() {
+    window.scroll(0,0);
+  }
 }
