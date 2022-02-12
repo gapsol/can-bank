@@ -17,8 +17,6 @@ if (
 ) {
   $table = 'can_' . $_GET['table'];
   switch ($table) {
-    case 'can_type':
-    case 'can_country':
     case 'can_bank':
       if (isset($_GET['fnc'])) {
         switch ($_GET['fnc']) {
@@ -34,21 +32,23 @@ if (
       } else {
         $query = 'SELECT COUNT(*) FROM `' . $table . '`';
       }
+      break;
+    default:
+      $query = 'SELECT COUNT(*) FROM `' . $table . '`';
   }
 
-  if (
-    !isset($query)
-    && !isset($query_p)
-    && !isset($query_x)
-  ) {
-    json_error_badrequest($mysqli);
-  } else if (isset($query)) {
+  if (!empty($query)) {
     get_simple($query);
-  } else {
+  } else if (
+    !empty($query_p)
+    && !empty($query_x)
+  ) {
     get_dates($query_p, $query_x);
+  } else {
+    json_error_badrequest($mysqli);
   }
 } else {
-  json_error_notacceptable($mysqli);
+  json_error_notacceptable();
 }
 
 function get_simple($query)

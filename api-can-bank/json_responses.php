@@ -76,6 +76,11 @@ function json_success($connection = null, $message = '')
   exit();
 }
 
+function json_nocontent($connection = null, $message = 'No content')
+{
+  json_return($connection, 204, 'list', [], $message);
+}
+
 // successful exit json with encapsulated data package
 function json_return($connection = null, $return_type = 'data', $return_data = '', $message = 'OK')
 {

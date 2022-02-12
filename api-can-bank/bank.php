@@ -3,8 +3,8 @@
 /*
  * REST API for CanBank application
  * script: /bank =>
- *  POST: insert
  *  GET:{0} stats {id} select, {0, text} find
+ *  POST: insert
  *  PUT:{id} update
  *  DELETE:{id} delete
  TODO: filename scheme:
@@ -40,29 +40,24 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 function getIt()
 {
-  if (!isset($_GET)) {
+  if (
+    empty($_GET)
+    || !isfull($_GET['id'])
+    || $_GET['id'] < 0
+  ) {
     json_error_badrequest();
   }
-  if (
-    isset($_GET['id'])
-    && $_GET['id'] >= 0
-  ) {
-    switch ($_GET['id']) {
-      case 0:
-        if (
-          isset($_GET['text'])
-          && isfull($_GET['text'])
-        ) {
-          $query = get_find_query($_GET['text']);
-        } else {
-          $query = 'SELECT * FROM `can_bank` ORDER BY `id` DESC';
-        }
-        break;
-      default:
-        $query = 'SELECT * FROM `can_bank` WHERE id=' . $_GET['id'];
-    }
-  } else {
-    json_error_badrequest();
+
+  switch ($_GET['id']) {
+    case 0:
+      if (empty($_GET['text'])) {
+        $query = 'SELECT * FROM `can_bank` ORDER BY `id` DESC';
+      } else {
+        $query = get_find_query($_GET['text']);
+      }
+      break;
+    default:
+      $query = 'SELECT * FROM `can_bank` WHERE id = ' . $_GET['id'];
   }
 
   $mysqli = my_connect();
@@ -71,24 +66,37 @@ function getIt()
   while ($row = $result->fetch_assoc()) {
     array_push($return, $row);
   }
-  json_return($mysqli, 'list', $return);
+  //if (count($return) > 0) {
+    json_return($mysqli, 'list', $return);
+  /*} else {
+    json_nocontent($mysqli);
+  }*/
 }
 
 function postIt()
 {
   $json = file_get_contents('php://input');
   $post = json_decode($json);
-  if (!isset($post)) {
+  if (empty($post)) {
     json_error_badrequest();
   }
 
-  /*
-  re_file($post->canFormFname1, $post->canFormEan);
-  re_file($post->canFormFname2, $post->canFormEan);
-  re_file($post->canFormFname3, $post->canFormEan);
-  re_file($post->canFormFname4, $post->canFormEan);
-  re_file($post->canFormFname5, $post->canFormEan);
-  */
+  var_dump($_FILES);
+  exit();
+  if ($post->canFormFname1)
+    $canFormFname[1] = re_file($post->canFormFname1, $post->canFormEan);
+  if ($post->canFormFname2)
+    $canFormFname[2] = re_file($post->canFormFname2, $post->canFormEan);
+  if ($post->canFormFname3)
+    $canFormFname[3] = re_file($post->canFormFname3, $post->canFormEan);
+  if ($post->canFormFname4)
+    $canFormFname[4] = re_file($post->canFormFname4, $post->canFormEan);
+  if ($post->canFormFname5)
+    $canFormFname[5] = re_file($post->canFormFname5, $post->canFormEan);
+
+  var_dump($canFormFname);
+  //  json_error(null, 200, 'files', $canFormFname);
+
   $uniq = gen_uniq();
   $query = 'INSERT IGNORE INTO `can_bank`
 (`uniq`, `type`, `diameter`, `height`, `volume`, `volumeFlOz`, `material`, `surface`, `cover_color`, `opener_color`,
@@ -128,7 +136,6 @@ VALUES (
   my_query($mysqli, $query);
   if ($mysqli->affected_rows > 0) {
     json_success($mysqli);
-    // TODO: $_FILE
   } else {
     json_error_nocontent($mysqli);
   }
@@ -138,7 +145,7 @@ function putIt()
 {
   $json = file_get_contents('php://input');
   $post = json_decode($json);
-  if (!isset($post)) {
+  if (empty($post)) {
     json_error_badrequest();
   }
 
@@ -183,44 +190,48 @@ function putIt()
 function deleteIt()
 {
   if (
-    isset($_REQUEST)
-    && isset($_REQUEST['id'])
-    && $_REQUEST['id'] > 0
+    empty($_REQUEST)
+    || !isfull($_REQUEST['id'])
+    || $_REQUEST['id'] <= 0
   ) {
-    $query = 'DELETE IGNORE FROM `can_bank` WHERE `id`=' . $_REQUEST['id'];
+    json_error_badrequest();
+  }
 
-    $mysqli = my_connect();
-    my_query($mysqli, $query);
-    if ($mysqli->affected_rows > 0) {
-      json_success($mysqli);
-    } else {
-      json_error_nocontent($mysqli);
-    }
+  $query = 'DELETE IGNORE FROM `can_bank` WHERE `id`=' . $_REQUEST['id'];
+  $mysqli = my_connect();
+  my_query($mysqli, $query);
+  if ($mysqli->affected_rows > 0) {
+    json_success($mysqli);
+  } else {
+    json_error_nocontent($mysqli);
   }
 }
 
 function get_find_query($text)
 {
-  $query = $text;
-  $query = 'SELECT * FROM `can_bank` WHERE
-      `brand` LIKE "%' . $_GET['text'] . '%" OR
-      `content_name` LIKE "%' . $_GET['text'] . '%" OR
-      `keywords` LIKE "%' . $_GET['text'] . '%" OR
-      `ean` LIKE "%' . $_GET['text'] . '%" OR
-      `notes` LIKE "%' . $_GET['text'] . '%"';
   // TODO: make this query more complex
-  return $query;
+  return
+    'SELECT * FROM `can_bank` WHERE
+  `brand` LIKE "%' . $text . '%" OR
+  `content_name` LIKE "%' . $text . '%" OR
+  `keywords` LIKE "%' . $text . '%" OR
+  `ean` LIKE "%' . $text . '%" OR
+  `notes` LIKE "%' . $text . '%"';
 }
-/*
+
 function re_file($file, $ean)
 {
   if ($file == '') return false;
+  $fn_array = explode('.', $file);
+  $fn['dir'] = '/cbank';
+  $fn['base'] = 'cb';
+  $fn['core'] = (isset($ean) && isfull($ean)) ? $ean : date('ymdhis');
+  $fn['ext'] = $fn_array[count($fn_array) - 1];
+  $fn['id'] = 0;
   do {
-    $fn_dir = '/cbank';
-    $fn_base = 'cb';
-    $fn_core = (isfull($ean)) ? $ean : date('ymdhis');
+    $fn['id']++;
+    $fname = $fn['dir'] . '/' . $fn['base'] . '_' . $fn['core'] . '_' . $fn['id'] . '.' . $fn['ext'];
+  } while (file_exists($fname));
 
-  } while (file_exists($fname_base . '*.*'));
-  $filename[1] = $fname_base . '_1' . 'ext';  // $post->canFormFname1
+  return $fname;
 }
-*/

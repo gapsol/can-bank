@@ -10,9 +10,12 @@ define('DB_NAME', $params['db_name']);
 define('DB_CHARSET', $params['db_charset']);
 define('DB_COLLATION', $params['db_collation']);
 
+// empty($var) = !isset($var) || $var == false
+// false: $var EXISTS, NON-EMPTY, NON-ZERO
+
 function isfull($var)
 {
-  return $var !== '';
+  return $var !== NULL && $var !== '';
 }
 
 function gen_uniq()

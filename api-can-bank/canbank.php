@@ -1,9 +1,10 @@
 <?php
 
 /*
- * create.php
+ * canbank.php
  * REST API for canBank application
- * creates database and its tables
+ * GET: gets the database and tables state
+ * POST: creates database and its tables
  */
 require_once 'get_config.php';
 require_once 'get_headers.php';
@@ -28,46 +29,47 @@ function getCanbank()
   $table_error = [];
   $mysqli->query('SELECT COUNT(*) FROM `can_bank`');
   if ($mysqli->error) {
-    array_push($table_error, $mysqli->error);
-  }
-
-  $mysqli->query('SELECT COUNT(*) FROM `can_type`');
-  if ($mysqli->error) {
-    array_push($table_error, $mysqli->error);
-  }
-
-  $mysqli->query('SELECT COUNT(*) FROM `can_surface`');
-  if ($mysqli->error) {
-    array_push($table_error, $mysqli->error);
-  }
-
-  $mysqli->query('SELECT COUNT(*) FROM `can_material`');
-  if ($mysqli->error) {
-    array_push($table_error, $mysqli->error);
+    array_push($table_error, 'levelL0'); // $mysqli->error);
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_color`');
   if ($mysqli->error) {
-    array_push($table_error, $mysqli->error);
+    array_push($table_error, 'levelL1'); // $mysqli->error);
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_content`');
   if ($mysqli->error) {
-    array_push($table_error, $mysqli->error);
+    array_push($table_error, 'levelL2'); // $mysqli->error);
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_country`');
   if ($mysqli->error) {
-    array_push($table_error, $mysqli->error);
+    array_push($table_error, 'levelL3'); // $mysqli->error);
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_language`');
   if ($mysqli->error) {
-    array_push($table_error, $mysqli->error);
+    array_push($table_error, 'levelL4'); // $mysqli->error);
+  }
+
+  $mysqli->query('SELECT COUNT(*) FROM `can_material`');
+  if ($mysqli->error) {
+    array_push($table_error, 'levelL5'); // $mysqli->error);
+  }
+
+  $mysqli->query('SELECT COUNT(*) FROM `can_surface`');
+  if ($mysqli->error) {
+    array_push($table_error, 'levelL6'); // $mysqli->error);
+  }
+
+  $mysqli->query('SELECT COUNT(*) FROM `can_type`');
+  if ($mysqli->error) {
+    array_push($table_error, 'levelL7'); // $mysqli->error);
   }
 
   if (count($table_error) > 0) {
-    json_error_server($mysqli, $table_error);
+    $s = (count($table_error) > 1) ? 's' : '';
+    json_return($mysqli, 'data', $table_error, 'Missing table'.$s);
   }
 
   json_success($mysqli, 'Database ready!');
@@ -75,9 +77,9 @@ function getCanbank()
 
 function createCanbank()
 {
-  $mysqli = my_connect();
+  $mysqli = my_connect(false);
 
-  $query = 'CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET `' . DB_CHARSET . '` COLLATE `' . DB_COLLATION . '`';
+  $query = 'CREATE DATABASE IF NOT EXISTS `' . DB_NAME . '` CHARACTER SET ' . DB_CHARSET . ' COLLATE ' . DB_COLLATION;
   my_query($mysqli, $query);
 
   $mysqli->select_db(DB_NAME);
@@ -139,7 +141,7 @@ function createCanbank()
     `id` int primary key auto_increment NOT NULL,
     `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `uniq` varchar(13),
-    `name` varchar(100) NOT NULL
+    `name` varchar(100) NOT NULL,
     `abbr` varchar(3) NOT NULL,
     `color` varchar(10) NOT NULL,
     `default` tinyint NOT NULL
