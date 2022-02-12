@@ -151,7 +151,6 @@ export class CanbankAddComponent implements OnInit {
       console.log(this.canForm.value)
     }*/
     let canObj = this.canType.find(cantyp => cantyp.id === this.canForm.value.canFormType);
-    // console.log(canObj)
     if (canObj !== undefined) {
       this.typeIconContent = this.reduceVolume(canObj.volume / 1000);
       if (this.typeIconContent[0] === '0') {
@@ -297,6 +296,7 @@ export class CanbankAddComponent implements OnInit {
   addCan() {
     this.canbankXC.setBank(this.canForm.value).subscribe(
       () => {
+        return;
         let help: any;
         help = this.canType.find(i => i.id === this.canForm.value.canFormType);
         this.canbankRC.canFormType = help.name;

@@ -1,4 +1,6 @@
 .can-flash-h1 {
+  font-family: Limelight;
+  font-weight: bold;
   color: gold;
 }
 .can-flash-plus {
@@ -13,4 +15,8 @@
 }
 .can-flash-plus:hover {
   cursor: pointer;
+}
+
+.can-flash-minus {
+  display: none;
 }

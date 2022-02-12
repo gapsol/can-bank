@@ -40,6 +40,7 @@
   margin-top: 3em;
 }
 .menu-btn {
+  position: relative;
   width: 69%;
   max-width: 471px;
   margin: 6px auto;
@@ -95,4 +96,15 @@
 }
 .check-right {
   float: right;
+}
+.ctg-badge {
+  display: inline-block;
+  position: absolute;
+  right: 3px;
+  height: 1em;
+  border-radius: 12px;
+  padding: 3px 6px;
+  background-color: blue;
+  color: gold;
+  line-height: 1.2em;
 }

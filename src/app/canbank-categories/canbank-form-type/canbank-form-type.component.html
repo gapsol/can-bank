@@ -5,20 +5,31 @@
     <thead>
       <tr>
         <th></th>
-        <th class="tab-90">{{ i18n.ctg_type }}</th>
+        <th class="tab-45">{{ i18n.ctg_type }}</th>
+        <th class="tab-45">{{ i18n.ctg_dimensions }}</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of canTypeRows">
-        <td><button class="btn-flag" [style]="item.style" [class]="item.class" (click)="setDefaultCanType(item.id)"></button></td>
+        <td><button class="btn-flag" [style]="item.style" [class]="item.class"
+            (click)="setDefaultCanType(item.id)"></button></td>
         <td>{{ item.name }}</td>
+        <td>
+          <small>
+            <span class="type-dims">&harr; {{ item.diameter }} mm</span>&nbsp;
+            <span class="type-dims">&varr; {{ item.height }} mm</span>&nbsp;
+            <span class="type-dims">&cup; {{ item.volume }} ml</span>&nbsp;
+            <span class="type-dims">&cup; {{ item.volumeFlOz }} fl.oz.</span>
+          </small>
+        </td>
         <td><button class="btn-del" (click)="deleteCanType(item.id)"><span>×</span></button></td>
       </tr>
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="3"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass" (click)="openForm()">+</button>
+        <td colspan="3"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass"
+            (click)="openForm()">+</button>
         </td>
       </tr>
     </tfoot>

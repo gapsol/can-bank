@@ -38,6 +38,7 @@ export class CanbankFormContentComponent implements OnInit {
   }
 
   getCanContents(): void {
+    this.canContentRows = [];
     this.canbankXC.getContentType(0).subscribe(
       () => {
         this.canbankIF.canContentType.forEach((e) => {
@@ -51,6 +52,7 @@ export class CanbankFormContentComponent implements OnInit {
             class: eClass
           });
         });
+        window.scroll(0, 0);
       },
       (error: any) => { console.error(error); }
     );
@@ -59,7 +61,7 @@ export class CanbankFormContentComponent implements OnInit {
   deleteCanContent(id: number) {
     if (confirm('You are about to delete record')) {
       this.canbankXC.deleteContentType(id).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanContents(); },
         (error: any) => { console.error(error); }
       );
     }
@@ -79,7 +81,7 @@ export class CanbankFormContentComponent implements OnInit {
     // content valid only when it fits htmlcontents array
     if (this.checkCanContent()) {
       this.canbankXC.setContentType(this.canForm.value).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanContents(); },
         (error: any) => { console.error(error); }
       )
     }
@@ -92,7 +94,7 @@ export class CanbankFormContentComponent implements OnInit {
     this.canForm.value.canFormName = content.name;
     this.canForm.value.canFormDefault = 1;
     this.canbankXC.updateContentType(this.canForm.value).subscribe(
-      () => { location.reload(); },
+      () => { this.getCanContents(); },
       (error: any) => { console.error(error); }
     );
   }

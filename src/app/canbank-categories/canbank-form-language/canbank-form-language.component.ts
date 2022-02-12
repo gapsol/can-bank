@@ -41,6 +41,7 @@ export class CanbankFormLanguageComponent implements OnInit {
   getCanLanguages(): void {
     this.canbankXC.getLanguage(0).subscribe(
       () => {
+        this.canLanguageRows = [];
         this.canbankIF.canLanguage.forEach((e) => {
           let eStyle = 'background-color:silver;';
           let eClass = (e.default) ? 'btn-default' : '';
@@ -53,6 +54,7 @@ export class CanbankFormLanguageComponent implements OnInit {
             class: eClass
           });
         });
+        window.scroll(0, 0);
       },
       (error: any) => { console.error(error); }
     );
@@ -61,7 +63,7 @@ export class CanbankFormLanguageComponent implements OnInit {
   deleteCanLanguage(id: number) {
     if (confirm('You are about to delete record')) {
       this.canbankXC.deleteLanguage(id).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanLanguages(); },
         (error: any) => { console.error(error); }
       );
     }
@@ -82,7 +84,7 @@ export class CanbankFormLanguageComponent implements OnInit {
     // load ISO langs tab
     if (this.checkCanLanguage()) {
       this.canbankXC.setLanguage(this.canForm.value).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanLanguages(); },
         (error: any) => { console.error(error); }
       )
     }
@@ -96,7 +98,7 @@ export class CanbankFormLanguageComponent implements OnInit {
     this.canForm.value.canFormAbbr = language.abbr;
     this.canForm.value.canFormDefault = 1;
     this.canbankXC.updateLanguage(this.canForm.value).subscribe(
-      () => { location.reload(); },
+      () => { this.getCanLanguages(); },
       (error: any) => { console.error(error); }
     );
   }

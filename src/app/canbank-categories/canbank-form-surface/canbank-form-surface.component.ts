@@ -44,6 +44,7 @@ export class CanbankFormSurfaceComponent implements OnInit {
   getCanSurfaces(): void {
     this.canbankXC.getSurface(0).subscribe(
       () => {
+        this.canSurfaceRows = [];
         this.canbankIF.canSurface.forEach((e) => {
           let eStyle = 'background-color:' + e.color + ';';
           let eClass = (e.default) ? 'btn-default' : '';
@@ -56,6 +57,7 @@ export class CanbankFormSurfaceComponent implements OnInit {
             class: eClass
           });
         });
+        window.scroll(0, 0);
       },
       (error: any) => { console.error(error); }
     );
@@ -75,7 +77,7 @@ export class CanbankFormSurfaceComponent implements OnInit {
     // surface valid only when it fits htmlsurfaces array
     if (this.checkCanSurface()) {
       this.canbankXC.setSurface(this.canForm.value).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanSurfaces(); },
         (error: any) => { console.error(error); }
       )
     }
@@ -90,7 +92,7 @@ export class CanbankFormSurfaceComponent implements OnInit {
     this.canForm.value.canFormDefault = 1;
 
     this.canbankXC.updateSurface(this.canForm.value).subscribe(
-      () => { location.reload(); },
+      () => { this.getCanSurfaces(); },
       (error: any) => { console.error(error); }
     );
   }
@@ -98,7 +100,7 @@ export class CanbankFormSurfaceComponent implements OnInit {
   deleteCanSurface(id: number) {
     if (confirm('You are about to delete record')) {
       this.canbankXC.deleteSurface(id).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanSurfaces(); },
         (error: any) => { console.error(error); }
       );
     }

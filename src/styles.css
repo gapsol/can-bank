@@ -84,14 +84,20 @@ table th {
   text-align: center;
   padding: 3px 5px;
 }
-table .tab-90 {
-  width: 90%;
+th {
+  font-family: Limelight;
 }
 table tbody tr:nth-child(2n + 1) {
   background-color: #ffc800;
 }
 table tbody tr:nth-child(2n) {
   background-color: #ffe800;
+}
+.tab-45 {
+  width: 45%;
+}
+.tab-90 {
+  width: 90%;
 }
 
 form {

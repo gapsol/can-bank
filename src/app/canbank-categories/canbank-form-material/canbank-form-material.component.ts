@@ -44,6 +44,7 @@ export class CanbankFormMaterialComponent implements OnInit {
   getCanMaterials(): void {
     this.canbankXC.getMaterial(0).subscribe(
       () => {
+        this.canMaterialRows = [];
         this.canbankIF.canMaterial.forEach((e) => {
           let eStyle = 'background-color:' + e.color + ';';
           let eClass = (e.default) ? 'btn-default' : '';
@@ -57,6 +58,7 @@ export class CanbankFormMaterialComponent implements OnInit {
             class: eClass
           });
         });
+        window.scroll(0, 0);
       },
       (error: any) => { console.error(error); }
     );
@@ -77,7 +79,7 @@ export class CanbankFormMaterialComponent implements OnInit {
     if (this.checkCanMaterial()) {
       this.canForm.value.canFormDefault = (this.canForm.value.canFormDefault) ? 1 : 0;
       this.canbankXC.setMaterial(this.canForm.value).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanMaterials(); },
         (error: any) => { console.error(error); }
       )
     }
@@ -93,7 +95,7 @@ export class CanbankFormMaterialComponent implements OnInit {
     this.canForm.value.canFormDefault = 1;
 
     this.canbankXC.updateMaterial(this.canForm.value).subscribe(
-      () => { location.reload(); },
+      () => { this.getCanMaterials(); },
       (error: any) => { console.error(error); }
     );
   }
@@ -101,7 +103,7 @@ export class CanbankFormMaterialComponent implements OnInit {
   deleteCanMaterial(id: number) {
     if (confirm('You are about to delete record')) {
       this.canbankXC.deleteMaterial(id).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanMaterials(); },
         (error: any) => { console.error(error); }
       );
     }

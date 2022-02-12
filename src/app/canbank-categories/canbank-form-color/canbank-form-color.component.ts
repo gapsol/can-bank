@@ -43,6 +43,7 @@ export class CanbankFormColorComponent implements OnInit {
   getCanColors(): void {
     this.canbankXC.getColor(0).subscribe(
       () => {
+        this.canColorRows = [];
         this.canbankIF.canColor.forEach((e) => {
           let eStyle = 'background-color:' + e.color + ';';
           let eClass = (e.default) ? 'btn-default' : '';
@@ -56,6 +57,7 @@ export class CanbankFormColorComponent implements OnInit {
             class: eClass
           });
         });
+        window.scroll(0, 0);
       },
       (error) => { console.error(error); }
     );
@@ -64,7 +66,7 @@ export class CanbankFormColorComponent implements OnInit {
   deleteCanColor(id: number) {
     if (confirm('You are about to delete record')) {
       this.canbankXC.deleteColor(id).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanColors(); },
         error => { console.error(error); }
       );
     }
@@ -106,7 +108,7 @@ export class CanbankFormColorComponent implements OnInit {
     // color valid only when it fits htmlColors array
     if (this.checkCanColor()) {
       this.canbankXC.setColor(this.canForm.value).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanColors(); },
         (error) => { console.error(error); }
       )
     }
@@ -121,7 +123,7 @@ export class CanbankFormColorComponent implements OnInit {
     this.canForm.value.canFormPicker = color.code;
     this.canForm.value.canFormDefault = 1;
     this.canbankXC.updateColor(this.canForm.value).subscribe(
-      () => { location.reload(); },
+      () => { this.getCanColors(); },
       (error: any) => { console.error(error); }
     );
   }

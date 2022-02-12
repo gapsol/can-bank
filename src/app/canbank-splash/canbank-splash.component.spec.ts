@@ -11,9 +11,9 @@ describe('CanbankSplashComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CanbankSplashComponent ]
+      declarations: [CanbankSplashComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

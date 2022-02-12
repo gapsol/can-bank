@@ -6,25 +6,30 @@ import { Injectable, Input } from '@angular/core';
 export class CanbankLevelmeterService {
 
   levelMeter = {
-    levelDb: "",
-    levelDt: "",
-    levelL1: "",
-    levelL2: "",
-    levelL3: "",
-    levelL4: "",
-    levelL5: "",
-    levelL6: "",
-    levelL7: ""
+    levelDa: "",  // database
+    levelDb: "",  // tables
+    levelL0: "",  // table can_bank
+    levelL1: "",  // table can_color
+    levelL2: "",  // table can_content
+    levelL3: "",  // table can_country
+    levelL4: "",  // table can_language
+    levelL5: "",  // table can_material
+    levelL6: "",  // table can_surface
+    levelL7: ""   // table can_type
   };
 
+  @Input()
+  private _levelDa: string = '';
+  get levelDa(): string { return this._levelDa; }
+  set levelDa(str: string) { this._levelDa = str; }
   @Input()
   private _levelDb: string = '';
   get levelDb(): string { return this._levelDb; }
   set levelDb(str: string) { this._levelDb = str; }
   @Input()
-  private _levelDt: string = '';
-  get levelDt(): string { return this._levelDt; }
-  set levelDt(str: string) { this._levelDt = str; }
+  private _levelL0: string = '';
+  get levelL0(): string { return this._levelL0; }
+  set levelL0(str: string) { this._levelL0 = str; }
   @Input()
   private _levelL1: string = '';
   get levelL1(): string { return this._levelL1; }

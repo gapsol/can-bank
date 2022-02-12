@@ -2,11 +2,6 @@
  * CanBank CATEGORIES
  *  OVERVIEW of categories/types
  *  MODIFY the lists content
- *
- * TODO:
- *  get info from database
- *  modification forms
- *  ? offline/local
  */
 import { Component, OnInit } from '@angular/core';
 import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
@@ -32,8 +27,10 @@ interface category {
   data: any
 }
 interface menuItem {
+  type: string,
   uri: string,
-  i18n: string
+  i18n: string,
+  count: number
 }
 
 @Component({
@@ -44,9 +41,10 @@ interface menuItem {
 
     <nav class="canbank-menu">
       <div class="menu-btn" *ngFor="let item of menuList">
-        <a [routerLink]="item.uri" class="anchor-btn"><!-- routerLinkActive="menu-btn-active" -->
+        <a [routerLink]="item.uri" class="anchor-btn">
           <span>{{ item.i18n }}</span>
         </a>
+        <span class="ctg-badge">{{ item.count }}</span>
       </div>
     </nav>
     <router-outlet></router-outlet>
@@ -57,13 +55,13 @@ interface menuItem {
 export class CanbankCategoriesComponent implements OnInit {
   i18n = i18n[config.language];
   menuList: Array<menuItem> = [
-    { uri: '/ctgtype', i18n: this.i18n['ctg_type'] },
-    { uri: '/ctgcontent', i18n: this.i18n['ctg_content_type'] },
-    { uri: '/ctgmaterial', i18n: this.i18n['ctg_material'] },
-    { uri: '/ctgsurface', i18n: this.i18n['ctg_surface'] },
-    { uri: '/ctgcolor', i18n: this.i18n['ctg_color'] },
-    { uri: '/ctgcountry', i18n: this.i18n['ctg_country'] },
-    { uri: '/ctglanguage', i18n: this.i18n['ctg_language'] },
+    { type: 'type', uri: '/ctgtype', i18n: this.i18n['ctg_type'], count: 0 },
+    { type: 'content', uri: '/ctgcontent', i18n: this.i18n['ctg_content_type'], count: 0 },
+    { type: 'material', uri: '/ctgmaterial', i18n: this.i18n['ctg_material'], count: 0 },
+    { type: 'surface', uri: '/ctgsurface', i18n: this.i18n['ctg_surface'], count: 0 },
+    { type: 'color', uri: '/ctgcolor', i18n: this.i18n['ctg_color'], count: 0 },
+    { type: 'country', uri: '/ctgcountry', i18n: this.i18n['ctg_country'], count: 0 },
+    { type: 'language', uri: '/ctglanguage', i18n: this.i18n['ctg_language'], count: 0 },
   ];
   /*    { type: 'Can type', class: "can-type", data: canType },
       { type: 'Content type', class: "content-type", data: canContentType },
@@ -93,65 +91,74 @@ export class CanbankCategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.getCanTypes();
+    this.getCanCTypes();
+    this.getCanMaterials();
+    this.getCanSurfaces();
+    this.getCanColors();
+    this.getCanCountries();
+    this.getCanLanguages();
   }
 
   getCanTypes() {
-    this.canbankXC.getType(0).subscribe(
-      () => {
-        this.categories.push({ type: "Type", class: "type", name: '', color: '', data: this.canbankIF.canType });
-        this.getCanCTypes();
+    this.canbankXC.getCount('type').subscribe(
+      (response: any) => {
+        let help = this.menuList.find(i => i.type === 'type');
+        if (help) help.count = response.count;
       }
     );
   }
 
   getCanCTypes() {
-    this.canbankXC.getContentType(0).subscribe(
-      () => {
-        this.categories.push({ type: "Content type", class: "content", name: '', color: '', data: this.canbankIF.canContentType });
-        this.getCanMaterials();
+    this.canbankXC.getCount('content').subscribe(
+      (response: any) => {
+        let help = this.menuList.find(i => i.type === 'content');
+        if (help) help.count = response.count;
       }
     );
   }
 
   getCanMaterials() {
-    this.canbankXC.getMaterial(0).subscribe(
-      () => {
-        this.categories.push({ type: "Material", class: "material", name: '', color: '', data: this.canbankIF.canMaterial });
-        this.getCanSurfaces();
+    this.canbankXC.getCount('material').subscribe(
+      (response: any) => {
+        let help = this.menuList.find(i => i.type === 'material');
+        if (help) help.count = response.count;
       }
     );
   }
 
   getCanSurfaces() {
-    this.canbankXC.getSurface(0).subscribe(
-      () => {
-        this.categories.push({ type: "Surface", class: "surface", name: '', color: '', data: this.canbankIF.canSurface });
-        this.getCanColors();
+    this.canbankXC.getCount('surface').subscribe(
+      (response: any) => {
+        let help = this.menuList.find(i => i.type === 'surface');
+        if (help) help.count = response.count;
       }
     );
   }
 
   getCanColors() {
-    this.canbankXC.getColor(0).subscribe(
-      () => {
-        this.categories.push({ type: "Color", class: "color", name: '', color: '', data: this.canbankIF.canColor });
-        this.getCanCountries();
+    this.canbankXC.getCount('color').subscribe(
+      (response: any) => {
+        let help = this.menuList.find(i => i.type === 'color');
+        if (help) help.count = response.count;
       }
     );
   }
 
   getCanCountries() {
-    this.canbankXC.getCountry(0).subscribe(
-      () => {
-        this.categories.push({ type: "Country", class: "country", name: '', color: '', data: this.canbankIF.canCountry });
-        this.getCanLanguages();
+    this.canbankXC.getCount('country').subscribe(
+      (response: any) => {
+        let help = this.menuList.find(i => i.type === 'country');
+        if (help) help.count = response.count;
       }
     );
   }
 
   getCanLanguages() {
-    this.canbankXC.getLanguage(0).subscribe(
-      () => { this.categories.push({ type: "Language", class: "language", name: '', color: '', data: this.canbankIF.canLanguage }); }
+    this.canbankXC.getCount('language').subscribe(
+      (response: any) => {
+        let help = this.menuList.find(i => i.type === 'language');
+        if (help) help.count = response.count;
+      }
     );
   }
 

@@ -18,8 +18,8 @@
 
 .can-splash-level {
   display: inline-block;
-  width: 2em;
-  height: 1em;
+  width: 1.7em;
+  height: 0.85em;
   border: 1px solid blue;
   background-color: gray;
 }
@@ -30,7 +30,7 @@
   background-color: lime;
 }
 .can-splash-level.empty {
-  background-color: green;
+  background-color: #0B0;
 }
 .can-splash-level.error {
   background-color: red;
@@ -39,6 +39,7 @@
   color: lime;
 }
 .can-splash-error {
+  font-weight: bold;
   color: gold;
 }
 

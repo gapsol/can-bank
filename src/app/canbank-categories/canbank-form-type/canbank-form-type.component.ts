@@ -44,6 +44,7 @@ export class CanbankFormTypeComponent implements OnInit {
   getCanTypes(): void {
     this.canbankXC.getType(0).subscribe(
       () => {
+        this.canTypeRows = [];
         this.canbankIF.canType.forEach((e) => {
           let eStyle = 'background-color:silver;';
           let eClass = (e.default) ? 'btn-default' : '';
@@ -59,6 +60,7 @@ export class CanbankFormTypeComponent implements OnInit {
             class: eClass
           });
         });
+        window.scroll(0, 0);
       },
       (error: any) => { console.error(error); }
     );
@@ -67,7 +69,7 @@ export class CanbankFormTypeComponent implements OnInit {
   deleteCanType(id: number) {
     if (confirm('You are about to delete record')) {
       this.canbankXC.deleteType(id).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanTypes(); },
         (error: any) => { console.error(error); }
       );
     }
@@ -87,7 +89,7 @@ export class CanbankFormTypeComponent implements OnInit {
     // content valid only when it fits htmlcontents array
     if (this.checkCanType()) {
       this.canbankXC.setType(this.canForm.value).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanTypes(); },
         (error: any) => { console.error(error); }
       )
     }
@@ -104,7 +106,7 @@ export class CanbankFormTypeComponent implements OnInit {
     this.canForm.value.canFormVolumeFlOz = type.volumeFlOz;
     this.canForm.value.canFormDefault = 1;
     this.canbankXC.updateType(this.canForm.value).subscribe(
-      () => { location.reload(); },
+      () => { this.getCanTypes(); },
       (error: any) => { console.error(error); }
     );
   }

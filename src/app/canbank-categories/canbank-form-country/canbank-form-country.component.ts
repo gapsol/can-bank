@@ -35,12 +35,13 @@ export class CanbankFormCountryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCanCountrys();
+    this.getCanCountries();
   }
 
-  getCanCountrys(): void {
+  getCanCountries(): void {
     this.canbankXC.getCountry(0).subscribe(
       () => {
+        this.canCountryRows = [];
         this.canbankIF.canCountry.forEach((e) => {
           let eStyle = 'background-color:silver;';
           let eClass = (e.default) ? 'btn-default' : '';
@@ -53,6 +54,7 @@ export class CanbankFormCountryComponent implements OnInit {
             class: eClass
           });
         });
+        window.scroll(0, 0);
       },
       (error: any) => { console.error(error); }
     );
@@ -61,7 +63,7 @@ export class CanbankFormCountryComponent implements OnInit {
   deleteCanCountry(id: number) {
     if (confirm('You are about to delete record')) {
       this.canbankXC.deleteCountry(id).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanCountries(); },
         (error: any) => { console.error(error); }
       );
     }
@@ -81,7 +83,7 @@ export class CanbankFormCountryComponent implements OnInit {
     // country valid only when it fits htmlcountrys array
     if (this.checkCanCountry()) {
       this.canbankXC.setCountry(this.canForm.value).subscribe(
-        () => { location.reload(); },
+        () => { this.getCanCountries(); },
         (error: any) => { console.error(error); }
       )
     }
@@ -95,7 +97,7 @@ export class CanbankFormCountryComponent implements OnInit {
     this.canForm.value.canFormAbbr = country.abbr;
     this.canForm.value.canFormDefault = 1;
     this.canbankXC.updateCountry(this.canForm.value).subscribe(
-      () => { location.reload(); },
+      () => { this.getCanCountries(); },
       (error: any) => { console.error(error); }
     );
   }

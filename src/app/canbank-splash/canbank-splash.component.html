@@ -3,7 +3,7 @@
     <div [class]="item.value" class="can-splash-level" *ngFor="let item of levelMeter | keyvalue; index as i"></div>
     <div class="can-splash-success">{{ successMessage }}</div>
     <div class="can-splash-error" *ngFor="let item of errorMessage">{{ item }}</div>
-    <canbank-flash *ngIf="flashMe"></canbank-flash>
-    <canbank-prefill *ngIf="prefillMe"></canbank-prefill>
+    <canbank-flash></canbank-flash>
+    <canbank-prefill></canbank-prefill>
   </div>
 </div>

@@ -7,17 +7,23 @@ import { CanbankXchangeService } from '../canbank-services/canbank-xchange.servi
 @Component({
   selector: 'canbank-prefill',
   template: `
-    <div class="can-prefill-h1" (click)="canbankPrefill()">{{ prefillBtn }}</div>
+    <div *ngIf="prefillMe" class="can-prefill-h1" (click)="canbankPrefill()">{{ prefillBtn }}</div>
   `,
   styleUrls: ['./canbank-prefill.component.css']
 })
 export class CanbankPrefillComponent implements OnInit {
   i18n = i18n[config.language];
+  prefillMe: boolean = false;
   prefillBtn: string = this.i18n.msg_prefill;
 
   constructor(private canbankXC: CanbankXchangeService) { }
 
   ngOnInit(): void {
+    /*if (that.getLevelMeterEmpty().length > 0) {
+      that.prefillMe = true;
+    } else {
+      setTimeout(() => { that.router.navigate(['home']) }, config.tOut);
+    }*/
   }
 
   canbankPrefill() {
