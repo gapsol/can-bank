@@ -6,13 +6,17 @@
     <div class="input-box">
       <label for="find">{{ i18n['find_it'] }}</label>
       <input type="text" name="find" id="find" required minlength="3" [(ngModel)]="find" (input)="canFind()">
+      <!--
+        TODO: checkboxes "find in" - name, content name, keywords, barcode
+        TODO: select/options
+      -->
     </div>
   </form>
 
   <table *ngIf="canList.length > 0">
     <thead>
       <tr>
-        <th>{{ i18n.found }}: {{ canList.length }}</th>
+        <th>{{ i18n['found'] }}: {{ canList.length }}</th>
       </tr>
     </thead>
     <tbody>

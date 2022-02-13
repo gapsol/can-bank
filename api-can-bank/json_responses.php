@@ -28,7 +28,9 @@ function json_error($connection = null, $code = 400, $message = null, $info = nu
   http_response_code($code);
   $j['status'] = 'error';
   $j['message'] = (!isset($message)) ? $response[$code] : $message;
-  if (isset($info)) { $j['info'] = $info; }
+  if (isset($info)) {
+    $j['info'] = $info;
+  }
   print json_encode($j);
   exit();
 }

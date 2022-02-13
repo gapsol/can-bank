@@ -620,8 +620,9 @@ export class CanbankXchangeService {
   // 3. get item with id
   // 4. search items with requested text
   public getBank(id: number, text?: string): Observable<object> {
-    const params = new HttpParams().set('id', id);
-    if (text) { params.set('text', text); }
+    let params = new HttpParams();
+    params = params.set('id', id);
+    if (text) { params = params.set('text', text); }
     return this.http.get(`${this.canbankUrl}/bank`, { params })
       .pipe(
         map((response: any) => {

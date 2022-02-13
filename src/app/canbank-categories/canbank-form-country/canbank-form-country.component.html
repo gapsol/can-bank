@@ -5,7 +5,7 @@
     <thead>
       <tr>
         <th>[F]</th>
-        <th class="tab-90">{{ i18n.ctg_country }}</th>
+        <th class="tab-90">{{ i18n['ctg_country'] }}</th>
         <th></th>
       </tr>
     </thead>
@@ -25,13 +25,13 @@
   </table>
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanCountry()">
-    <label for="canFormName">{{ i18n.name }}</label>
+    <label for="canFormName">{{ i18n['ctg_tab_name'] }}</label>
     <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
-    <label for="canFormAbbr">{{ i18n.abbreviation }}</label>
+    <label for="canFormAbbr">{{ i18n['ctg_tab_abbr'] }}</label>
     <input type="text" id="canFormAbbr" formControlName="canFormAbbr" minlength="2" class="can-ctg-input" required />
     <div>
       <input id="canFormDefault" type="checkbox" formControlName="canFormDefault" class="check-2em check-right" />
-      <label for="canFormDefault">{{ i18n.check_default }}</label>
+      <label for="canFormDefault">{{ i18n['ctg_check_default'] }}</label>
     </div>
 
     <button type="submit" class="can-ctg-submit-btn" [disabled]="canForm.invalid">+</button>

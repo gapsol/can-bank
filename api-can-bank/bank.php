@@ -66,11 +66,7 @@ function getIt()
   while ($row = $result->fetch_assoc()) {
     array_push($return, $row);
   }
-  //if (count($return) > 0) {
-    json_return($mysqli, 'list', $return);
-  /*} else {
-    json_nocontent($mysqli);
-  }*/
+  json_return($mysqli, 'list', $return);
 }
 
 function postIt()

@@ -5,8 +5,8 @@
     <thead>
       <tr>
         <th></th>
-        <th class="tab-45">{{ i18n.ctg_type }}</th>
-        <th class="tab-45">{{ i18n.ctg_dimensions }}</th>
+        <th class="tab-45">{{ i18n['ctg_tab_type'] }}</th>
+        <th class="tab-45">{{ i18n['ctg_tab_dims'] }}</th>
         <th></th>
       </tr>
     </thead>
@@ -17,10 +17,10 @@
         <td>{{ item.name }}</td>
         <td>
           <small>
-            <span class="type-dims">&harr; {{ item.diameter }} mm</span>&nbsp;
-            <span class="type-dims">&varr; {{ item.height }} mm</span>&nbsp;
-            <span class="type-dims">&cup; {{ item.volume }} ml</span>&nbsp;
-            <span class="type-dims">&cup; {{ item.volumeFlOz }} fl.oz.</span>
+            <span class="type-dims">&harr;&nbsp;{{ item.diameter }}&nbsp;mm</span>&nbsp;
+            <span class="type-dims">&varr;&nbsp;{{ item.height }}&nbsp;mm</span>&nbsp;
+            <span class="type-dims">&cup;&nbsp;{{ item.volume }}&nbsp;ml</span>&nbsp;
+            <span class="type-dims">&cup;&nbsp;{{ item.volumeFlOz }}&nbsp;fl.oz.</span>
           </small>
         </td>
         <td><button class="btn-del" (click)="deleteCanType(item.id)"><span>×</span></button></td>
@@ -28,7 +28,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="3"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass"
+        <td colspan="4"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass"
             (click)="openForm()">+</button>
         </td>
       </tr>
@@ -36,19 +36,19 @@
   </table>
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanType()">
-    <label for="canFormName">{{ i18n.name }}</label>
+    <label for="canFormName">{{ i18n['ctg_tab_name'] }}</label>
     <input id="canFormName" type="text" formControlName="canFormName" required />
-    <label for="canFormDiameter">{{ i18n.diameter }}</label>
+    <label for="canFormDiameter">{{ i18n['add_diameter'] }}</label>
     <input id="canFormDiameter" type="number" min="0" step="1" formControlName="canFormDiameter" required /><br>
-    <label for="canFormHeight">{{ i18n.height }}</label>
+    <label for="canFormHeight">{{ i18n['add_height'] }}</label>
     <input id="canFormHeight" type="number" min="0" step="1" formControlName="canFormHeight" required />
-    <label for="canFormVolume">{{ i18n.volume }}</label>
+    <label for="canFormVolume">{{ i18n['add_volume'] }}</label>
     <input id="canFormVolume" type="number" min="0" step="1" formControlName="canFormVolume" required />
-    <label for="canFormVolumeFlOz">{{ i18n.volumeFlOz }}</label>
+    <label for="canFormVolumeFlOz">{{ i18n['add_volumeFlOz'] }}</label>
     <input id="canFormVolumeFlOz" type="number" min="0" step="0.1" formControlName="canFormVolumeFlOz" required />
     <div>
       <input id="canFormDefault" type="checkbox" formControlName="canFormDefault" class="check-2em check-right" />
-      <label for="canFormDefault">{{ i18n.check_default }}</label>
+      <label for="canFormDefault">{{ i18n['ctg_check_default'] }}</label>
     </div>
 
     <button type="submit" class="can-ctg-submit-btn" [disabled]="canForm.invalid">+</button>

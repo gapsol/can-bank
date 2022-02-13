@@ -29,47 +29,47 @@ function getCanbank()
   $table_error = [];
   $mysqli->query('SELECT COUNT(*) FROM `can_bank`');
   if ($mysqli->error) {
-    array_push($table_error, 'levelL0'); // $mysqli->error);
+    array_push($table_error, 'levelL0');
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_color`');
   if ($mysqli->error) {
-    array_push($table_error, 'levelL1'); // $mysqli->error);
+    array_push($table_error, 'levelL1');
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_content`');
   if ($mysqli->error) {
-    array_push($table_error, 'levelL2'); // $mysqli->error);
+    array_push($table_error, 'levelL2');
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_country`');
   if ($mysqli->error) {
-    array_push($table_error, 'levelL3'); // $mysqli->error);
+    array_push($table_error, 'levelL3');
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_language`');
   if ($mysqli->error) {
-    array_push($table_error, 'levelL4'); // $mysqli->error);
+    array_push($table_error, 'levelL4');
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_material`');
   if ($mysqli->error) {
-    array_push($table_error, 'levelL5'); // $mysqli->error);
+    array_push($table_error, 'levelL5');
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_surface`');
   if ($mysqli->error) {
-    array_push($table_error, 'levelL6'); // $mysqli->error);
+    array_push($table_error, 'levelL6');
   }
 
   $mysqli->query('SELECT COUNT(*) FROM `can_type`');
   if ($mysqli->error) {
-    array_push($table_error, 'levelL7'); // $mysqli->error);
+    array_push($table_error, 'levelL7');
   }
 
   if (count($table_error) > 0) {
     $s = (count($table_error) > 1) ? 's' : '';
-    json_return($mysqli, 'data', $table_error, 'Missing table'.$s);
+    json_return($mysqli, 'data', $table_error, 'Missing table' . $s);
   }
 
   json_success($mysqli, 'Database ready!');

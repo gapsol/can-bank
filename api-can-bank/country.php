@@ -50,11 +50,7 @@ function getIt()
     $row['default'] = ($row['default'] == 1) ? true : false;
     array_push($return, $row);
   }
-  //if (count($return) > 0) {
-    json_return($mysqli, 'list', $return);
-  /*} else {
-    json_nocontent($mysqli);
-  }*/
+  json_return($mysqli, 'list', $return);
 }
 
 function postIt()

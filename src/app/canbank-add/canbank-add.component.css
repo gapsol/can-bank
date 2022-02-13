@@ -33,6 +33,9 @@
 .input-icon-white {
   background-color: white;
 }
-#can-form-diameter, #can-form-height, #can-form-volume, #can-form-volumeFlOz {
-  background-color: #DEF;
+#can-form-diameter,
+#can-form-height,
+#can-form-volume,
+#can-form-volumeFlOz {
+  background-color: #def;
 }

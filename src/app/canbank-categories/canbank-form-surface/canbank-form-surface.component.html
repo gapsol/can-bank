@@ -5,7 +5,7 @@
     <thead>
       <tr>
         <th></th>
-        <th class="tab-90">{{ i18n.ctg_surface }}</th>
+        <th class="tab-90">{{ i18n['ctg_surface'] }}</th>
         <th></th>
       </tr>
     </thead>
@@ -25,14 +25,14 @@
   </table>
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanSurface()">
-    <label>{{ i18n.name }} + {{ i18n.color }}</label>
+    <label>{{ i18n['ctg_tab_name'] }} + {{ i18n['ctg_tab_color'] }}</label>
     <div style="display: flex;">
       <input type="text" formControlName="canFormName" minlength="3" class="border-left" required />
       <input type="color" formControlName="canFormPicker" class="can-ctg-color-picker border-right" required /><br>
     </div>
     <div>
       <input id="canFormDefault" type="checkbox" formControlName="canFormDefault" class="check-2em check-right" />
-      <label for="canFormDefault">{{ i18n.check_default }}</label>
+      <label for="canFormDefault">{{ i18n['ctg_check_default'] }}</label>
     </div>
 
     <button type="submit" class="can-ctg-submit-btn" [disabled]="canForm.invalid">+</button>
