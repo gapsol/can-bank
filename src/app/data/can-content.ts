@@ -1,10 +1,6 @@
-export interface canContentType {
-  id: number,
-  name: string,
-  default: boolean
-}
+import { canContentType } from "./can.interface";
 
-export var canContentType: Array<canContentType> = [
+export var canContentTypes: Array<canContentType> = [
   {
     id: 1,
     name: "pivo",

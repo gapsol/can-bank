@@ -1,12 +1,6 @@
-export interface canMaterial {
-  id: number,
-  name: string,
-  abbr: string,
-  color: string,
-  default: boolean
-}
+import { canMaterial } from "./can.interface";
 
-export var canMaterial: Array<canMaterial> = [
+export var canMaterials: Array<canMaterial> = [
   {
     id: 1,
     name: "hliník",

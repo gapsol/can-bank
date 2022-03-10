@@ -36,19 +36,28 @@ function getIt()
     json_error_badrequest();
   }
 
+  $return = [];
+  $mysqli = my_connect();
   switch ($_GET['id']) {
     case 0:
-      $query = 'SELECT * FROM `can_surface` ORDER BY `default` DESC, `name`';
+      $query = 'SELECT * FROM `can_surface` WHERE `id`=(SELECT `key` FROM `can_default` WHERE `table`="surface")
+                UNION
+                SELECT * FROM `can_surface` WHERE `id`<>(SELECT `key` FROM `can_default` WHERE `table`="surface" ORDER BY `name`)';
+      $result = my_query($mysqli, $query);
+      while ($row = $result->fetch_assoc()) {
+        $row['default'] = (count($return) == 0);
+        array_push($return, $row);
+      }
       break;
     default:
       $query = 'SELECT * FROM `can_surface` WHERE id = ' . $_GET['id'];
-  }
-  $mysqli = my_connect();
-  $result = my_query($mysqli, $query);
-  $return = [];
-  while ($row = $result->fetch_assoc()) {
-    $row['default'] = ($row['default'] == 1) ? true : false;
-    array_push($return, $row);
+      $duery = 'SELECT `key` FROM `can_default` WHERE `table`="surface"';
+      $default = my_query($mysqli, $duery);
+      $result = my_query($mysqli, $query);
+      while ($row = $result->fetch_assoc()) {
+        $row['default'] = ($default == $row['id']);
+        array_push($return, $row);
+      }
   }
   json_return($mysqli, 'list', $return);
 }
@@ -67,27 +76,37 @@ function postIt()
     && isset($post->canFormDefault)
   ) {
     $mysqli = my_connect();
-    if ($post->canFormDefault) {
-      $query = 'UPDATE IGNORE `can_surface` SET `default` = false WHERE `default` = true';
-      my_query($mysqli, $query);
-    }
     $uniq = gen_uniq();
     $query = 'INSERT IGNORE INTO `can_surface`
-      (`uniq`, `name`, `color`, `default`)
+      (`uniq`, `name`, `color`)
       VALUES (
       "' . $uniq . '",
       "' . $post->canFormName . '",
-      "' . $post->canFormPicker . '",
-      "' . $post->canFormDefault . '"
+      "' . $post->canFormPicker . '"
       )';
     my_query($mysqli, $query);
     if ($mysqli->affected_rows > 0) {
-      json_success($mysqli);
+      if ($post->canFormDefault) {
+        postDefault($mysqli);
+      } else {
+        json_success($mysqli);
+      }
     } else {
       json_error_nocontent($mysqli);
     }
   } else {
     json_error_notacceptable();
+  }
+}
+
+function postDefault($mysqli)
+{
+  $query = 'UPDATE `can_default` SET `key`=' . $mysqli->insert_id . ' WHERE `table`="surface"';
+  my_query($mysqli, $query);
+  if ($mysqli->affected_rows > 0) {
+    json_success($mysqli);
+  } else {
+    json_error_nocontent($mysqli);
   }
 }
 
@@ -100,21 +119,36 @@ function putIt()
   }
 
   if (
+    isset($post)
+    && isset($post->canFormId)
+  ) {
+    $query = 'UPDATE IGNORE `can_default`
+      SET
+        `key`=' . $post->canFormId . '
+      WHERE
+        `table`="surface"';
+    $mysqli = my_connect();
+    my_query($mysqli, $query);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
+  } else {
+    json_error_notacceptable();
+  }
+  /*if (
     isset($post->canFormId)
     && isset($post->canFormName)
     && isset($post->canFormPicker)
-    && isset($post->canFormDefault)
   ) {
     $uniq = gen_uniq();
-    $query = 'UPDATE IGNORE `can_surface` SET `default` = false WHERE `default` = true';
     $mysqli = my_connect();
-    my_query($mysqli, $query);
     $query = 'UPDATE IGNORE `can_surface`
       SET
         `uniq` = "' . $uniq . '",
         `name` = "' . $post->canFormName . '",
         `color` = "' . $post->canFormPicker . '",
-        `default` = "' . $post->canFormDefault . '"
       WHERE
         `id` = ' . $post->canFormId;
     my_query($mysqli, $query);
@@ -125,7 +159,7 @@ function putIt()
     }
   } else {
     json_error_notacceptable();
-  }
+  }*/
 }
 
 function deleteIt()

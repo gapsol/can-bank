@@ -1,39 +1,29 @@
 <div class="sub-screen">
   <h1 class="title">canTypeForm</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th class="tab-45">{{ i18n['ctg_tab_type'] }}</th>
-        <th class="tab-45">{{ i18n['ctg_tab_dims'] }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of canTypeRows">
-        <td><button class="btn-flag" [style]="item.style" [class]="item.class"
-            (click)="setDefaultCanType(item.id)"></button></td>
-        <td>{{ item.name }}</td>
-        <td>
-          <small>
-            <span class="type-dims">&harr;&nbsp;{{ item.diameter }}&nbsp;mm</span>&nbsp;
-            <span class="type-dims">&varr;&nbsp;{{ item.height }}&nbsp;mm</span>&nbsp;
-            <span class="type-dims">&cup;&nbsp;{{ item.volume }}&nbsp;ml</span>&nbsp;
-            <span class="type-dims">&cup;&nbsp;{{ item.volumeFlOz }}&nbsp;fl.oz.</span>
-          </small>
-        </td>
-        <td><button class="btn-del" (click)="deleteCanType(item.id)"><span>×</span></button></td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="4"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass"
-            (click)="openForm()">+</button>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  <div class="demo demo-head">{{ i18n['ctg_tab_type'] }} & {{ i18n['ctg_tab_dims'] }}</div>
+  <div *ngIf="canTypeRows.length == 0">
+    <div class="demo demo-body" *ngFor="let item of [1,2]">&nbsp;</div>
+  </div>
+  <div *ngIf="canTypeRows.length > 0">
+    <div class="demo demo-body" *ngFor="let item of canTypeRows">
+      <button *ngIf="item.removable" class="btn btn-del right" (click)="deleteCanType(item.id)"><span>×</span></button>
+      <button *ngIf="!item.removable" class="btn btn-hidden right"></button>
+      <button class="btn btn-flag left" [style]="item.style" [class]="item.class"
+        (click)="setDefaultCanType(item.id)"></button>
+      <span class="cat-item">{{ item.name }}
+        <small><span class="type-dims">&harr;&nbsp;{{ item.diameter }}&nbsp;mm</span></small>
+        <small><span class="type-dims">&varr;&nbsp;{{ item.height }}&nbsp;mm</span></small>
+        <small><span class="type-dims">&cup;&nbsp;{{ item.volume }}&nbsp;ml</span></small>
+        <small><span class="type-dims">&cup;&nbsp;{{ item.volumeFlOz }}&nbsp;fl.oz.</span></small>
+      </span>
+      <span class="defloat"></span>
+    </div>
+  </div>
+
+
+  <button id="openBtn" class="can-ctg-open-btn center" [class]="openClass" (click)="openForm()">+</button>
+
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanType()">
     <label for="canFormName">{{ i18n['ctg_tab_name'] }}</label>

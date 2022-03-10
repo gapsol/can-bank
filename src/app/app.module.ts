@@ -26,6 +26,7 @@ import { CanbankStatsComponent } from './canbank-stats/canbank-stats.component';
 import { CanbankPrefillComponent } from './canbank-prefill/canbank-prefill.component';
 import { CanbankDisplayComponent } from './canbank-display/canbank-display.component';
 import { CanbankSettingsComponent } from './canbank-settings/canbank-settings.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { CanbankSettingsComponent } from './canbank-settings/canbank-settings.co
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
   ],
   declarations: [
     AppComponent,

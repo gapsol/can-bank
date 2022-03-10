@@ -15,7 +15,8 @@ export class CanbankLevelmeterService {
     levelL4: "",  // table can_language
     levelL5: "",  // table can_material
     levelL6: "",  // table can_surface
-    levelL7: ""   // table can_type
+    levelL7: "",  // table can_type
+    levelL8: ""   // table can_default
   };
 
   @Input()
@@ -58,6 +59,10 @@ export class CanbankLevelmeterService {
   private _levelL7: string = '';
   get levelL7(): string { return this._levelL7; }
   set levelL7(str: string) { this._levelL7 = str; }
+  @Input()
+  private _levelL8: string = '';
+  get levelL8(): string { return this._levelL8; }
+  set levelL8(str: string) { this._levelL8 = str; }
 
   constructor() { }
 

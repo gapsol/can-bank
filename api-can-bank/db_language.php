@@ -9,16 +9,16 @@ if (!isset($j)) {
   $j = [];
 }
 $query = [];
-$query[1] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (1, "slovak", "sk", 1)';
-$query[2] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (2, "czech", "cz", 0)';
-$query[3] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (3, "polish", "pl", 0)';
-$query[4] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (4, "hungarian", "hu", 0)';
-$query[5] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (5, "german", "de", 0)';
-$query[6] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (6, "french", "fr", 0)';
-$query[7] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (7, "spanish", "es", 0)';
-$query[8] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (8, "catalan", "ca", 0)';
-$query[9] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (9, "english", "en", 0)';
-$query[10] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`, `default`) VALUES (10, "russian", "ru", 0)';
+$query[1] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (1, "slovak", "sk")';
+$query[2] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (2, "czech", "cz")';
+$query[3] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (3, "polish", "pl")';
+$query[4] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (4, "hungarian", "hu")';
+$query[5] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (5, "german", "de")';
+$query[6] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (6, "french", "fr")';
+$query[7] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (7, "spanish", "es")';
+$query[8] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (8, "catalan", "ca")';
+$query[9] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (9, "english", "en")';
+$query[10] = 'INSERT IGNORE INTO `can_language` (`id`, `name`, `abbr`) VALUES (10, "russian", "ru")';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
 if ($mysqli->error) {

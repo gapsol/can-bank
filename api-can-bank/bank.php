@@ -224,10 +224,11 @@ function re_file($file, $ean)
   $fn['core'] = (isset($ean) && isfull($ean)) ? $ean : date('ymdhis');
   $fn['ext'] = $fn_array[count($fn_array) - 1];
   $fn['id'] = 0;
+  $fname = '';
   do {
     $fn['id']++;
     $fname = $fn['dir'] . '/' . $fn['base'] . '_' . $fn['core'] . '_' . $fn['id'] . '.' . $fn['ext'];
   } while (file_exists($fname));
-
+// TODO: check existing AND generated filenames
   return $fname;
 }

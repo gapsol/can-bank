@@ -67,6 +67,11 @@ function getCanbank()
     array_push($table_error, 'levelL7');
   }
 
+  $mysqli->query('SELECT COUNT(*) FROM `can_default`');
+  if ($mysqli->error) {
+    array_push($table_error, 'levelL8');
+  }
+
   if (count($table_error) > 0) {
     $s = (count($table_error) > 1) ? 's' : '';
     json_return($mysqli, 'data', $table_error, 'Missing table' . $s);
@@ -88,14 +93,14 @@ function createCanbank()
   }
 
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_bank` (
-    `id` int primary key auto_increment not null,
+    `id` int PRIMARY KEY AUTO_INCREMENT NOT NULL,
     `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `uniq` varchar(13),
     `type` int,
     `diameter` int,
     `height` int,
     `volume` double,
-    `volumeFlOz` int,
+    `volumeFlOz` double,
     `material` int,
     `surface` int,
     `cover_color` int,
@@ -122,54 +127,13 @@ function createCanbank()
     json_error_server($mysqli, 'can_bank: ' . $mysqli->error);
   }
 
-  $mysqli->query('CREATE TABLE IF NOT EXISTS `can_type` (
-    `id` int primary key auto_increment not null,
-    `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `uniq` varchar(13),
-    `name` varchar(250) NOT NULL,
-    `diameter` int,
-    `height` int,
-    `volume` double,
-    `volumeFlOz` int,
-    `default` tinyint NOT NULL
-    )');
-  if ($mysqli->error) {
-    json_error_server($mysqli, 'can_type: ' . $mysqli->error);
-  }
-
-  $mysqli->query('CREATE TABLE IF NOT EXISTS `can_material` (
-    `id` int primary key auto_increment NOT NULL,
-    `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `uniq` varchar(13),
-    `name` varchar(100) NOT NULL,
-    `abbr` varchar(3) NOT NULL,
-    `color` varchar(10) NOT NULL,
-    `default` tinyint NOT NULL
-    )');
-  if ($mysqli->error) {
-    json_error_server($mysqli, 'can_material: ' . $mysqli->error);
-  }
-
-  $mysqli->query('CREATE TABLE IF NOT EXISTS `can_surface` (
-    `id` int primary key auto_increment not null,
-    `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `uniq` varchar(13),
-    `name` varchar(100) NOT NULL,
-    `color` varchar(10) NOT NULL,
-    `default` tinyint NOT NULL
-    )');
-  if ($mysqli->error) {
-    json_error_server($mysqli, 'can_surface: ' . $mysqli->error);
-  }
-
   $mysqli->query('CREATE TABLE IF NOT EXISTS `can_color` (
     `id` int primary key auto_increment not null,
     `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `uniq` varchar(13),
     `name` varchar(100) NOT NULL,
     `color` varchar(50) NOT NULL,
-    `code` varchar(10) NOT NULL,
-    `default` tinyint NOT NULL
+    `code` varchar(10) NOT NULL
     )');
   if ($mysqli->error) {
     json_error_server($mysqli, 'can_color: ' . $mysqli->error);
@@ -179,8 +143,7 @@ function createCanbank()
     `id` int primary key auto_increment not null,
     `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `uniq` varchar(13),
-    `name` varchar(100) NOT NULL,
-    `default` tinyint NOT NULL
+    `name` varchar(100) NOT NULL
     )');
   if ($mysqli->error) {
     json_error_server($mysqli, 'can_content: ' . $mysqli->error);
@@ -191,8 +154,7 @@ function createCanbank()
     `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `uniq` varchar(13),
     `name` varchar(100) NOT NULL,
-    `abbr` varchar(3) NOT NULL,
-    `default` tinyint NOT NULL
+    `abbr` varchar(3) NOT NULL
     )');
   if ($mysqli->error) {
     json_error_server($mysqli, 'can_country: ' . $mysqli->error);
@@ -203,11 +165,55 @@ function createCanbank()
     `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `uniq` varchar(13),
     `name` varchar(100) NOT NULL,
-    `abbr` varchar(3) NOT NULL,
-    `default` tinyint NOT NULL
+    `abbr` varchar(3) NOT NULL
     )');
   if ($mysqli->error) {
     json_error_server($mysqli, 'can_language: ' . $mysqli->error);
+  }
+
+  $mysqli->query('CREATE TABLE IF NOT EXISTS `can_material` (
+    `id` int primary key auto_increment NOT NULL,
+    `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `uniq` varchar(13),
+    `name` varchar(100) NOT NULL,
+    `abbr` varchar(3) NOT NULL,
+    `color` varchar(10) NOT NULL
+    )');
+  if ($mysqli->error) {
+    json_error_server($mysqli, 'can_material: ' . $mysqli->error);
+  }
+
+  $mysqli->query('CREATE TABLE IF NOT EXISTS `can_surface` (
+    `id` int primary key auto_increment not null,
+    `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `uniq` varchar(13),
+    `name` varchar(100) NOT NULL,
+    `color` varchar(10) NOT NULL
+    )');
+  if ($mysqli->error) {
+    json_error_server($mysqli, 'can_surface: ' . $mysqli->error);
+  }
+
+  $mysqli->query('CREATE TABLE IF NOT EXISTS `can_type` (
+    `id` int primary key auto_increment not null,
+    `tstamp` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `uniq` varchar(13),
+    `name` varchar(250) NOT NULL,
+    `diameter` int,
+    `height` int,
+    `volume` double,
+    `volumeFlOz` double
+    )');
+  if ($mysqli->error) {
+    json_error_server($mysqli, 'can_type: ' . $mysqli->error);
+  }
+
+  $mysqli->query('CREATE TABLE IF NOT EXISTS `can_default` (
+    `table` varchar(13) PRIMARY KEY NOT NULL,
+    `key` int
+  )');
+  if ($mysqli->error) {
+    json_error_server($mysqli, 'can_default: ' . $mysqli->error);
   }
 
   json_success($mysqli);

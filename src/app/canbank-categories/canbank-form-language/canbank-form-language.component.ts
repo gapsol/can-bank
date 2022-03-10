@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { config } from '../../config/config';
 import { i18n } from '../../data/can-i18n';
-import { CanbankXchangeService } from '../../canbank-services/canbank-xchange.service';
+import { CanbankXlanguageService } from '../../canbank-services-x/canbank-xlanguage.service';
+import { CanbankXdefaultService } from '../../canbank-services-x/canbank-xdefault.service';
 import { CanbankInterfaceService } from '../../canbank-services/canbank-interface.service';
-import { canLanguage } from '../../data/can-language';
+import { canLanguage } from '../../data/can.interface';
 
 interface styledLanguage extends canLanguage {
   style: string,
-  class: string
+  class: string,
 }
 
 @Component({
   selector: 'canbank-form-language',
   templateUrl: './canbank-form-language.component.html',
-  styleUrls: ['../canbank-categories.component.css', './canbank-form-language.component.css']
+  styleUrls: ['../canbank-categories.component.css']
 })
 export class CanbankFormLanguageComponent implements OnInit {
   i18n = i18n[config.language];
@@ -30,42 +30,49 @@ export class CanbankFormLanguageComponent implements OnInit {
   openClass: string = '';
 
   constructor(
-    private canbankXC: CanbankXchangeService,
+    private canbankXLng: CanbankXlanguageService,
+    private canbankXDef: CanbankXdefaultService,
     private canbankIF: CanbankInterfaceService
   ) { }
 
   ngOnInit() {
-    this.getCanLanguages();
+    this.canbankXDef.getDefault().subscribe(
+      () => this.getCanLanguages(),
+      error => console.error(error)
+    )
   }
 
   getCanLanguages(): void {
-    this.canbankXC.getLanguage(0).subscribe(
+    this.canbankXLng.getLanguage().subscribe(
       () => {
         this.canLanguageRows = [];
-        this.canbankIF.canLanguage.forEach((e) => {
+        let dftLang = this.canbankIF.canDefaults['language'];
+        this.canbankIF.canLanguage.forEach(e => {
           let eStyle = 'background-color:silver;';
-          let eClass = (e.default) ? 'btn-default' : '';
+          let eClass = (dftLang === e.abbr) ? 'btn-default' : '';
+          let eDefault = !!eClass;
+          let eRemove = (dftLang !== e.abbr)
           this.canLanguageRows.push({
-            id: e.id,
-            name: e.name,
             abbr: e.abbr,
-            default: e.default,
+            name: e.name,
+            default: eDefault,
+            removable: eRemove,
             style: eStyle,
             class: eClass
-          });
-        });
+          })
+        })
         window.scroll(0, 0);
       },
-      (error: any) => { console.error(error); }
-    );
+      error => console.error(error)
+    )
   }
 
-  deleteCanLanguage(id: number) {
+  deleteCanLanguage(abbr: string) {
     if (confirm('You are about to delete record')) {
-      this.canbankXC.deleteLanguage(id).subscribe(
-        () => { this.getCanLanguages(); },
-        (error: any) => { console.error(error); }
-      );
+      this.canbankXLng.deleteLanguage(abbr).subscribe(
+        () => this.getCanLanguages(),
+        error => console.error(error)
+      )
     }
   }
 
@@ -83,34 +90,39 @@ export class CanbankFormLanguageComponent implements OnInit {
     // language valid only when it fits htmllanguages array
     // load ISO langs tab
     if (this.checkCanLanguage()) {
-      this.canbankXC.setLanguage(this.canForm.value).subscribe(
-        () => { this.getCanLanguages(); },
-        (error: any) => { console.error(error); }
+      this.canbankXLng.setLanguage(this.canForm.value).subscribe(
+        () => {
+          this.canbankXDef.getDefault().subscribe(
+            () => this.getCanLanguages(),
+            error => console.error(error)
+          )
+        },
+        error => console.error(error)
       )
     }
   }
 
-  setDefaultCanLanguage(id: number): void {
-    let language = this.canbankIF.canLanguage.find(e => e.id === id);
+  setDefaultCanLanguage(abbr: string): void {
+    let language = this.canbankIF.canLanguage.find(e => e.abbr === abbr);
     if (language === undefined || language.default === true) { return }
-    this.canForm.value.canFormId = language.id;
-    this.canForm.value.canFormName = language.name;
     this.canForm.value.canFormAbbr = language.abbr;
-    this.canForm.value.canFormDefault = 1;
-    this.canbankXC.updateLanguage(this.canForm.value).subscribe(
-      () => { this.getCanLanguages(); },
-      (error: any) => { console.error(error); }
-    );
+    this.canbankXLng.defaultLanguage(this.canForm.value).subscribe(
+      () => {
+        this.canbankXDef.getDefault().subscribe(
+          () => this.getCanLanguages(),
+          error => console.error(error)
+        )
+      },
+      error => console.error(error)
+    )
   }
 
   openForm() {
     this.openClass = 'btn-open';
     setTimeout(() => {
       let element = document.getElementById('openBtn');
-      if (element) {
-        element.scrollIntoView(true);
-      }
-    });
+      if (element) { element.scrollIntoView(true) }
+    })
   }
 
 }

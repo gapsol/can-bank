@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { config } from '../../config/config';
 import { i18n } from '../../data/can-i18n';
 import { htmlColors } from '../../data/html-colors';
-import { CanbankXchangeService } from '../../canbank-services/canbank-xchange.service';
+import { CanbankXsurfaceService } from '../../canbank-services-x/canbank-xsurface.service';
+import { CanbankXdefaultService } from '../../canbank-services-x/canbank-xdefault.service';
 import { CanbankInterfaceService } from '../../canbank-services/canbank-interface.service';
-import { canSurface } from '../../data/can-surface';
+import { canSurface } from '../../data/can.interface';
 
 interface styledSurface extends canSurface {
   style: string,
-  class: string
+  class: string,
 }
 
 @Component({
   selector: 'canbank-form-surface',
   templateUrl: './canbank-form-surface.component.html',
-  styleUrls: ['../canbank-categories.component.css', './canbank-form-surface.component.css']
+  styleUrls: ['../canbank-categories.component.css']
 })
 export class CanbankFormSurfaceComponent implements OnInit {
   i18n = i18n[config.language];
@@ -31,36 +31,51 @@ export class CanbankFormSurfaceComponent implements OnInit {
   openClass: string = '';
 
   constructor(
-    private canbankXC: CanbankXchangeService,
+    private canbankSfc: CanbankXsurfaceService,
+    private canbankXDef: CanbankXdefaultService,
     private canbankIF: CanbankInterfaceService
   ) { }
 
   ngOnInit() {
-    this.getCanSurfaces();
+    this.canbankXDef.getDefault().subscribe(
+      () => this.getCanSurfaces(),
+      error => console.error(error)
+    )
   }
 
-  // TODO:
-  // classify style
   getCanSurfaces(): void {
-    this.canbankXC.getSurface(0).subscribe(
+    this.canbankSfc.getSurface().subscribe(
       () => {
         this.canSurfaceRows = [];
-        this.canbankIF.canSurface.forEach((e) => {
+        let dftSurface = this.canbankIF.canDefaults['surface'];
+        this.canbankIF.canSurface.forEach(e => {
           let eStyle = 'background-color:' + e.color + ';';
-          let eClass = (e.default) ? 'btn-default' : '';
+          let eClass = (dftSurface === e.id) ? 'btn-default' : '';
+          let eDefault = !!eClass;
+          let eRemove = (dftSurface !== e.id);
           this.canSurfaceRows.push({
             id: e.id,
             name: e.name,
             color: e.color,
-            default: e.default,
+            default: eDefault,
+            removable: eRemove,
             style: eStyle,
             class: eClass
-          });
-        });
+          })
+        })
         window.scroll(0, 0);
       },
-      (error: any) => { console.error(error); }
-    );
+      error => console.error(error)
+    )
+  }
+
+  deleteCanSurface(id: number) {
+    if (confirm('You are about to delete record')) {
+      this.canbankSfc.deleteSurface(id).subscribe(
+        () => this.getCanSurfaces(),
+        error => console.error(error)
+      )
+    }
   }
 
   checkCanSurface(): boolean {
@@ -76,9 +91,14 @@ export class CanbankFormSurfaceComponent implements OnInit {
     // surface valid only when so far not exists
     // surface valid only when it fits htmlsurfaces array
     if (this.checkCanSurface()) {
-      this.canbankXC.setSurface(this.canForm.value).subscribe(
-        () => { this.getCanSurfaces(); },
-        (error: any) => { console.error(error); }
+      this.canbankSfc.setSurface(this.canForm.value).subscribe(
+        () => {
+          this.canbankXDef.getDefault().subscribe(
+            () => this.getCanSurfaces(),
+            error => console.error(error)
+          )
+        },
+        error => console.error(error)
       )
     }
   }
@@ -87,33 +107,23 @@ export class CanbankFormSurfaceComponent implements OnInit {
     let surface = this.canbankIF.canSurface.find(e => e.id === id);
     if (surface === undefined || surface.default === true) { return }
     this.canForm.value.canFormId = surface.id;
-    this.canForm.value.canFormName = surface.name;
-    this.canForm.value.canFormPicker = surface.color;
-    this.canForm.value.canFormDefault = 1;
-
-    this.canbankXC.updateSurface(this.canForm.value).subscribe(
-      () => { this.getCanSurfaces(); },
-      (error: any) => { console.error(error); }
-    );
-  }
-
-  deleteCanSurface(id: number) {
-    if (confirm('You are about to delete record')) {
-      this.canbankXC.deleteSurface(id).subscribe(
-        () => { this.getCanSurfaces(); },
-        (error: any) => { console.error(error); }
-      );
-    }
+    this.canbankSfc.defaultSurface(this.canForm.value).subscribe(
+      () => {
+        this.canbankXDef.getDefault().subscribe(
+          () => this.getCanSurfaces(),
+          error => console.error(error)
+        )
+      },
+      error => console.error(error)
+    )
   }
 
   openForm() {
     this.openClass = 'btn-open';
     setTimeout(() => {
       let element = document.getElementById('openBtn');
-      if (element) {
-        element.scrollIntoView(true);
-      }
-    });
+      if (element) { element.scrollIntoView(true) }
+    })
   }
 
 }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { config } from '../../config/config';
 import { i18n } from '../../data/can-i18n';
-import { CanbankXchangeService } from '../../canbank-services/canbank-xchange.service';
+import { CanbankXcountryService } from '../../canbank-services-x/canbank-xcountry.service';
+import { CanbankXdefaultService } from '../../canbank-services-x/canbank-xdefault.service';
 import { CanbankInterfaceService } from '../../canbank-services/canbank-interface.service';
-import { canCountry } from '../../data/can-country';
+import { canCountry } from '../../data/can.interface';
 
 interface styledCountry extends canCountry {
   style: string,
@@ -16,7 +16,7 @@ interface styledCountry extends canCountry {
 @Component({
   selector: 'canbank-form-country',
   templateUrl: './canbank-form-country.component.html',
-  styleUrls: ['../canbank-categories.component.css', './canbank-form-country.component.css']
+  styleUrls: ['../canbank-categories.component.css']
 })
 export class CanbankFormCountryComponent implements OnInit {
   i18n = i18n[config.language];
@@ -30,42 +30,49 @@ export class CanbankFormCountryComponent implements OnInit {
   openClass: string = '';
 
   constructor(
-    private canbankXC: CanbankXchangeService,
+    private canbankXCty: CanbankXcountryService,
+    private canbankXDef: CanbankXdefaultService,
     private canbankIF: CanbankInterfaceService
   ) { }
 
   ngOnInit() {
-    this.getCanCountries();
+    this.canbankXDef.getDefault().subscribe(
+      () => this.getCanCountries(),
+      error => console.error(error)
+    )
   }
 
   getCanCountries(): void {
-    this.canbankXC.getCountry(0).subscribe(
+    this.canbankXCty.getCountry().subscribe(
       () => {
         this.canCountryRows = [];
-        this.canbankIF.canCountry.forEach((e) => {
+        let dftCountry = this.canbankIF.canDefaults['country'];
+        this.canbankIF.canCountry.forEach(e => {
           let eStyle = 'background-color:silver;';
-          let eClass = (e.default) ? 'btn-default' : '';
+          let eClass = (dftCountry === e.abbr) ? 'btn-default' : '';
+          let eDefault = !!eClass;
+          let eRemove = (dftCountry !== e.abbr);
           this.canCountryRows.push({
-            id: e.id,
-            name: e.name,
             abbr: e.abbr,
-            default: e.default,
+            name: e.name,
+            default: eDefault,
+            removable: eRemove,
             style: eStyle,
             class: eClass
-          });
-        });
+          })
+        })
         window.scroll(0, 0);
       },
-      (error: any) => { console.error(error); }
-    );
+      error => console.error(error)
+    )
   }
 
-  deleteCanCountry(id: number) {
+  deleteCanCountry(abbr: string) {
     if (confirm('You are about to delete record')) {
-      this.canbankXC.deleteCountry(id).subscribe(
-        () => { this.getCanCountries(); },
-        (error: any) => { console.error(error); }
-      );
+      this.canbankXCty.deleteCountry(abbr).subscribe(
+        () => this.getCanCountries(),
+        error => console.error(error)
+      )
     }
   }
 
@@ -82,34 +89,39 @@ export class CanbankFormCountryComponent implements OnInit {
     // country valid only when so far not exists
     // country valid only when it fits htmlcountrys array
     if (this.checkCanCountry()) {
-      this.canbankXC.setCountry(this.canForm.value).subscribe(
-        () => { this.getCanCountries(); },
-        (error: any) => { console.error(error); }
+      this.canbankXCty.setCountry(this.canForm.value).subscribe(
+        () => {
+          this.canbankXDef.getDefault().subscribe(
+            () => this.getCanCountries(),
+            error => console.error(error)
+          )
+        },
+        error => console.error(error)
       )
     }
   }
 
-  setDefaultCanCountry(id: number): void {
-    let country = this.canbankIF.canCountry.find(e => e.id === id);
+  setDefaultCanCountry(abbr: string): void {
+    let country = this.canbankIF.canCountry.find(e => e.abbr === abbr);
     if (country === undefined || country.default === true) { return }
-    this.canForm.value.canFormId = country.id;
-    this.canForm.value.canFormName = country.name;
     this.canForm.value.canFormAbbr = country.abbr;
-    this.canForm.value.canFormDefault = 1;
-    this.canbankXC.updateCountry(this.canForm.value).subscribe(
-      () => { this.getCanCountries(); },
-      (error: any) => { console.error(error); }
-    );
+    this.canbankXCty.defaultCountry(this.canForm.value).subscribe(
+      () => {
+        this.canbankXDef.getDefault().subscribe(
+          () => this.getCanCountries(),
+          error => console.error(error)
+        )
+      },
+      error => console.error(error)
+    )
   }
 
   openForm() {
     this.openClass = 'btn-open';
     setTimeout(() => {
       let element = document.getElementById('openBtn');
-      if (element) {
-        element.scrollIntoView(true);
-      }
-    });
+      if (element) { element.scrollIntoView(true) }
+    })
   }
 
 }

@@ -1,39 +1,34 @@
 <div class="sub-screen">
   <h1 class="title">languageForm</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>[P]</th>
-        <th class="tab-90">{{ i18n['ctg_language'] }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of canLanguageRows">
-        <td><button class="btn-flag" [style]="item.style" [class]="item.class" (click)="setDefaultCanLanguage(item.id)">P</button></td>
-        <td>{{ item.name }} [{{ item.abbr }}]</td>
-        <td><button class="btn-del" (click)="deleteCanLanguage(item.id)"><span>×</span></button></td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass" (click)="openForm()">+</button>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  <div class="demo demo-head">{{ i18n['ctg_language'] }}</div>
+  <div *ngIf="canLanguageRows.length == 0">
+    <div class="demo demo-body" *ngFor="let item of [1,2]">&nbsp;</div>
+  </div>
+  <div *ngIf="canLanguageRows.length > 0">
+    <div class="demo demo-body" *ngFor="let item of canLanguageRows">
+      <button *ngIf="item.removable" class="btn btn-del right"
+        (click)="deleteCanLanguage(item.abbr)"><span>×</span></button>
+      <button *ngIf="!item.removable" class="btn btn-hidden right"></button>
+      <button class="btn btn-flag left" [style]="item.style" [class]="item.class"
+        (click)="setDefaultCanLanguage(item.abbr)">P</button>
+      <span class="cat-item">{{ item.name }} [{{ item.abbr }}]</span>
+      <span class="defloat"></span>
+    </div>
+  </div>
+
+  <button id="openBtn" class="can-ctg-open-btn center" [class]="openClass" (click)="openForm()">+</button>
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanLanguage()">
-      <label for="canFormName">{{ i18n['ctg_tab_name'] }}</label>
-      <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
-      <label for="canFormAbbr">{{ i18n['ctg_tab_abbr'] }}</label>
-      <input type="text" id="canFormAbbr" formControlName="canFormAbbr" minlength="2" class="can-ctg-input" required />
-      <div>
-        <input id="canFormDefault" type="checkbox" formControlName="canFormDefault" class="check-2em check-right" />
-        <label for="canFormDefault">{{ i18n['ctg_check_default'] }}</label>
-      </div>
+    <label for="canFormName">{{ i18n['ctg_tab_name'] }}</label>
+    <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
+    <label for="canFormAbbr">{{ i18n['ctg_tab_abbr'] }}</label>
+    <input type="text" id="canFormAbbr" formControlName="canFormAbbr" minlength="2" class="can-ctg-input" required />
+    <div>
+      <input id="canFormDefault" type="checkbox" formControlName="canFormDefault" class="check-2em check-right" />
+      <label for="canFormDefault">{{ i18n['ctg_check_default'] }}</label>
+    </div>
 
-      <button type="submit" class="can-ctg-submit-btn" [disabled]="canForm.invalid">+</button>
+    <button type="submit" class="can-ctg-submit-btn" [disabled]="canForm.invalid">+</button>
   </form>
 </div>

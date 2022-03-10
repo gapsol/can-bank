@@ -13,11 +13,11 @@
   .can-md-12 { width: 100%; }
 }
 @media screen and (min-width: 481px) {
-  form, table { width: 69%; max-width: 741px; }
+  form, table, div.demo { width: 69%; max-width: 741px; }
 }
 @media screen and (max-width: 480px) {
   .can-sm-12 { width: 100%; }
-  form, table { width: 96% }
+  form, table, div.demo { width: 96% }
 }
 .full-screen {
   min-height: 100%;
@@ -38,6 +38,10 @@
 }
 .right {
   float: right;
+}
+.center {
+  display: block;
+  margin: auto;
 }
 .defloat {
   clear: both;
@@ -88,16 +92,35 @@ th {
   font-family: Limelight;
 }
 table tbody tr:nth-child(2n + 1) {
-  background-color: #ffc800;
+  background-color: #FFE039; /* #ffc800; */
 }
 table tbody tr:nth-child(2n) {
-  background-color: #ffe800;
+  background-color: #C6A700; /* #ffe800; */
 }
 .tab-45 {
   width: 45%;
 }
 .tab-90 {
   width: 90%;
+}
+
+div.demo {
+  margin: 6px auto;
+  border-radius: 6px;
+  padding: 3px;
+  text-align: center;
+}
+div.demo-head {
+  background-color: blue;
+  color: gold;
+  font-family: Limelight;
+  font-weight: bold;
+}
+div.demo-body:nth-child(2n + 1) {
+  background-color: #C6A700;
+}
+div.demo-body:nth-child(2n) {
+  background-color: #FFE039;
 }
 
 form {
@@ -168,3 +191,6 @@ input:required:invalid, select:required:invalid {
   border-left: 4px solid red !important;
   border-right: 4px solid red !important;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

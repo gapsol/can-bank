@@ -36,19 +36,28 @@ function getIt()
     json_error_badrequest();
   }
 
+  $return = [];
+  $mysqli = my_connect();
   switch ($_GET['id']) {
     case 0:
-      $query = 'SELECT * FROM `can_content` ORDER BY `default` DESC, `name`';
+      $query = 'SELECT * FROM `can_content` WHERE `id`=(SELECT `key` FROM `can_default` WHERE `table`="content")
+                UNION
+                SELECT * FROM `can_content` WHERE `id`<>(SELECT `key` FROM `can_default` WHERE `table`="content" ORDER BY `name`)';
+      $result = my_query($mysqli, $query);
+      while ($row = $result->fetch_assoc()) {
+        $row['default'] = (count($return) == 0);
+        array_push($return, $row);
+      }
       break;
     default:
       $query = 'SELECT * FROM `can_content` WHERE id = ' . $_GET['id'];
-  }
-  $mysqli = my_connect();
-  $result = my_query($mysqli, $query);
-  $return = [];
-  while ($row = $result->fetch_assoc()) {
-    $row['default'] = ($row['default'] == 1) ? true : false;
-    array_push($return, $row);
+      $duery = 'SELECT `key` FROM `can_default` WHERE `table`="content"';
+      $default = my_query($mysqli, $duery);
+      $result = my_query($mysqli, $query);
+      while ($row = $result->fetch_assoc()) {
+        $row['default'] = ($default == $row['id']);
+        array_push($return, $row);
+      }
   }
   json_return($mysqli, 'list', $return);
 }
@@ -64,28 +73,37 @@ function postIt()
   if (
     isset($post)
     && isset($post->canFormName)
-    && isset($post->canFormDefault)
   ) {
     $mysqli = my_connect();
-    if ($post->canFormDefault) {
-      $query = 'UPDATE IGNORE `can_content` SET `default` = false WHERE `default` = true';
-      my_query($mysqli, $query);
-    }
     $uniq = gen_uniq();
-    $query = 'INSERT IGNORE INTO `can_content` (`uniq`, `name`, `default`)
+    $query = 'INSERT IGNORE INTO `can_content` (`uniq`, `name`)
       VALUES (
       "' . $uniq . '",
-      "' . $post->canFormName . '",
-      "' . $post->canFormDefault . '"
+      "' . $post->canFormName . '"
       )';
     my_query($mysqli, $query);
     if ($mysqli->affected_rows > 0) {
-      json_success($mysqli);
+      if ($post->canFormDefault) {
+        postDefault($mysqli);
+      } else {
+        json_success($mysqli);
+      }
     } else {
       json_error_nocontent($mysqli);
     }
   } else {
     json_error_notacceptable();
+  }
+}
+
+function postDefault($mysqli)
+{
+  $query = 'UPDATE `can_default` SET `key`=' . $mysqli->insert_id . ' WHERE `table`="content"';
+  my_query($mysqli, $query);
+  if ($mysqli->affected_rows > 0) {
+    json_success($mysqli);
+  } else {
+    json_error_nocontent($mysqli);
   }
 }
 
@@ -100,20 +118,13 @@ function putIt()
   if (
     isset($post)
     && isset($post->canFormId)
-    && isset($post->canFormName)
-    && isset($post->canFormDefault)
   ) {
-    $query = 'UPDATE IGNORE `can_content` SET `default` = false WHERE `default` = true';
-    $mysqli = my_connect();
-    my_query($mysqli, $query);
-    $uniq = gen_uniq();
-    $query = 'UPDATE IGNORE `can_content`
+    $query = 'UPDATE IGNORE `can_default`
       SET
-        `uniq` = "' . $uniq . '",
-        `name` = "' . $post->canFormName . '",
-        `default` = "' . $post->canFormDefault . '"
+        `key`=' . $post->canFormId . '
       WHERE
-        `id` = ' . $post->canFormId;
+        `table`="content"';
+    $mysqli = my_connect();
     my_query($mysqli, $query);
     if ($mysqli->affected_rows > 0) {
       json_success($mysqli);
@@ -123,6 +134,28 @@ function putIt()
   } else {
     json_error_notacceptable();
   }
+  /*if (
+    isset($post)
+    && isset($post->canFormId)
+    && isset($post->canFormName)
+  ) {
+    $uniq = gen_uniq();
+    $query = 'UPDATE IGNORE `can_content`
+      SET
+        `uniq` = "' . $uniq . '",
+        `name` = "' . $post->canFormName . '"
+      WHERE
+        `id` = ' . $post->canFormId;
+    $mysqli = my_connect();
+    my_query($mysqli, $query);
+    if ($mysqli->affected_rows > 0) {
+      json_success($mysqli);
+    } else {
+      json_error_nocontent($mysqli);
+    }
+  } else {
+    json_error_notacceptable();
+  }*/
 }
 
 function deleteIt()

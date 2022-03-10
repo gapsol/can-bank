@@ -3,16 +3,14 @@
 *  welcome page of the app
 *  shows basic info from database
 *
-* TODO:
+// TODO:
 *  DEMO version - remove or?
-*  IS? import { canBank } necessary
 */
 import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
-import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankXchangeService } from '../canbank-services-x/canbank-xchange.service';
 import { CanbankLanguageService } from '../canbank-services/canbank-language.service';
-import { canBank } from '../data/can-bank';
 
 @Component({
   selector: 'canbank-home',
@@ -178,28 +176,28 @@ export class CanbankHomeComponent implements OnInit {
     that.printNewest = result.split('');
     that.langNewest = that.canbankLS.langGetWordCount('newest');
   }
+  /*
+    sCanOldest(): Date {
+      let oldest = new Date();
+      canBank.forEach((can) => {
+        let next = new Date(can.prod_date);
+        if (next < oldest) {
+          oldest = next;
+        }
+      })
+      return oldest;
+    }
 
-  sCanOldest(): Date {
-    let oldest = new Date();
-    canBank.forEach((can) => {
-      let next = new Date(can.prod_date);
-      if (next < oldest) {
-        oldest = next;
-      }
-    })
-    return oldest;
-  }
-
-  sCanNewest(): Date {
-    let newest = new Date(0);
-    canBank.forEach((can) => {
-      let next = new Date(can.prod_date);
-      if (next > newest) {
-        newest = next;
-      }
-    })
-    return newest;
-  }
+    sCanNewest(): Date {
+      let newest = new Date(0);
+      canBank.forEach((can) => {
+        let next = new Date(can.prod_date);
+        if (next > newest) {
+          newest = next;
+        }
+      })
+      return newest;
+    }*/
 
   /*
   * functions for demo effects

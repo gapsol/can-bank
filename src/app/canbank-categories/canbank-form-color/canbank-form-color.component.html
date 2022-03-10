@@ -1,30 +1,22 @@
 <div class="sub-screen">
   <h1 class="title">colorForm</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th class="tab-90">{{ i18n['ctg_tab_name'] }} / {{ i18n['ctg_tab_color'] }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of canColorRows">
-        <td><button class="btn-flag" [style]="item.style" [class]="item.class"
-            (click)="setDefaultCanColor(item.id)"></button></td>
-        <td>{{ item.name }} / {{ item.color }}</td>
-        <td><button class="btn-del" (click)="deleteCanColor(item.id)"><span>×</span></button></td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="4"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass"
-            (click)="openForm()">+</button>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  <div class="demo demo-head">{{ i18n['ctg_tab_name'] }} / {{ i18n['ctg_tab_color'] }}</div>
+  <div *ngIf="canColorRows.length == 0">
+    <div class="demo demo-body" *ngFor="let item of [1,2]">&nbsp;</div>
+  </div>
+  <div *ngIf="canColorRows.length > 0">
+    <div class="demo demo-body" *ngFor="let item of canColorRows">
+      <button *ngIf="item.removable" class="btn btn-del right" (click)="deleteCanColor(item.id)"><span>×</span></button>
+      <button *ngIf="!item.removable" class="btn btn-hidden right"></button>
+      <button class="btn btn-flag left" [style]="item.style" [class]="item.class"
+        (click)="setDefaultCanColor(item.id)"></button>
+      <span class="cat-item">{{ item.name }} / {{ item.color }}</span>
+      <span class="defloat"></span>
+    </div>
+  </div>
+
+  <button id="openBtn" class="can-ctg-open-btn center" [class]="openClass" (click)="openForm()">+</button>
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanColor()">
     <label for="canFormName">{{ i18n['ctg_tab_name'] }}</label>

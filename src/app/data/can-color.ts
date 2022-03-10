@@ -1,12 +1,6 @@
-export interface canColor {
-  id: number,
-  name: string,
-  color: string,
-  code: string,
-  default: boolean
-}
+import { canColor } from './can.interface';
 
-export var canColor: Array<canColor> = [
+export var canColors: Array<canColor> = [
   {
     id: 1,
     name: "kov - strieborný",

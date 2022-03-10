@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankXchangeService } from '../canbank-services-x/canbank-xchange.service';
 
 @Component({
   selector: 'canbank-prefill',

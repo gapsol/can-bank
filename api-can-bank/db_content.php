@@ -9,15 +9,15 @@ if (!isset($j)) {
   $j = [];
 }
 $query = [];
-$query[1] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (1, "beer", 1)';
-$query[2] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (2, "radler", 0)';
-$query[3] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (3, "cider", 0)';
-$query[4] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (4, "lemonade", 0)';
-$query[5] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (5, "energy drink", 0)';
-$query[6] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (6, "water", 0)';
-$query[7] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (7, "coffee", 0)';
-$query[8] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (8, "wine", 0)';
-$query[9] = 'INSERT IGNORE INTO `can_content` (`id`, `name`, `default`) VALUES (9, "mix", 0)';
+$query[1] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (1, "beer")';
+$query[2] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (2, "radler")';
+$query[3] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (3, "cider")';
+$query[4] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (4, "lemonade")';
+$query[5] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (5, "energy drink")';
+$query[6] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (6, "water")';
+$query[7] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (7, "coffee")';
+$query[8] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (8, "wine")';
+$query[9] = 'INSERT IGNORE INTO `can_content` (`id`, `name`) VALUES (9, "mix")';
 
 $mysqli = new mysqli(DB_SERVER, DB_USERNAME, DB_PASSWORD);
 if ($mysqli->error) {

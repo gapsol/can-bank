@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { config } from '../../config/config';
 import { i18n } from '../../data/can-i18n';
-import { CanbankXchangeService } from '../../canbank-services/canbank-xchange.service';
+import { CanbankXtypeService } from '../../canbank-services-x/canbank-xtype.service';
+import { CanbankXdefaultService } from '../../canbank-services-x/canbank-xdefault.service';
 import { CanbankInterfaceService } from '../../canbank-services/canbank-interface.service';
-import { canType } from '../../data/can-type';
+import { canType } from '../../data/can.interface';
 
 interface styledType extends canType {
   style: string,
-  class: string
+  class: string,
 }
 
 @Component({
@@ -33,21 +33,30 @@ export class CanbankFormTypeComponent implements OnInit {
   openClass: string = '';
 
   constructor(
-    private canbankXC: CanbankXchangeService,
+    private canbankXTyp: CanbankXtypeService,
+    private canbankXDef: CanbankXdefaultService,
     private canbankIF: CanbankInterfaceService
   ) { }
 
   ngOnInit() {
-    this.getCanTypes();
+    this.canbankXDef.getDefault().subscribe(
+      () => this.getCanTypes(),
+      error => console.error(error)
+    )
   }
 
   getCanTypes(): void {
-    this.canbankXC.getType(0).subscribe(
+    this.canbankXTyp.getType().subscribe(
       () => {
         this.canTypeRows = [];
-        this.canbankIF.canType.forEach((e) => {
+        let dftType = this.canbankIF.canDefaults['type'];
+        this.canbankIF.canType.forEach(e => {
           let eStyle = 'background-color:silver;';
-          let eClass = (e.default) ? 'btn-default' : '';
+          let eClass = (dftType === e.id) ? 'btn-default' : '';
+          let eDefault = !!eClass;
+          let eRemove = (dftType !== e.id);
+          // TODO: refine define removement
+          // TODO: collpase/expand table effect
           this.canTypeRows.push({
             id: e.id,
             name: e.name,
@@ -55,23 +64,24 @@ export class CanbankFormTypeComponent implements OnInit {
             height: e.height,
             volume: e.volume,
             volumeFlOz: e.volumeFlOz,
-            default: e.default,
+            default: eDefault,
+            removable: eRemove,
             style: eStyle,
-            class: eClass
+            class: eClass,
           });
         });
         window.scroll(0, 0);
       },
-      (error: any) => { console.error(error); }
-    );
+      error => console.error(error)
+    )
   }
 
   deleteCanType(id: number) {
     if (confirm('You are about to delete record')) {
-      this.canbankXC.deleteType(id).subscribe(
-        () => { this.getCanTypes(); },
-        (error: any) => { console.error(error); }
-      );
+      this.canbankXTyp.deleteType(id).subscribe(
+        () => this.getCanTypes(),
+        error => console.error(error)
+      )
     }
   }
 
@@ -88,9 +98,14 @@ export class CanbankFormTypeComponent implements OnInit {
     // content valid only when so far not exists
     // content valid only when it fits htmlcontents array
     if (this.checkCanType()) {
-      this.canbankXC.setType(this.canForm.value).subscribe(
-        () => { this.getCanTypes(); },
-        (error: any) => { console.error(error); }
+      this.canbankXTyp.setType(this.canForm.value).subscribe(
+        () => {
+          this.canbankXDef.getDefault().subscribe(
+            () => this.getCanTypes(),
+            error => console.error(error)
+          )
+        },
+        error => console.error(error)
       )
     }
   }
@@ -99,26 +114,23 @@ export class CanbankFormTypeComponent implements OnInit {
     let type = this.canbankIF.canType.find(e => e.id === id);
     if (type === undefined || type.default === true) { return }
     this.canForm.value.canFormId = type.id;
-    this.canForm.value.canFormName = type.name;
-    this.canForm.value.canFormDiameter = type.diameter;
-    this.canForm.value.canFormHeight = type.height;
-    this.canForm.value.canFormVolume = type.volume;
-    this.canForm.value.canFormVolumeFlOz = type.volumeFlOz;
-    this.canForm.value.canFormDefault = 1;
-    this.canbankXC.updateType(this.canForm.value).subscribe(
-      () => { this.getCanTypes(); },
-      (error: any) => { console.error(error); }
-    );
+    this.canbankXTyp.defaultType(this.canForm.value).subscribe(
+      () => {
+        this.canbankXDef.getDefault().subscribe(
+          () => this.getCanTypes(),
+          error => console.error(error)
+        )
+      },
+      error => console.error(error)
+    )
   }
 
   openForm() {
     this.openClass = 'btn-open';
     setTimeout(() => {
       let element = document.getElementById('openBtn');
-      if (element) {
-        element.scrollIntoView();
-      }
-    });
+      if (element) { element.scrollIntoView(true) }
+    })
   }
 
 }

@@ -1,11 +1,6 @@
-export interface canSurface {
-  id: number,
-  name: string,
-  color: string,
-  default: boolean
-}
+import { canSurface } from "./can.interface";
 
-export var canSurface: Array<canSurface> = [
+export var canSurfaces: Array<canSurface> = [
   {
     id: 1,
     name: "lesklý",

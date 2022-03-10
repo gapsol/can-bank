@@ -10,9 +10,10 @@ import { Router } from '@angular/router';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { canBank } from '../data/can-bank';
+import { canBank } from '../data/can.interface';
+import { CanbankXbankService } from '../canbank-services-x/canbank-xbank.service';
 import { CanbankInterfaceService } from '../canbank-services/canbank-interface.service';
-import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankXchangeService } from '../canbank-services-x/canbank-xchange.service';
 import { CanbankRecordService } from '../canbank-services/canbank-record.service';
 
 interface canList extends canBank {
@@ -20,8 +21,7 @@ interface canList extends canBank {
 }
 @Component({
   selector: 'canbank-find',
-  templateUrl: './canbank-find.component.html',
-  styleUrls: ['./canbank-find.component.css']
+  templateUrl: './canbank-find.component.html'
 })
 export class CanbankFindComponent implements OnInit {
   i18n = i18n[config.language];
@@ -30,6 +30,7 @@ export class CanbankFindComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private canbankXB: CanbankXbankService,
     private canbankIF: CanbankInterfaceService,
     private canbankXC: CanbankXchangeService,
     private canbankRC: CanbankRecordService
@@ -44,7 +45,7 @@ export class CanbankFindComponent implements OnInit {
   canFind() {
     this.canList = [];
     if (this.find.length >= 3) {
-      this.canbankXC.getBank(0, this.find)
+      this.canbankXB.getBank(0, this.find)
         .subscribe(
           (response: any) => {
             response['list'].forEach((element: any) => {
@@ -86,12 +87,12 @@ export class CanbankFindComponent implements OnInit {
       this.canbankRC.canFormKeywords = display.keywords;
       this.canbankRC.canFormProdDate = display.prod_date;
       this.canbankRC.canFormExpDate = display.exp_date;
-      help = this.canbankIF.canCountry.find(i => i.id === display?.prod_country);
+      /*help = this.canbankIF.canCountry.find(i => i.id === display?.prod_country);
       this.canbankRC.canFormProdCountry = (help) ? help.name : '';
       help = this.canbankIF.canCountry.find(i => i.id === display?.shop_country);
       this.canbankRC.canFormShopCountry = (help) ? help.name : '';
       help = this.canbankIF.canLanguage.find(i => i.id === display?.language)
-      this.canbankRC.canFormLanguage = (help) ? help.name : '';
+      this.canbankRC.canFormLanguage = (help) ? help.name : '';*/
       this.canbankRC.canFormEan = display.ean;
       this.canbankRC.canFormFname1 = display.fname1;
       this.canbankRC.canFormFname2 = display.fname2;

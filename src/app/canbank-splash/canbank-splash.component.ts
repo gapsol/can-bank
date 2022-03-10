@@ -17,8 +17,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { config } from '../config/config';
-import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankXcolorService } from '../canbank-services-x/canbank-xcolor.service';
+import { CanbankXcontentService } from '../canbank-services-x/canbank-xcontent.service';
+import { CanbankXcountryService } from '../canbank-services-x/canbank-xcountry.service';
+import { CanbankXlanguageService } from '../canbank-services-x/canbank-xlanguage.service';
+import { CanbankXmaterialService } from '../canbank-services-x/canbank-xmaterial.service';
+import { CanbankXsurfaceService } from '../canbank-services-x/canbank-xsurface.service';
+import { CanbankXtypeService } from '../canbank-services-x/canbank-xtype.service';
+import { CanbankXdefaultService } from '../canbank-services-x/canbank-xdefault.service';
+import { CanbankXchangeService } from '../canbank-services-x/canbank-xchange.service';
 import { CanbankLevelmeterService } from '../canbank-services/canbank-levelmeter.service';
+import { CanbankMessageService } from '../canbank-services/canbank-message.service';
+import { CanbankXbankService } from '../canbank-services-x/canbank-xbank.service';
 
 @Component({
   selector: 'canbank-splash',
@@ -31,9 +41,19 @@ export class CanbankSplashComponent implements OnInit {
   errorMessage: string[] = [];
 
   constructor(
+    private router: Router,
+    private canbankXCol: CanbankXcolorService,
+    private canbankXCon: CanbankXcontentService,
+    private canbankXCty: CanbankXcountryService,
+    private canbankXLng: CanbankXlanguageService,
+    private canbankXMtl: CanbankXmaterialService,
+    private canbankXSfc: CanbankXsurfaceService,
+    private canbankXTyp: CanbankXtypeService,
+    private canbankXDef: CanbankXdefaultService,
+    private canbankXB: CanbankXbankService,
     private canbankXC: CanbankXchangeService,
     private canbankLM: CanbankLevelmeterService,
-    private router: Router,
+    private canbankMsg: CanbankMessageService,
   ) { }
 
   ngOnInit() {
@@ -45,7 +65,7 @@ export class CanbankSplashComponent implements OnInit {
     this.canbankXC.getState().subscribe(
       () => {
         this.getLevelMeterDb();
-        this.successMessage = this.canbankXC.canbankMessage;
+        this.successMessage = this.canbankMsg.canbankMessage;
         let that = this;
         setTimeout(() => {
           this.checkLists(that);
@@ -60,70 +80,77 @@ export class CanbankSplashComponent implements OnInit {
           this.levelMeter.levelDb = this.canbankLM.levelDb;
           this.setLevelMeterLst('error');
         }
-        this.errorMessage[0] = this.canbankXC.canbankMessage;
+        this.errorMessage[0] = this.canbankMsg.canbankMessage;
       }
     )
   }
 
   checkLists(that: any): void {
     that.setLevelMeterLst('running');
-    that.canbankXC.getBank(0).subscribe(
+    that.canbankXB.getBank().subscribe(
       () => { that.levelMeter.levelL0 = that.canbankLM.levelL0; },
       (error: any) => {
         that.levelMeter.levelL0 = that.canbankLM.levelL0;
         console.error(error);
       }
     )
-    that.canbankXC.getColor(0).subscribe(
+    that.canbankXCol.getColor().subscribe(
       () => { that.levelMeter.levelL1 = that.canbankLM.levelL1; },
       (error: any) => {
         that.levelMeter.levelL1 = that.canbankLM.levelL1;
         console.error(error);
       }
     )
-    that.canbankXC.getContentType(0).subscribe(
+    that.canbankXCon.getContentType().subscribe(
       () => { that.levelMeter.levelL2 = that.canbankLM.levelL2; },
       (error: any) => {
         that.levelMeter.levelL2 = that.canbankLM.levelL2;
         console.error(error);
       }
     )
-    that.canbankXC.getCountry(0).subscribe(
+    that.canbankXCty.getCountry().subscribe(
       () => { that.levelMeter.levelL3 = that.canbankLM.levelL3; },
       (error: any) => {
         that.levelMeter.levelL3 = that.canbankLM.levelL3;
         console.error(error);
       }
     )
-    that.canbankXC.getLanguage(0).subscribe(
+    that.canbankXLng.getLanguage().subscribe(
       () => { that.levelMeter.levelL4 = that.canbankLM.levelL4; },
       (error: any) => {
         that.levelMeter.levelL4 = that.canbankLM.levelL4;
         console.error(error);
       }
     )
-    that.canbankXC.getMaterial(0).subscribe(
+    that.canbankXMtl.getMaterial().subscribe(
       () => { that.levelMeter.levelL5 = that.canbankLM.levelL5; },
       (error: any) => {
         that.levelMeter.levelL5 = that.canbankLM.levelL5;
         console.error(error);
       }
     )
-    that.canbankXC.getSurface(0).subscribe(
+    that.canbankXSfc.getSurface().subscribe(
       () => { that.levelMeter.levelL6 = that.canbankLM.levelL6; },
       (error: any) => {
         that.levelMeter.levelL6 = that.canbankLM.levelL6;
         console.error(error);
       }
     )
-    that.canbankXC.getType(0).subscribe(
+    that.canbankXTyp.getType().subscribe(
       () => { that.levelMeter.levelL7 = that.canbankLM.levelL7; },
       (error: any) => {
         that.levelMeter.levelL7 = that.canbankLM.levelL7;
         console.error(error);
       }
     )
-    that.afterTheEvent(that.getLevelMeterState, 10, that.checkFlash);
+    that.canbankXDef.getDefault().subscribe(
+      () => { that.levelMeter.levelL8 = that.canbankLM.levelL8; },
+      (error: any) => {
+        that.levelMeter.levelL8 = that.canbankLM.levelL8;
+        console.error(error);
+      }
+    )
+    that.afterTheEvent(that.getLevelMeterState, 11, that.checkFlash);
   }
 
   setLevelMeter(state: string): void {
@@ -154,7 +181,8 @@ export class CanbankSplashComponent implements OnInit {
       this.levelMeter.levelL4 =
       this.levelMeter.levelL5 =
       this.levelMeter.levelL6 =
-      this.levelMeter.levelL7 = state;
+      this.levelMeter.levelL7
+    this.levelMeter.levelL8 = state;
   }
 
   getLevelMeterLst(): void {
@@ -166,6 +194,7 @@ export class CanbankSplashComponent implements OnInit {
     this.levelMeter.levelL5 = this.canbankLM.levelL5;
     this.levelMeter.levelL6 = this.canbankLM.levelL6;
     this.levelMeter.levelL7 = this.canbankLM.levelL7;
+    this.levelMeter.levelL8 = this.canbankLM.levelL8;
   }
 
   getLevelMeterState(that: any): number {
@@ -186,6 +215,7 @@ export class CanbankSplashComponent implements OnInit {
     return list;
   }
 
+  // compFnc: getLevelMeterState, compVal: levelMeter.length, callBack: checkFlash
   afterTheEvent(compFnc: Function, compVal: any, callBack: Function): void {
     let tInt = setInterval(() => {
       if (compFnc(this) === compVal) {
@@ -197,6 +227,7 @@ export class CanbankSplashComponent implements OnInit {
 
   checkFlash(that: any): void {
     // if (that.getLevelMeterEmpty().length === 0) {
+    // TODO: block on error with button to continue
     setTimeout(() => { that.router.navigate(['home']) }, config.tOut);
     // }
   }

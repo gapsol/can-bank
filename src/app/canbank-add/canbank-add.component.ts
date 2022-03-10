@@ -6,19 +6,24 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs/internal/Observable';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
-import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankXbankService } from '../canbank-services-x/canbank-xbank.service';
+import { CanbankXchangeService } from '../canbank-services-x/canbank-xchange.service';
 import { CanbankRecordService } from '../canbank-services/canbank-record.service';
 import { CanbankInterfaceService } from '../canbank-services/canbank-interface.service';
-import { canColor } from '../data/can-color';
-import { canContentType } from '../data/can-content';
-import { canCountry } from '../data/can-country';
-import { canLanguage } from '../data/can-language';
-import { canMaterial } from '../data/can-material';
-import { canSurface } from '../data/can-surface';
-import { canType } from '../data/can-type';
+import {
+  canColor,
+  canContentType,
+  canCountry,
+  canLanguage,
+  canMaterial,
+  canSurface,
+  canType,
+  canDefaults
+} from '../data/can.interface';
 
 @Component({
   selector: 'canbank-add',
@@ -32,25 +37,21 @@ export class CanbankAddComponent implements OnInit {
   canColor: Array<canColor> = [];
   coverIconColor: string = '';
   openerIconColor: string = '';
-
   canContentType: Array<canContentType> = [];
-
+  // TODO: vvv
   canCountry: Array<canCountry> = [];
-  countryIconContent: string = '';
-
+  prodCountryIconContent: string = '';
+  shopCountryIconContent: string = '';
   canLanguage: Array<canLanguage> = [];
   languageIconContent: string = '';
-
+  // TODO: ^^^
   canMaterial: Array<canMaterial> = [];
   materialIconColor: string = '';
   materialIconContent: string = '';
-
   canSurface: Array<canSurface> = [];
   surfaceIconColor: string = '';
-
   canType: Array<canType> = [];
   typeIconContent: string = '';
-
   canFormValid: boolean = false;
 
   canForm = new FormGroup({
@@ -65,27 +66,32 @@ export class CanbankAddComponent implements OnInit {
     canFormSurface: new FormControl(0, Validators.required),
     canFormCoverColor: new FormControl(0, Validators.required),
     canFormOpenerColor: new FormControl(0, Validators.required),
-    canFormBrand: new FormControl('', Validators.required),
+    // TODO: remove BRAND INPUT
+    canFormBrand: new FormControl('BRAND INPUT', Validators.required),
     canFormContentName: new FormControl(''),
     canFormContentType: new FormControl(0, Validators.required),
     canFormAlcohol: new FormControl(0, Validators.required),
     canFormKeywords: new FormControl(''),
     canFormProdDate: new FormControl(''),
     canFormExpDate: new FormControl(''),
-    canFormProdCountry: new FormControl(0, Validators.required),
-    canFormShopCountry: new FormControl(0, Validators.required),
-    canFormLanguage: new FormControl(0, Validators.required),
-    canFormEan: new FormControl('', Validators.required),
+    canFormProdCountry: new FormControl(config.country, Validators.required),
+    canFormShopCountry: new FormControl(config.country, Validators.required),
+    canFormLanguage: new FormControl(config.language, Validators.required),
+    // TODO: remove 3141592653
+    canFormEan: new FormControl('3141592653', Validators.required),
+    canFormNotes: new FormControl(''),
     canFormFname1: new FormControl(''),
     canFormFname2: new FormControl(''),
     canFormFname3: new FormControl(''),
     canFormFname4: new FormControl(''),
     canFormFname5: new FormControl(''),
-    canFormNotes: new FormControl('')
   });
+  fileList: File[] = [];
+  progress: number[] = [0, 0, 0, 0, 0, 0];
 
   constructor(
     private router: Router,
+    private canbankXB: CanbankXbankService,
     private canbankXC: CanbankXchangeService,
     private canbankRC: CanbankRecordService,
     private canbankIF: CanbankInterfaceService
@@ -103,16 +109,18 @@ export class CanbankAddComponent implements OnInit {
         this.canSurface = this.canbankIF.canSurface;
         this.canType = this.canbankIF.canType;
         this.canForm.patchValue({
-          canFormCoverColor: this.canColor.find(can => can.default)?.id,
-          canFormOpenerColor: this.canColor.find(can => can.default)?.id,
-          canFormContentType: this.canContentType.find(can => can.default)?.id,
-          canFormProdCountry: this.canCountry.find(can => can.default)?.id,
-          canFormShopCountry: this.canCountry.find(can => can.default)?.id,
-          canFormLanguage: this.canLanguage.find(can => can.default)?.id,
-          canFormMaterial: this.canMaterial.find(can => can.default)?.id,
-          canFormSurface: this.canSurface.find(can => can.default)?.id,
-          canFormType: this.canType.find(can => can.default)?.id
+          canFormCoverColor: this.canColor.find(item => item.id === this.canbankIF.canDefaults.color)!.id,
+          canFormOpenerColor: this.canColor.find(item => item.id === this.canbankIF.canDefaults.color)!.id,
+          canFormContentType: this.canContentType.find(item => item.id === this.canbankIF.canDefaults.content)!.id,
+          // countries & languages read from settings and/or from geolocation what about ^^^ default settings
+          canFormProdCountry: this.canCountry.find(item => item.abbr === this.canbankIF.canDefaults.country)!.abbr,
+          canFormShopCountry: this.canCountry.find(item => item.abbr === this.canbankIF.canDefaults.country)!.abbr,
+          canFormLanguage: this.canLanguage.find(item => item.abbr === this.canbankIF.canDefaults.language)!.abbr,
+          canFormMaterial: this.canMaterial.find(item => item.id === this.canbankIF.canDefaults.material)!.id,
+          canFormSurface: this.canSurface.find(item => item.id === this.canbankIF.canDefaults.surface)!.id,
+          canFormType: this.canType.find(item => item.id === this.canbankIF.canDefaults.type)!.id
         });
+        // this.geoLocation();
         this.updateCover();
         this.updateOpener();
         this.updateContentType();
@@ -124,6 +132,156 @@ export class CanbankAddComponent implements OnInit {
         this.updateType();
       });
   }
+
+  fileCatch(event: any, index: number) {
+    console.log('fileCatch event', index)
+    let file = event.target.files.item(0);
+    if ((file.size / 1048576) <= config.maxUploadSize) {
+      console.log('f:info: ', file.name, file.size, file.type);
+      this.fileList[index] = event.target.files.item(0);
+      /*let info = { id: 2, name: 'raja' }
+      formData.append('file', file, file.name);
+      formData.append('id', '2');
+      formData.append('tz', new Date().toISOString())
+      formData.append('update', '2')
+      formData.append('info', JSON.stringify(info))*/
+      //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
+    } else {
+      // TODO: Error message
+      console.error('file size', file.size, '> maximum');
+      switch (index) {
+        case 1:
+          this.canForm.value.canFormFname1 = '';
+          break;
+        case 2:
+          this.canForm.value.canFormFname2 = '';
+          break;
+        case 3:
+          this.canForm.value.canFormFname3 = '';
+          break;
+        case 4:
+          this.canForm.value.canFormFname4 = '';
+          break;
+        case 5:
+          this.canForm.value.canFormFname5 = '';
+          break;
+      }
+    }
+  }
+
+  addCan() {
+    console.log('addCan')
+    this.canbankXB.setBank(this.canForm.value).subscribe({
+      next(response) { console.log(response); },
+      error(error) { console.error(error); },
+      complete() { console.log('completed'); }
+    })
+    /*this.uploadAdded.subscribe({
+      next() { },
+      error(error) { },
+      complete() { }
+    });*/
+  }
+
+  uploadAdded = new Observable(subscriber => {
+    const formData = new FormData();
+    this.fileList.forEach((file, index) => {
+      formData.append('file' + index, file, file.name);
+      subscriber.next(
+        this.canbankXB.uploadBank(formData).subscribe(
+          response => {
+            console.log(response);
+            this.progress[index] = response.progress;
+            return response;
+          },
+          error => { console.log(error); return error; }
+        )
+      )
+    })
+    subscriber.complete();
+  })
+
+  displayAdded() {
+    let help: any;
+    help = this.canType.find(i => i.id === this.canForm.value.canFormType);
+    this.canbankRC.canFormType = help.name;
+    this.canbankRC.canFormDiameter = this.canForm.value.canFormTypeDetails.canFormDiameter;
+    this.canbankRC.canFormHeight = this.canForm.value.canFormTypeDetails.canFormHeight;
+    this.canbankRC.canFormVolume = this.canForm.value.canFormTypeDetails.canFormVolume;
+    this.canbankRC.canFormVolumeFlOz = this.canForm.value.canFormTypeDetails.canFormVolumeFlOz;
+    help = this.canMaterial.find(i => i.id === this.canForm.value.canFormMaterial);
+    this.canbankRC.canFormMaterial = help.name;
+    help = this.canSurface.find(i => i.id === this.canForm.value.canFormSurface);
+    this.canbankRC.canFormSurface = help.name;
+    help = this.canColor.find(i => i.id === this.canForm.value.canFormCoverColor);
+    this.canbankRC.canFormCoverColor = help.name;
+    help = this.canColor.find(i => i.id === this.canForm.value.canFormOpenerColor);
+    this.canbankRC.canFormOpenerColor = help.name;
+    this.canbankRC.canFormBrand = this.canForm.value.canFormBrand;
+    this.canbankRC.canFormContentName = this.canForm.value.canFormContentName;
+    help = this.canContentType.find(i => i.id === this.canForm.value.canFormContentType);
+    this.canbankRC.canFormContentType = help.name;
+    this.canbankRC.canFormAlcohol = this.canForm.value.canFormAlcohol;
+    this.canbankRC.canFormKeywords = this.canForm.value.canFormKeywords;
+    this.canbankRC.canFormProdDate = this.canForm.value.canFormProdDate;
+    this.canbankRC.canFormExpDate = this.canForm.value.canFormExpDate;
+    /*help = this.canCountry.find(i => i.id === this.canForm.value.canFormProdCountry);
+    this.canbankRC.canFormProdCountry = help.name;
+    help = this.canCountry.find(i => i.id === this.canForm.value.canFormShopCountry);
+    this.canbankRC.canFormShopCountry = help.name;
+    help = this.canLanguage.find(i => i.id === this.canForm.value.canFormLanguage);
+    this.canbankRC.canFormLanguage = help.name;*/
+    this.canbankRC.canFormEan = this.canForm.value.canFormEan;
+    this.canbankRC.canFormFname1 = this.canForm.value.canFormFname1;
+    this.canbankRC.canFormFname2 = this.canForm.value.canFormFname2;
+    this.canbankRC.canFormFname3 = this.canForm.value.canFormFname3;
+    this.canbankRC.canFormFname4 = this.canForm.value.canFormFname4;
+    this.canbankRC.canFormFname5 = this.canForm.value.canFormFname5;
+    this.canbankRC.canFormNotes = this.canForm.value.canFormNotes;
+    this.router.navigate(['/display']);
+  }
+  /***onFileInput(files: FileList | null): void {
+    if (files) {
+      this.file = files.item(0)
+    }
+  }
+  */
+  /*uploadFile(file: any) {
+    const formData = new FormData();
+    formData.append('file', file.data /*, filename*///); // Blob
+  /*
+  formData.append('userpic', myFileInput.files[0], 'chris.jpg');
+  formData.append('userpic[]', myFileInput.files[0], 'chris1.jpg');
+  formData.append('userpic[]', myFileInput.files[1], 'chris2.jpg');
+  /
+  file.inProgress = true;
+  this.canbankXC.upload(formData).subscribe(
+    (event: any) => {
+      if (typeof (event) === 'object') {
+        console.log(event.body);
+      }
+    }
+  );
+  }
+
+  private uploadFiles() {
+  this.fileUpload.nativeElement.value = '';
+  this.files.forEach(file => {
+    this.uploadFile(file);
+  });
+  }
+
+  onClick() {
+  const fileUpload = this.fileUpload.nativeElement;
+  fileUpload.onchange = () => {
+    for (let index = 0; index < fileUpload.files.length; index++) {
+      const file = fileUpload.files[index];
+      this.files.push({ data: file, inProgress: false, progress: 0 });
+    }
+    this.uploadFiles();
+  };
+  fileUpload.click();
+  }*/
 
   /*
     sortColor() {
@@ -170,7 +328,7 @@ export class CanbankAddComponent implements OnInit {
           canFormVolume: canObj.volume,
           canFormVolumeFlOz: canFormVolumeFlOz
         }
-      });
+      })
     } else {
       this.typeIconContent = '+';
       this.canForm.patchValue({
@@ -228,7 +386,6 @@ export class CanbankAddComponent implements OnInit {
   }
 
   updateCover() {
-    // TODO: zmenit tvar ikonky
     let canObj = this.canColor.find(cancol => cancol.id === this.canForm.value.canFormCoverColor);
     if (canObj !== undefined) {
       this.coverIconColor = 'background-color:' + canObj.color;
@@ -236,7 +393,6 @@ export class CanbankAddComponent implements OnInit {
   }
 
   updateOpener() {
-    // TODO: zmenit tvar ikonky
     let canObj = this.canColor.find(cancol => cancol.id === this.canForm.value.canFormOpenerColor);
     if (canObj !== undefined) {
       this.openerIconColor = 'background-color:' + canObj.color;
@@ -269,77 +425,60 @@ export class CanbankAddComponent implements OnInit {
     // TODO: zobrazit slova ako bloky
   }
 
+  // TODO: create alternative to Google geolocation API
+  // some grid approximation
+  // list ordering by GPS grid
+  geoLocation() {
+    if (!('geolocation' in navigator)) return;
+    navigator.geolocation.getCurrentPosition(
+      success => console.log(success),
+      error => console.error(error)
+    );
+  }
+
+  // country codes are uppercase
   updateProdCountry() {
+    let flagObj = this.canCountry.find(item => item.abbr === this.canForm.value.canFormProdCountry);
+    if (flagObj !== undefined) {
+      flagObj.abbr = flagObj.abbr;
+      this.prodCountryIconContent = `url(./assets/flags/${flagObj.abbr.toLowerCase()}.svg)`;
+    } else {
+      this.prodCountryIconContent = '';
+    }
   }
 
   updateShopCountry() {
+    let flagObj = this.canCountry.find(item => item.abbr === this.canForm.value.canFormShopCountry);
+    if (flagObj !== undefined) {
+      flagObj.abbr = flagObj.abbr;
+      this.shopCountryIconContent = `url(./assets/flags/${flagObj.abbr.toLowerCase()}.svg)`;
+    } else {
+      this.shopCountryIconContent = '';
+    }
   }
 
-  // TODO: katalog krajin, ikona vlajky SVG
   newCountry() {
-    // TODO: refresh zoznamu
+    // TODO: add from global list
   }
 
+  // language codes are lowercase
   updateLanguage() {
+    let flagObj = this.canLanguage.find(item => item.abbr === this.canForm.value.canFormLanguage);
+    if (flagObj !== undefined) {
+      flagObj.abbr = flagObj.abbr;
+      this.languageIconContent = `url(/assets/flags/${flagObj.abbr}.svg)`;
+    } else {
+      this.languageIconContent = '';
+    }
   }
 
-  // TODO: katalog jazykov, ikona vlajky SVG
   newLanguage() {
-    // TODO: refresh zoznamu
+    // TODO: add from global list
   }
 
-  // TODO: zobrazit Ean graficky
-  // TODO: hladat existujuce barkody podla zadavaneho textu
+  // TODO: display EAN image
+  // TODO: look for existing barcodes during inserting EAN code
   displayEan() {
-  }
-
-  addCan() {
-    this.canbankXC.setBank(this.canForm.value).subscribe(
-      () => {
-        return;
-        let help: any;
-        help = this.canType.find(i => i.id === this.canForm.value.canFormType);
-        this.canbankRC.canFormType = help.name;
-        this.canbankRC.canFormDiameter = this.canForm.value.canFormTypeDetails.canFormDiameter;
-        this.canbankRC.canFormHeight = this.canForm.value.canFormTypeDetails.canFormHeight;
-        this.canbankRC.canFormVolume = this.canForm.value.canFormTypeDetails.canFormVolume;
-        this.canbankRC.canFormVolumeFlOz = this.canForm.value.canFormTypeDetails.canFormVolumeFlOz;
-        help = this.canMaterial.find(i => i.id === this.canForm.value.canFormMaterial);
-        this.canbankRC.canFormMaterial = help.name;
-        help = this.canSurface.find(i => i.id === this.canForm.value.canFormSurface);
-        this.canbankRC.canFormSurface = help.name;
-        help = this.canColor.find(i => i.id === this.canForm.value.canFormCoverColor);
-        this.canbankRC.canFormCoverColor = help.name;
-        help = this.canColor.find(i => i.id === this.canForm.value.canFormOpenerColor);
-        this.canbankRC.canFormOpenerColor = help.name;
-        this.canbankRC.canFormBrand = this.canForm.value.canFormBrand;
-        this.canbankRC.canFormContentName = this.canForm.value.canFormContentName;
-        help = this.canContentType.find(i => i.id === this.canForm.value.canFormContentType);
-        this.canbankRC.canFormContentType = help.name;
-        this.canbankRC.canFormAlcohol = this.canForm.value.canFormAlcohol;
-        this.canbankRC.canFormKeywords = this.canForm.value.canFormKeywords;
-        this.canbankRC.canFormProdDate = this.canForm.value.canFormProdDate;
-        this.canbankRC.canFormExpDate = this.canForm.value.canFormExpDate;
-        help = this.canCountry.find(i => i.id === this.canForm.value.canFormProdCountry);
-        this.canbankRC.canFormProdCountry = help.name;
-        help = this.canCountry.find(i => i.id === this.canForm.value.canFormShopCountry);
-        this.canbankRC.canFormShopCountry = help.name;
-        help = this.canLanguage.find(i => i.id === this.canForm.value.canFormLanguage);
-        this.canbankRC.canFormLanguage = help.name;
-        this.canbankRC.canFormEan = this.canForm.value.canFormEan;
-        this.canbankRC.canFormFname1 = this.canForm.value.canFormFname1;
-        this.canbankRC.canFormFname2 = this.canForm.value.canFormFname2;
-        this.canbankRC.canFormFname3 = this.canForm.value.canFormFname3;
-        this.canbankRC.canFormFname4 = this.canForm.value.canFormFname4;
-        this.canbankRC.canFormFname5 = this.canForm.value.canFormFname5;
-        this.canbankRC.canFormNotes = this.canForm.value.canFormNotes;
-        this.router.navigate(['/display']);
-      },
-      (err: any) => {
-        console.log('add can error')
-        console.error(err)
-      }
-    );
   }
 
 }

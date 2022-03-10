@@ -1,34 +1,6 @@
-export interface canBank {
-  id: number,
-  type: number,
-  diameter: number,
-  height: number,
-  volume: number,
-  volumeFlOz: number,
-  material: number,
-  surface: number,
-  cover_color: number,
-  opener_color: number,
-  brand: string,
-  content_name: string,
-  content_type: number,
-  alcohol: number,
-  keywords: string,
-  prod_date: string,
-  exp_date: string,
-  prod_country: number,
-  shop_country: number,
-  language: number,
-  ean: string,
-  fname1: string,
-  fname2: string,
-  fname3: string,
-  fname4: string,
-  fname5: string,
-  notes: string
-}
+import { canBank } from './can.interface';
 
-export var canBank: Array<canBank> = [
+export var canBanks: Array<canBank> = [
   {
     id: 1,
     type: 1,

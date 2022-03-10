@@ -68,6 +68,10 @@
 .btn-right {
   border-radius: 0 6px 6px 0;
 }
+.btn {
+  width: 2em;
+  vertical-align: text-bottom;
+}
 .btn-default {
   border-style: solid;
   border-width: 2px;
@@ -85,10 +89,8 @@
   line-height: 1em;
   font-size: 2em;
 }
-.btn-flag,
-.btn-del {
-  width: 2em;
-  vertical-align: text-bottom;
+.btn-hidden {
+  background-color: transparent;
 }
 .check-2em {
   width: 2em;
@@ -107,4 +109,7 @@
   background-color: blue;
   color: gold;
   line-height: 1.2em;
+}
+.cat-item {
+  line-height: 1.6em;
 }

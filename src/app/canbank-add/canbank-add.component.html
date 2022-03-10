@@ -5,45 +5,45 @@
   <form id="can-form" [formGroup]="canForm" (ngSubmit)="addCan()">
     <div class="input-box">
       <label for="can-form-type">{{ i18n['add_can_type'] }}</label>
-      <div class="input-value-box input-with-icon">
-        <div class="full">
-          <select id="can-form-type" class="full" formControlName="canFormType" (change)="updateType()" required>
-            <option *ngFor="let type of canType" [ngValue]="type.id">{{ type.name }}</option>
-            <!--option value="0" (select)="newType()" class="new-option">{{ i18n['add_can_type'] }}</option-->
-          </select>
-        </div>
+      <div class="input-value-box full">
+        <select id="can-form-type" class="full" formControlName="canFormType" (change)="updateType()" required>
+          <option *ngFor="let type of canType" [ngValue]="type.id">{{ type.name }}</option>
+          <!--option value="0" (select)="newType()" class="new-option">{{ i18n['add_can_type'] }}</option-->
+        </select>
       </div>
     </div>
 
-    <div formGroupName="canFormTypeDetails">
-      <div class="input-box">
-        <div class="can-sm-12 can-md-6 can-lg-3">
-          <label for="can-form-diameter">{{ i18n['add_diameter'] }}</label>
-          <div class="input-value-box">
-            <input id="can-form-diameter" type="number" formControlName="canFormDiameter" readonly />
-          </div>
-        </div>
-        <div class="can-sm-12 can-md-6 can-lg-3">
-          <label for="can-form-height">{{ i18n['add_height'] }}</label>
-          <div class="input-value-box">
-            <input id="can-form-height" type="number" formControlName="canFormHeight" readonly />
-          </div>
-        </div>
-        <div class="can-sm-12 can-md-6 can-lg-3">
-          <label for="can-form-volume">{{ i18n['add_volume'] }}</label>
-          <div class="input-value-box">
-            <input id="can-form-volume" type="number" formControlName="canFormVolume" readonly />
-          </div>
-        </div>
-        <div class="can-sm-12 can-md-6 can-lg-3">
-          <label for="can-form-volumeFlOz">{{ i18n['add_volumeFlOz'] }}</label>
-          <div class="input-value-box">
-            <input id="can-form-volumeFlOz" type="number" formControlName="canFormVolumeFlOz" readonly />
-          </div>
+    <div class="input-box" formGroupName="canFormTypeDetails">
+      <div class="can-sm-12 can-md-6 can-lg-3">
+        <label for="can-form-diameter">{{ i18n['add_diameter'] }}</label>
+        <div class="input-value-box">
+          <input id="can-form-diameter" type="number" formControlName="canFormDiameter"
+            placeholder="{{ i18n['add_diameter'] }}" readonly />
         </div>
       </div>
-      <div class="defloat"></div>
+      <div class="can-sm-12 can-md-6 can-lg-3">
+        <label for="can-form-height">{{ i18n['add_height'] }}</label>
+        <div class="input-value-box">
+          <input id="can-form-height" type="number" formControlName="canFormHeight"
+            placeholder="{{ i18n['add_height'] }}" readonly />
+        </div>
+      </div>
+      <div class="can-sm-12 can-md-6 can-lg-3">
+        <label for="can-form-volume">{{ i18n['add_volume'] }}</label>
+        <div class="input-value-box">
+          <input id="can-form-volume" type="number" formControlName="canFormVolume"
+            placeholder="{{ i18n['add_volume'] }}" readonly />
+        </div>
+      </div>
+      <div class="can-sm-12 can-md-6 can-lg-3">
+        <label for="can-form-volumeFlOz">{{ i18n['add_volumeFlOz'] }}</label>
+        <div class="input-value-box">
+          <input id="can-form-volumeFlOz" type="number" formControlName="canFormVolumeFlOz"
+            placeholder="{{ i18n['add_volumeFlOz'] }}" readonly />
+        </div>
+      </div>
     </div>
+    <div class="defloat"></div>
 
     <div class="input-box">
       <div class="can-sm-12 can-md-6 can-lg-3">
@@ -75,7 +75,7 @@
       <div class="can-sm-12 can-md-6 can-lg-3">
         <label for="can-form-cover-color">{{ i18n['add_cover'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-cover" [style]="coverIconColor"></div>
+          <div class="input-icon" [style]="coverIconColor"></div>
           <div class="full">
             <select id="can-form-cover-color" formControlName="canFormCoverColor" (change)="updateCover()" required>
               <option *ngFor="let color of canColor" [ngValue]="color.id">{{ color.name }}</option>
@@ -88,7 +88,7 @@
       <div class="can-sm-12 can-md-6 can-lg-3">
         <label for="can-form-opener-color">{{ i18n['add_opener'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-opener" [style]="openerIconColor"></div>
+          <div class="input-icon" [style]="openerIconColor"></div>
           <div class="full">
             <select id="can-form-opener-color" formControlName="canFormOpenerColor" (change)="updateOpener()" required>
               <option *ngFor="let color of canColor" [ngValue]="color.id">{{ color.name }}</option>
@@ -105,16 +105,17 @@
       <label for="can-form-brand">{{ i18n['add_brand'] }}</label>
       <div class="input-value-box">
         <input id="can-form-brand" type="text" formControlName="canFormBrand" (change)="updateBrand()" maxlength="100"
-          required />
+          placeholder="{{ i18n['add_brand'] }}" required />
       </div>
     </div>
+    <div class="defloat"></div>
 
     <div class="input-box">
       <div class="can-sm-12 can-md-12 can-lg-6">
         <label for="can-form-content-name">{{ i18n['add_content_name'] }}</label>
         <div class="input-value-box">
           <input id="can-form-content-name" type="text" formControlName="canFormContentName"
-            (change)="updateContentName()" />
+            placeholder="{{ i18n['add_content_name'] }}" (change)="updateContentName()" />
         </div>
       </div>
 
@@ -133,7 +134,7 @@
         <label for="can-form-alcohol">{{ i18n['add_alcohol'] }}</label>
         <div class="input-value-box">
           <input id="can-form-alcohol" type="number" min="0" max="100" step="0.1" formControlName="canFormAlcohol"
-            required />
+            placeholder="{{ i18n['add_alcohol'] }}" required />
         </div>
       </div>
     </div>
@@ -143,32 +144,36 @@
       <label for="can-form-keywords">{{ i18n['add_keywords'] }}</label>
       <div class="input-value-box">
         <input id="can-form-keywords" type="text" formControlName="canFormKeywords" (change)="updateKeywords()"
-          pattern="" />
+          placeholder="{{ i18n['add_keywords'] }}" pattern="" />
       </div>
     </div>
+    <div class="defloat"></div>
 
     <div class="input-box">
       <div class="can-sm-12 can-md-12 can-lg-6">
         <label for="can-form-prod-date">{{ i18n['add_production_date'] }}</label>
         <div class="input-value-box">
-          <input id="can-form-prod-date" type="date" formControlName="canFormProdDate" />
+          <input id="can-form-prod-date" type="date" formControlName="canFormProdDate"
+            placeholder="{{ i18n['add_production_date'] }}" />
         </div>
       </div>
 
       <div class="can-sm-12 can-md-12 can-lg-6">
         <label for="can-form-exp-date">{{ i18n['add_expiration_date'] }}</label>
         <div class="input-value-box">
-          <input id="can-form-exp-date" type="date" formControlName="canFormExpDate" />
+          <input id="can-form-exp-date" type="date" formControlName="canFormExpDate"
+            placeholder="{{ i18n['add_expiration_date'] }}" />
         </div>
       </div>
     </div>
+    <div class="defloat"></div>
 
     <div class="input-box">
       <div class="can-sm-12 can-md-12 can-lg-12">
         <label for="can-form-ean">{{ i18n['add_barcode'] }}</label>
         <div class="input-value-box">
           <input id="can-form-ean" type="text" maxlength="13" pattern="[0-9]{1,13}" formControlName="canFormEan"
-            (change)="displayEan()" required />
+            (change)="displayEan()" placeholder="{{ i18n['add_barcode'] }}" required />
         </div>
       </div>
 
@@ -176,16 +181,17 @@
         <!-- TODO: generate ean_barcode image -->
       </div>
     </div>
+    <div class="defloat"></div>
 
     <div class="input-box">
       <div class="can-sm-12 can-md-6 can-lg-4">
         <label for="can-form-country">{{ i18n['add_made_in_country'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-flag"></div>
+          <div class="input-icon input-icon-flag" [style.background-image]="prodCountryIconContent"></div>
           <div class="full">
             <select id="can-form-prod-country" formControlName="canFormProdCountry" (change)="updateProdCountry()"
               required>
-              <option *ngFor="let country of canCountry" [ngValue]="country.id">{{ country.name }}</option>
+              <option *ngFor="let country of canCountry" [ngValue]="country.abbr">{{ country.name }}</option>
               <option value="-1">{{ i18n['add_unknown_country'] }}</option>
               <!--option value="0" (select)="newCountry()" class="new-option">{{ i18n['add_country'] }}</option-->
             </select>
@@ -196,11 +202,11 @@
       <div class="can-sm-12 can-md-6 can-lg-4">
         <label for="can-form-country">{{ i18n['add_shop_in_country'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-flag"></div>
+          <div class="input-icon input-icon-flag" [style.background-image]="shopCountryIconContent"></div>
           <div class="full">
             <select id="can-form-shop-country" formControlName="canFormShopCountry" (change)="updateShopCountry()"
               required>
-              <option *ngFor="let country of canCountry" [ngValue]="country.id">{{ country.name }}</option>
+              <option *ngFor="let country of canCountry" [ngValue]="country.abbr">{{ country.name }}</option>
               <option value="-1">{{ i18n['add_unknown_country'] }}</option>
               <!--option value="0" (select)="newCountry()" class="new-option">{{ i18n['add_country'] }}</option-->
             </select>
@@ -211,10 +217,10 @@
       <div class="can-sm-12 can-md-12 can-lg-4">
         <label for="can-form-language">{{ i18n['add_primary_language'] }}</label>
         <div class="input-with-icon input-value-box">
-          <div class="input-icon input-icon-flag"></div>
+          <div class="input-icon input-icon-flag" [style.background-image]="languageIconContent"></div>
           <div class="full">
             <select id="can-form-language" formControlName="canFormLanguage" (change)="updateLanguage()" required>
-              <option *ngFor="let lang of canLanguage" [ngValue]="lang.id">{{ lang.name }}</option>
+              <option *ngFor="let lang of canLanguage" [ngValue]="lang.abbr">{{ lang.name }}</option>
               <option value="-1">{{ i18n['add_unknown_language'] }}</option>
               <!--option value="0" (select)="newLanguage()" class="new-option">{{ i18n['add_language'] }}</option-->
             </select>
@@ -227,44 +233,74 @@
     <div class="input-box">
       <label for="can-form-notes">{{ i18n['add_notes'] }}</label>
       <div class="input-value-box">
-        <textarea id="can-form-notes" formControlName="canFormNotes"></textarea>
+        <textarea id="can-form-notes" formControlName="canFormNotes" placeholder="{{ i18n['add_notes'] }}"></textarea>
       </div>
     </div>
+    <div class="defloat"></div>
 
     <div class="input-box">
       <label for="can-form-fname1" class="can-file-button">{{ i18n['add_photo'] }} 1</label>
       <div class="input-value-box">
-        <input id="can-form-fname1" type="file" formControlName="canFormFname1" />
+        <input id="can-form-fname1" type="file" formControlName="canFormFname1" accept=".jpg, .jpeg"
+          (change)="fileCatch($event, 1)" placeholder="{{ i18n['add_photo'] }}" />
       </div>
     </div>
+    <div class="defloat"></div>
+    <progress [value]="progress[1]" style="width:100%;height: 2em;" max="100"></progress>
 
     <div class="input-box">
       <label for="can-form-fname2" class="can-file-button">{{ i18n['add_photo'] }} 2</label>
       <div class="input-value-box">
-        <input id="can-form-fname2" type="file" formControlName="canFormFname2" />
+        <input id="can-form-fname2" type="file" formControlName="canFormFname2" accept=".jpg, .jpeg"
+          (change)="fileCatch($event, 2)" placeholder="{{ i18n['add_photo'] }}" />
       </div>
     </div>
+    <div class="defloat"></div>
+    <progress [value]="progress[2]" style="width:100%;height: 2em;" max="100"></progress>
 
     <div class="input-box">
       <label for="can-form-fname3" class="can-file-button">{{ i18n['add_photo'] }} 3</label>
       <div class="input-value-box">
-        <input id="can-form-fname3" type="file" formControlName="canFormFname3" />
+        <input id="can-form-fname3" type="file" formControlName="canFormFname3" accept=".jpg, .jpeg"
+          (change)="fileCatch($event, 3)" placeholder="{{ i18n['add_photo'] }}" />
       </div>
     </div>
+    <div class="defloat"></div>
+    <progress [value]="progress[3]" style="width:100%;height: 2em;" max="100"></progress>
 
     <div class="input-box">
       <label for="can-form-fname4" class="can-file-button">{{ i18n['add_photo'] }} 4</label>
       <div class="input-value-box">
-        <input id="can-form-fname4" type="file" formControlName="canFormFname4" />
+        <input id="can-form-fname4" type="file" formControlName="canFormFname4" accept=".jpg, .jpeg"
+          (change)="fileCatch($event, 4)" placeholder="{{ i18n['add_photo'] }}" />
       </div>
     </div>
+    <div class="defloat"></div>
+    <progress [value]="progress[4]" style="width:100%;height: 2em;" max="100"></progress>
 
     <div class="input-box">
       <label for="can-form-fname5" class="can-file-button">{{ i18n['add_photo'] }} 5</label>
       <div class="input-value-box">
-        <input id="can-form-fname5" type="file" formControlName="canFormFname5" />
+        <input id="can-form-fname5" type="file" formControlName="canFormFname5" accept=".jpg, .jpeg"
+          (change)="fileCatch($event, 5)" placeholder="{{ i18n['add_photo'] }}" />
       </div>
     </div>
+    <div class="defloat"></div>
+    <progress [value]="progress[5]" style="width:100%;height:2em;" max="100"></progress>
+
+    <!--ul>
+      <li *ngFor="let file of fileList"-->
+    <!--span id="file-label"></span>
+      </li>
+    </ul-->
+    <!--
+    <input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" style="display:none;" />
+  -->
+    <!--label>File</label>
+  <button mat-raised-button (click)="fileInput.click()">
+    {{ file ? file.name : 'Select' }}
+  </button>
+  <input hidden type="file" #fileInput (change)="onFileInput(fileInput.files)" /-->
 
     <div class="input-box">
       <button type="submit" [disabled]="!canForm.valid">{{ i18n['add_save'] }}</button>

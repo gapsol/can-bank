@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
-import { Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { config } from '../../config/config';
 import { i18n } from '../../data/can-i18n';
-import { CanbankXchangeService } from '../../canbank-services/canbank-xchange.service';
+import { CanbankXmaterialService } from '../../canbank-services-x/canbank-xmaterial.service';
+import { CanbankXdefaultService } from '../../canbank-services-x/canbank-xdefault.service';
 import { CanbankInterfaceService } from '../../canbank-services/canbank-interface.service';
-import { canMaterial } from '../../data/can-material';
+import { canMaterial } from '../../data/can.interface';
 
 interface styledMaterial extends canMaterial {
   style: string,
-  class: string
+  class: string,
 }
 
 @Component({
   selector: 'canbank-form-material',
   templateUrl: './canbank-form-material.component.html',
-  styleUrls: ['../canbank-categories.component.css', './canbank-form-material.component.css']
+  styleUrls: ['../canbank-categories.component.css']
 })
 export class CanbankFormMaterialComponent implements OnInit {
   i18n = i18n[config.language];
@@ -31,37 +31,52 @@ export class CanbankFormMaterialComponent implements OnInit {
   openClass: string = '';
 
   constructor(
-    private canbankXC: CanbankXchangeService,
+    private canbankXMtl: CanbankXmaterialService,
+    private canbankXDef: CanbankXdefaultService,
     private canbankIF: CanbankInterfaceService
   ) { }
 
   ngOnInit() {
-    this.getCanMaterials();
+    this.canbankXDef.getDefault().subscribe(
+      () => this.getCanMaterials(),
+      error => console.error(error)
+    )
   }
 
-  // TODO:
-  // classify style
   getCanMaterials(): void {
-    this.canbankXC.getMaterial(0).subscribe(
+    this.canbankXMtl.getMaterial().subscribe(
       () => {
         this.canMaterialRows = [];
-        this.canbankIF.canMaterial.forEach((e) => {
+        let dftMaterial = this.canbankIF.canDefaults['material'];
+        this.canbankIF.canMaterial.forEach(e => {
           let eStyle = 'background-color:' + e.color + ';';
-          let eClass = (e.default) ? 'btn-default' : '';
+          let eClass = (dftMaterial === e.id) ? 'btn-default' : '';
+          let eDefault = !!eClass;
+          let eRemove = (dftMaterial !== e.id);
           this.canMaterialRows.push({
             id: e.id,
             name: e.name,
             abbr: e.abbr,
             color: e.color,
-            default: e.default,
+            default: eDefault,
+            removable: eRemove,
             style: eStyle,
             class: eClass
-          });
-        });
+          })
+        })
         window.scroll(0, 0);
       },
-      (error: any) => { console.error(error); }
-    );
+      error => console.error(error)
+    )
+  }
+
+  deleteCanMaterial(id: number) {
+    if (confirm('You are about to delete record')) {
+      this.canbankXMtl.deleteMaterial(id).subscribe(
+        () => this.getCanMaterials(),
+        error => console.error(error)
+      )
+    }
   }
 
   checkCanMaterial(): boolean {
@@ -77,10 +92,14 @@ export class CanbankFormMaterialComponent implements OnInit {
     // material valid only when so far not exists
     // material valid only when it fits htmlmaterials array
     if (this.checkCanMaterial()) {
-      this.canForm.value.canFormDefault = (this.canForm.value.canFormDefault) ? 1 : 0;
-      this.canbankXC.setMaterial(this.canForm.value).subscribe(
-        () => { this.getCanMaterials(); },
-        (error: any) => { console.error(error); }
+      this.canbankXMtl.setMaterial(this.canForm.value).subscribe(
+        () => {
+          this.canbankXDef.getDefault().subscribe(
+            () => this.getCanMaterials(),
+            error => console.error(error)
+          )
+        },
+        error => console.error(error)
       )
     }
   }
@@ -89,34 +108,23 @@ export class CanbankFormMaterialComponent implements OnInit {
     let material = this.canbankIF.canMaterial.find(e => e.id === id);
     if (material === undefined || material.default === true) { return }
     this.canForm.value.canFormId = material.id;
-    this.canForm.value.canFormName = material.name;
-    this.canForm.value.canFormPicker = material.color;
-    this.canForm.value.canFormAbbr = material.abbr;
-    this.canForm.value.canFormDefault = 1;
-
-    this.canbankXC.updateMaterial(this.canForm.value).subscribe(
-      () => { this.getCanMaterials(); },
-      (error: any) => { console.error(error); }
-    );
-  }
-
-  deleteCanMaterial(id: number) {
-    if (confirm('You are about to delete record')) {
-      this.canbankXC.deleteMaterial(id).subscribe(
-        () => { this.getCanMaterials(); },
-        (error: any) => { console.error(error); }
-      );
-    }
+    this.canbankXMtl.updateMaterial(this.canForm.value).subscribe(
+      () => {
+        this.canbankXDef.getDefault().subscribe(
+          () => this.getCanMaterials(),
+          error => console.error(error)
+        )
+      },
+      error => console.error(error)
+    )
   }
 
   openForm() {
     this.openClass = 'btn-open';
     setTimeout(() => {
       let element = document.getElementById('openBtn');
-      if (element) {
-        element.scrollIntoView(true);
-      }
-    });
+      if (element) { element.scrollIntoView(true) }
+    })
   }
 
 }

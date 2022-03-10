@@ -1,34 +1,30 @@
 <div class="sub-screen">
   <h1 class="title">materialForm</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th class="tab-90">{{ i18n['ctg_material'] }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of canMaterialRows">
-        <td><button class="btn-flag" [style]="item.style" [class]="item.class" (click)="setDefaultCanMaterial(item.id)"></button></td>
-        <td>{{ item.name }} [{{ item.abbr }}]</td>
-        <td><button class="btn-del" (click)="deleteCanMaterial(item.id)"><span>×</span></button></td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass" (click)="openForm()">+</button>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  <div class="demo demo-head">{{ i18n['ctg_material'] }}</div>
+  <div *ngIf="canMaterialRows.length == 0">
+    <div class="demo demo-body" *ngFor="let item of [1,2]">&nbsp;</div>
+  </div>
+  <div *ngIf="canMaterialRows.length > 0">
+    <div class="demo demo-body" *ngFor="let item of canMaterialRows">
+      <button *ngIf="item.removable" class="btn btn-del right"
+        (click)="deleteCanMaterial(item.id)"><span>×</span></button>
+      <button *ngIf="!item.removable" class="btn btn-hidden right"></button>
+      <button class="btn btn-flag left" [style]="item.style" [class]="item.class"
+        (click)="setDefaultCanMaterial(item.id)"></button>
+      <span class="cat-item">{{ item.name }} [{{ item.abbr }}]</span>
+      <span class="defloat"></span>
+    </div>
+  </div>
+
+  <button id="openBtn" class="can-ctg-open-btn center" [class]="openClass" (click)="openForm()">+</button>
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanMaterial()">
     <label for="canFormName">{{ i18n['ctg_tab_name'] }} + {{ i18n['ctg_tab_color'] }}</label>
     <div style="display: flex;">
       <input id="canFormName" type="text" formControlName="canFormName" minlength="3" class="border-left" required />
-      <input id="canFormPicker" type="color" formControlName="canFormPicker" class="can-ctg-color-picker border-right" required /><br>
+      <input id="canFormPicker" type="color" formControlName="canFormPicker" class="can-ctg-color-picker border-right"
+        required /><br>
     </div>
     <label for="canFormAbbr">{{ i18n['ctg_tab_abbr'] }}</label>
     <input id="canFormAbbr" type="text" formControlName="canFormAbbr" minlength="2" maxlength="2" required />

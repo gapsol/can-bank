@@ -1,12 +1,16 @@
 import { Injectable, Input } from '@angular/core';
 
-import { canColor } from '../data/can-color';
-import { canContentType } from '../data/can-content';
-import { canCountry } from '../data/can-country';
-import { canLanguage } from '../data/can-language';
-import { canMaterial } from '../data/can-material';
-import { canSurface } from '../data/can-surface';
-import { canType } from '../data/can-type';
+import {
+  canColor,
+  canContentType,
+  canCountry,
+  canLanguage,
+  canMaterial,
+  canSurface,
+  canType,
+  canDefault,
+  canDefaults
+} from '../data/can.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +73,37 @@ export class CanbankInterfaceService {
   get canType(): Array<canType> { return this._canType; }
   set canType(obj: Array<canType>) {
     this._canType = obj;
+    this.updateMe();
+  }
+  @Input()
+  private _canDefault: Array<canDefault> = [];
+  get canDefault(): Array<canDefault> { return this._canDefault; }
+  set canDefault(obj: Array<canDefault>) {
+    this._canDefault = obj;
+    this.updateMe();
+    this.canDefaults = {
+      color: this._canDefault.find(item => item.table === 'color')!.key,
+      content: this._canDefault.find(item => item.table === 'content')!.key,
+      country: this._canDefault.find(item => item.table === 'country')!.key,
+      language: this._canDefault.find(item => item.table === 'language')!.key,
+      material: this._canDefault.find(item => item.table === 'material')!.key,
+      surface: this._canDefault.find(item => item.table === 'surface')!.key,
+      type: this._canDefault.find(item => item.table === 'type')!.key
+    }
+  }
+  @Input()
+  private _canDefaults: canDefaults = {
+    color: 0,
+    content: 0,
+    country: '',
+    language: '',
+    material: 0,
+    surface: 0,
+    type: 0
+  };
+  get canDefaults(): canDefaults { return this._canDefaults; }
+  set canDefaults(obj: canDefaults) {
+    this._canDefaults = obj;
     this.updateMe();
   }
 

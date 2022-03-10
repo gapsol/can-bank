@@ -9,14 +9,14 @@ if (!isset($j)) {
   $j = [];
 }
 $query = [];
-$query[1] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `code`, `default`)
-VALUES (1, "glossy", "lightgray", "", 1)';
-$query[2] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `code`, `default`)
-VALUES (2, "matt", "silver", "", 0)';
-$query[3] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `code`, `default`)
-VALUES (3, "foil", "yellow", "", 0)';
-$query[4] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `code`, `default`)
-VALUES (4, "paper", "white", "", 0)';
+$query[1] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `code`)
+VALUES (1, "glossy", "lightgray", "")';
+$query[2] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `code`)
+VALUES (2, "matt", "silver", "")';
+$query[3] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `code`)
+VALUES (3, "foil", "yellow", "")';
+$query[4] = 'INSERT IGNORE INTO `can_surface` (`id`, `name`, `color`, `code`)
+VALUES (4, "paper", "white", "")';
 
 $mysqli = my_connect();
 

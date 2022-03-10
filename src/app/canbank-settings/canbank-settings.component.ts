@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-canbank-settings',
-  templateUrl: './canbank-settings.component.html',
-  styleUrls: ['./canbank-settings.component.css']
+  templateUrl: './canbank-settings.component.html'
 })
 export class CanbankSettingsComponent implements OnInit {
 

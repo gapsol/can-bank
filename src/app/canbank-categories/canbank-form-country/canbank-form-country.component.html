@@ -1,28 +1,23 @@
 <div class="sub-screen">
   <h1 class="title">countryForm</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>[F]</th>
-        <th class="tab-90">{{ i18n['ctg_country'] }}</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of canCountryRows">
-        <td><button class="btn-flag" [style]="item.style" [class]="item.class" (click)="setDefaultCanCountry(item.id)">P</button></td>
-        <td>{{ item.name }} [{{ item.abbr }}]</td>
-        <td><button class="btn-del" (click)="deleteCanCountry(item.id)"><span>×</span></button></td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <td colspan="3"><button id="openBtn" class="can-ctg-open-btn" [class]="openClass" (click)="openForm()">+</button>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
+  <div class="demo demo-head">{{ i18n['ctg_country'] }}</div>
+  <div *ngIf="canCountryRows.length == 0">
+    <div class="demo demo-body" *ngFor="let item of [1,2]">&nbsp;</div>
+  </div>
+  <div *ngIf="canCountryRows.length > 0">
+    <div class="demo demo-body" *ngFor="let item of canCountryRows">
+      <button *ngIf="item.removable" class="btn btn-del right"
+        (click)="deleteCanCountry(item.abbr)"><span>×</span></button>
+      <button *ngIf="!item.removable" class="btn btn-hidden right"></button>
+      <button class="btn btn-flag left" [style]="item.style" [class]="item.class"
+        (click)="setDefaultCanCountry(item.abbr)">P</button>
+      <span class="cat-item">{{ item.name }} [{{ item.abbr }}]</span>
+      <span class="defloat"></span>
+    </div>
+  </div>
+
+  <button id="openBtn" class="can-ctg-open-btn center" [class]="openClass" (click)="openForm()">+</button>
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanCountry()">
     <label for="canFormName">{{ i18n['ctg_tab_name'] }}</label>

@@ -9,10 +9,10 @@ if (!isset($j)) {
   $j = [];
 }
 $query = [];
-$query[1] = 'INSERT IGNORE INTO `can_material` (`id`, `name`, `abbr`, `color`, `code`, `default`)
-VALUES (1, "Aluminium", "Al", "silver", "", 1)';
-$query[2] = 'INSERT IGNORE INTO `can_material` (`id`, `name`, `abbr`, `color`, `code`, `default`)
-VALUES (2, "Steel", "Fe", "gray", "", 0)';
+$query[1] = 'INSERT IGNORE INTO `can_material` (`id`, `name`, `abbr`, `color`, `code`)
+VALUES (1, "Aluminium", "Al", "silver", "")';
+$query[2] = 'INSERT IGNORE INTO `can_material` (`id`, `name`, `abbr`, `color`, `code`)
+VALUES (2, "Steel", "Fe", "gray", "")';
 
 $mysqli = my_connect();
 

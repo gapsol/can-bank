@@ -4,19 +4,19 @@
  *  MODIFY the lists content
  */
 import { Component, OnInit } from '@angular/core';
-import { CanbankXchangeService } from '../canbank-services/canbank-xchange.service';
+import { CanbankXchangeService } from '../canbank-services-x/canbank-xchange.service';
 import { CanbankInterfaceService } from '../canbank-services/canbank-interface.service';
 
 import { config } from '../config/config';
 import { i18n } from '../data/can-i18n';
 
-import { canColor } from '../data/can-color';
-import { canContentType } from '../data/can-content';
-import { canCountry } from '../data/can-country';
-import { canLanguage } from '../data/can-language';
-import { canMaterial } from '../data/can-material';
-import { canSurface } from '../data/can-surface';
-import { canType } from '../data/can-type';
+import { canColor } from '../data/can.interface';
+import { canContentType } from '../data/can.interface';
+import { canCountry } from '../data/can.interface';
+import { canLanguage } from '../data/can.interface';
+import { canMaterial } from '../data/can.interface';
+import { canSurface } from '../data/can.interface';
+import { canType } from '../data/can.interface';
 import { FormGroup } from '@angular/forms';
 
 interface category {
@@ -44,7 +44,7 @@ interface menuItem {
         <a [routerLink]="item.uri" class="anchor-btn">
           <span>{{ item.i18n }}</span>
         </a>
-        <span class="ctg-badge">{{ item.count }}</span>
+        <span class="ctg-badge" *ngIf="item.count!==-1">{{ item.count }}</span>
       </div>
     </nav>
     <router-outlet></router-outlet>
@@ -55,13 +55,13 @@ interface menuItem {
 export class CanbankCategoriesComponent implements OnInit {
   i18n = i18n[config.language];
   menuList: Array<menuItem> = [
-    { type: 'type', uri: '/ctgtype', i18n: this.i18n['ctg_type'], count: 0 },
-    { type: 'content', uri: '/ctgcontent', i18n: this.i18n['ctg_content_type'], count: 0 },
-    { type: 'material', uri: '/ctgmaterial', i18n: this.i18n['ctg_material'], count: 0 },
-    { type: 'surface', uri: '/ctgsurface', i18n: this.i18n['ctg_surface'], count: 0 },
-    { type: 'color', uri: '/ctgcolor', i18n: this.i18n['ctg_color'], count: 0 },
-    { type: 'country', uri: '/ctgcountry', i18n: this.i18n['ctg_country'], count: 0 },
-    { type: 'language', uri: '/ctglanguage', i18n: this.i18n['ctg_language'], count: 0 },
+    { type: 'type', uri: '/ctgtype', i18n: this.i18n['ctg_type'], count: -1 },
+    { type: 'content', uri: '/ctgcontent', i18n: this.i18n['ctg_content_type'], count: -1 },
+    { type: 'material', uri: '/ctgmaterial', i18n: this.i18n['ctg_material'], count: -1 },
+    { type: 'surface', uri: '/ctgsurface', i18n: this.i18n['ctg_surface'], count: -1 },
+    { type: 'color', uri: '/ctgcolor', i18n: this.i18n['ctg_color'], count: -1 },
+    { type: 'country', uri: '/ctgcountry', i18n: this.i18n['ctg_country'], count: -1 },
+    { type: 'language', uri: '/ctglanguage', i18n: this.i18n['ctg_language'], count: -1 },
   ];
   /*    { type: 'Can type', class: "can-type", data: canType },
       { type: 'Content type', class: "content-type", data: canContentType },
@@ -70,19 +70,19 @@ export class CanbankCategoriesComponent implements OnInit {
       { type: 'Color', class: "color", data: canColor },
       { type: 'Country', class: "country", data: canCountry },
       { type: 'Language', class: "language", data: canLanguage },*/
-      canTypeName: string = '';
-      canContentTypeName: string = '';
-      canMaterialName: string = '';
-      canMaterialColor: string = '';
-      canSurfaceName: string = '';
-      canSurfaceColor: string = '';
-      canColorName: string = '';
-      canColorColor: string = '';
-      canCountryName: string = '';
-      canLanguageName: string = '';
-      categories: category[] = [];
-      show: boolean[] = [];
-      invalid: boolean[] = [true, true, true, true, true, true, true];
+  canTypeName: string = '';
+  canContentTypeName: string = '';
+  canMaterialName: string = '';
+  canMaterialColor: string = '';
+  canSurfaceName: string = '';
+  canSurfaceColor: string = '';
+  canColorName: string = '';
+  canColorColor: string = '';
+  canCountryName: string = '';
+  canLanguageName: string = '';
+  categories: category[] = [];
+  show: boolean[] = [];
+  invalid: boolean[] = [true, true, true, true, true, true, true];
 
   constructor(
     private canbankXC: CanbankXchangeService,
@@ -90,13 +90,14 @@ export class CanbankCategoriesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getCanTypes();
-    this.getCanCTypes();
-    this.getCanMaterials();
-    this.getCanSurfaces();
-    this.getCanColors();
-    this.getCanCountries();
-    this.getCanLanguages();
+    // TODO: remove timeouts
+    setTimeout(() => { this.getCanTypes(); }, Math.random() * config.tOut);
+    setTimeout(() => { this.getCanCTypes(); }, Math.random() * config.tOut);
+    setTimeout(() => { this.getCanMaterials(); }, Math.random() * config.tOut);
+    setTimeout(() => { this.getCanSurfaces(); }, Math.random() * config.tOut);
+    setTimeout(() => { this.getCanColors(); }, Math.random() * config.tOut);
+    setTimeout(() => { this.getCanCountries(); }, Math.random() * config.tOut);
+    setTimeout(() => { this.getCanLanguages(); }, Math.random() * config.tOut);
   }
 
   getCanTypes() {
@@ -183,7 +184,7 @@ export class CanbankCategoriesComponent implements OnInit {
       case 'color':
       case 'country':
       case 'language':
-        // this.canbankXC.setLanguage();
+      // this.canbankXC.setLanguage();
     }
   }
 
