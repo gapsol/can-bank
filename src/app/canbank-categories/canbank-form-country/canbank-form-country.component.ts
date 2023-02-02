@@ -48,7 +48,7 @@ export class CanbankFormCountryComponent implements OnInit {
         this.canCountryRows = [];
         let dftCountry = this.canbankIF.canDefaults['country'];
         this.canbankIF.canCountry.forEach(e => {
-          let eStyle = 'background-color:silver;';
+          let eStyle = `background-color:silver;background-image:url(./assets/flags/${e.abbr.toLowerCase()}.svg);background-size:contain;`;
           let eClass = (dftCountry === e.abbr) ? 'btn-default' : '';
           let eDefault = !!eClass;
           let eRemove = (dftCountry !== e.abbr);

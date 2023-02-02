@@ -3,20 +3,40 @@
   src: url(./assets/font/Limelight-Regular.ttf);
 }
 @media screen and (min-width: 961px) {
+  .can-lg-1 { width: 8.33%; }
+  .can-lg-2 { width: 16.66%; }
   .can-lg-3 { width: 25%; }
-  .can-lg-6 { width: 50%; }
   .can-lg-4 { width: 33.33%; }
+  .can-lg-5 { width: 41.66%; }
+  .can-lg-6 { width: 50%; }
+  .can-lg-7 { width: 58.33%; }
+  .can-lg-8 { width: 66.66%; }
+  .can-lg-9 { width: 75%; }
+  .can-lg-10 { width: 83.33%; }
+  .can-lg-11 { width: 91.66%; }
   .can-lg-12 { width: 100%; }
+  .can-lg-1, .can-lg-2, .can-lg-3, .can-lg-4, .can-lg-5, .can-lg-6, .can-lg-7, .can-lg-8, .can-lg-9, .can-lg-10, .can-lg-11, .can-lg-12 { float: left; }
 }
 @media screen and (min-width: 481px) and (max-width: 960px) {
+  .can-md-1 { width: 8.33%; }
+  .can-md-2 { width: 16.66%; }
+  .can-md-3 { width: 25%; }
+  .can-md-4 { width: 33.33%; }
+  .can-md-5 { width: 41.66%; }
   .can-md-6 { width: 50%; }
+  .can-md-7 { width: 58.33%; }
+  .can-md-8 { width: 66.66%; }
+  .can-md-9 { width: 75%; }
+  .can-md-10 { width: 83.33%; }
+  .can-md-11 { width: 91.66%; }
   .can-md-12 { width: 100%; }
+  .can-md-1, .can-md-2, .can-md-3, .can-md-4, .can-md-5, .can-md-6, .can-md-7, .can-md-8, .can-md-9, .can-md-10, .can-md-11, .can-md-12 { float: left; }
 }
 @media screen and (min-width: 481px) {
   form, table, div.demo { width: 69%; max-width: 741px; }
 }
 @media screen and (max-width: 480px) {
-  .can-sm-12 { width: 100%; }
+  .can-sm-12 { width: 100%; float: left; }
   form, table, div.demo { width: 96% }
 }
 .full-screen {
@@ -26,9 +46,6 @@
   min-height: calc(100% - 4em);
   margin-top: 2em;
   padding-bottom: 2em;
-}
-.can-sm-12, .can-md-12, .can-md-6, .can-lg-6, .can-lg-3 {
-  float: left;
 }
 .full {
   width: 100%;
@@ -92,7 +109,7 @@ th {
   font-family: Limelight;
 }
 table tbody tr:nth-child(2n + 1) {
-  background-color: #FFE039; /* #ffc800; */
+  background-color: #FFE764; /* #ffc800; */
 }
 table tbody tr:nth-child(2n) {
   background-color: #C6A700; /* #ffe800; */
@@ -116,11 +133,8 @@ div.demo-head {
   font-family: Limelight;
   font-weight: bold;
 }
-div.demo-body:nth-child(2n + 1) {
-  background-color: #C6A700;
-}
-div.demo-body:nth-child(2n) {
-  background-color: #FFE039;
+div.demo-body {
+  background-color: #FFE764; /*#FFE039;*/
 }
 
 form {

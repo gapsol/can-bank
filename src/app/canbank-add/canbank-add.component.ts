@@ -181,6 +181,7 @@ export class CanbankAddComponent implements OnInit {
       error(error) { },
       complete() { }
     });*/
+    //
   }
 
   uploadAdded = new Observable(subscriber => {

@@ -73,6 +73,18 @@ export class CanbankFormColorComponent implements OnInit {
     )
   }
 
+  editCanColor(id: number) {
+    this.openForm();
+    let patch = this.canColorRows.find(e => e.id == id);
+    this.canForm.patchValue({
+      canFormId: patch?.id,
+      canFormName: patch?.name,
+      canFormColor: patch?.color,
+      canFormPicker: patch?.code,
+      canFormDefault: patch?.default
+    });
+  }
+
   deleteCanColor(id: number) {
     if (confirm('You are about to delete record')) {
       this.canbankXCol.deleteColor(id).subscribe(
@@ -117,15 +129,27 @@ export class CanbankFormColorComponent implements OnInit {
     // color valid only when so far not exists
     // color valid only when it fits htmlColors array
     if (this.checkCanColor()) {
-      this.canbankXCol.setColor(this.canForm.value).subscribe(
-        () => {
-          this.canbankXDef.getDefault().subscribe(
-            () => this.getCanColors(),
-            error => console.error(error)
-          )
-        },
-        error => console.error(error)
-      )
+      if (this.canForm.value.canFormId == '') {
+        this.canbankXCol.setColor(this.canForm.value).subscribe(
+          () => {
+            this.canbankXDef.getDefault().subscribe(
+              () => this.getCanColors(),
+              error => console.error(error)
+            )
+          },
+          error => console.error(error)
+        )
+      } else {
+        this.canbankXCol.updateColor(this.canForm.value).subscribe(
+          () => {
+            this.canbankXDef.getDefault().subscribe(
+              () => this.getCanColors(),
+              error => console.error(error)
+            )
+          },
+          error => console.error(error)
+        )
+      }
     }
   }
 

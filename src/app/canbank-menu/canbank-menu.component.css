@@ -2,6 +2,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+  background-color: gold;
 }
 .menu-btn {
   display: inline-block;

@@ -9,6 +9,7 @@
     <div class="demo demo-body" *ngFor="let item of canColorRows">
       <button *ngIf="item.removable" class="btn btn-del right" (click)="deleteCanColor(item.id)"><span>×</span></button>
       <button *ngIf="!item.removable" class="btn btn-hidden right"></button>
+      <button class="btn btn-edit right" (click)="editCanColor(item.id)"><span>!</span></button>
       <button class="btn btn-flag left" [style]="item.style" [class]="item.class"
         (click)="setDefaultCanColor(item.id)"></button>
       <span class="cat-item">{{ item.name }} / {{ item.color }}</span>
@@ -19,6 +20,7 @@
   <button id="openBtn" class="can-ctg-open-btn center" [class]="openClass" (click)="openForm()">+</button>
 
   <form *ngIf="openClass" [formGroup]="canForm" (submit)="submitCanColor()">
+    <input type="hidden" id="canFormId" formControlName="canFormId" />
     <label for="canFormName">{{ i18n['ctg_tab_name'] }}</label>
     <input type="text" id="canFormName" formControlName="canFormName" minlength="3" class="can-ctg-input" required />
 

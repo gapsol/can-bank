@@ -81,6 +81,12 @@
   font-weight: bold;
   color: black;
 }
+.btn-edit {
+  margin-right: 6px;
+  font-weight: bold;
+  background-color: blue;
+  color: yellow;
+}
 .btn-del {
   background-color: red;
   color: white;

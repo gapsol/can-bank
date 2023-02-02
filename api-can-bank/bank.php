@@ -77,8 +77,16 @@ function postIt()
     json_error_badrequest();
   }
 
-  var_dump($_FILES);
-  exit();
+  // zistit posledny registrovany obrazok v databaze
+  // vytvorit zoznam suborov, ak sa uploaduju
+  // nahrat do databazy
+  // premenovat uploadovane subory
+  // podla ne/uspesnosti uploadu updatnut info v dbaze
+  // vypisat chyby
+  // ? reupload ?
+
+  // var_dump($_FILES);
+/*  exit();
   if ($post->canFormFname1)
     $canFormFname[1] = re_file($post->canFormFname1, $post->canFormEan);
   if ($post->canFormFname2)
@@ -89,8 +97,8 @@ function postIt()
     $canFormFname[4] = re_file($post->canFormFname4, $post->canFormEan);
   if ($post->canFormFname5)
     $canFormFname[5] = re_file($post->canFormFname5, $post->canFormEan);
-
-  var_dump($canFormFname);
+*/
+  // var_dump($canFormFname);
   //  json_error(null, 200, 'files', $canFormFname);
 
   $uniq = gen_uniq();

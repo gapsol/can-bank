@@ -11,7 +11,7 @@
         (click)="deleteCanCountry(item.abbr)"><span>×</span></button>
       <button *ngIf="!item.removable" class="btn btn-hidden right"></button>
       <button class="btn btn-flag left" [style]="item.style" [class]="item.class"
-        (click)="setDefaultCanCountry(item.abbr)">P</button>
+        (click)="setDefaultCanCountry(item.abbr)"></button>
       <span class="cat-item">{{ item.name }} [{{ item.abbr }}]</span>
       <span class="defloat"></span>
     </div>

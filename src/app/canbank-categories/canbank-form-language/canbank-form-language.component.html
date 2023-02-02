@@ -11,7 +11,7 @@
         (click)="deleteCanLanguage(item.abbr)"><span>×</span></button>
       <button *ngIf="!item.removable" class="btn btn-hidden right"></button>
       <button class="btn btn-flag left" [style]="item.style" [class]="item.class"
-        (click)="setDefaultCanLanguage(item.abbr)">P</button>
+        (click)="setDefaultCanLanguage(item.abbr)"></button>
       <span class="cat-item">{{ item.name }} [{{ item.abbr }}]</span>
       <span class="defloat"></span>
     </div>

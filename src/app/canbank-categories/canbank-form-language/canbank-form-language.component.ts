@@ -48,7 +48,7 @@ export class CanbankFormLanguageComponent implements OnInit {
         this.canLanguageRows = [];
         let dftLang = this.canbankIF.canDefaults['language'];
         this.canbankIF.canLanguage.forEach(e => {
-          let eStyle = 'background-color:silver;';
+          let eStyle = `background-color:silver;background-image:url(./assets/flags/${e.abbr.toLowerCase()}.svg);background-size:contain;`;
           let eClass = (dftLang === e.abbr) ? 'btn-default' : '';
           let eDefault = !!eClass;
           let eRemove = (dftLang !== e.abbr)

@@ -4,6 +4,22 @@
 
   <form id="can-form" [formGroup]="canForm" (ngSubmit)="addCan()">
     <div class="input-box">
+      <div class="can-sm-12 can-md-12 can-lg-12">
+        <label for="can-form-ean">{{ i18n['add_barcode'] }}</label>
+        <div class="input-value-box">
+          <input id="can-form-ean" type="text" maxlength="13" pattern="[0-9]{1,13}" formControlName="canFormEan"
+            (change)="displayEan()" placeholder="{{ i18n['add_barcode'] }}" required />
+            <!-- TODO: look for barcode in dbase to fill the form -->
+        </div>
+      </div>
+
+      <div class="can-sm-12 can-md-12 can-lg-6">
+        <!-- TODO: generate ean_barcode image -->
+      </div>
+    </div>
+    <div class="defloat"></div>
+
+    <div class="input-box">
       <label for="can-form-type">{{ i18n['add_can_type'] }}</label>
       <div class="input-value-box full">
         <select id="can-form-type" class="full" formControlName="canFormType" (change)="updateType()" required>
@@ -164,21 +180,6 @@
           <input id="can-form-exp-date" type="date" formControlName="canFormExpDate"
             placeholder="{{ i18n['add_expiration_date'] }}" />
         </div>
-      </div>
-    </div>
-    <div class="defloat"></div>
-
-    <div class="input-box">
-      <div class="can-sm-12 can-md-12 can-lg-12">
-        <label for="can-form-ean">{{ i18n['add_barcode'] }}</label>
-        <div class="input-value-box">
-          <input id="can-form-ean" type="text" maxlength="13" pattern="[0-9]{1,13}" formControlName="canFormEan"
-            (change)="displayEan()" placeholder="{{ i18n['add_barcode'] }}" required />
-        </div>
-      </div>
-
-      <div class="can-sm-12 can-md-12 can-lg-6">
-        <!-- TODO: generate ean_barcode image -->
       </div>
     </div>
     <div class="defloat"></div>
